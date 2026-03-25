@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { type Post } from '../data/mockData';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { Heart, MessageCircle, Share2, Pin, RefreshCw, MoreVertical, Send, Link, BadgeCheck, AtSign } from 'lucide-react';
 import { CommentSection } from './CommentSection';
 import { RepostMenu } from './RepostMenu';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { useNavigate } from 'react-router-dom';
 import { PlusCircle, MessageCircle, BadgeCheck, Users, Globe } from 'lucide-react';
 import { PremiumPassModal } from './PremiumPassModal';

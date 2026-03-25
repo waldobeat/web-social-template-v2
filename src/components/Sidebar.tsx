@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { Home, Compass, Bell, User, MessageCircle } from 'lucide-react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import './Sidebar.css';
 
 export const Sidebar = () => {

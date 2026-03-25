@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo } from 'react';
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { onNewContent } from '../services/botEngine';
 import { Smile, X, Send, Image as ImageIcon, AtSign } from 'lucide-react';

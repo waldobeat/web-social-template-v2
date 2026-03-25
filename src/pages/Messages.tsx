@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { Send, ArrowLeft, Check, X, Mail, BadgeCheck } from 'lucide-react';
 import './Messages.css';
 

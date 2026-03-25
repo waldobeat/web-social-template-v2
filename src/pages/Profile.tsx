@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { PostCard } from '../components/PostCard';
 import { type Post } from '../data/mockData';
 import { Users, Plus, Globe, Edit3, Sparkles, BadgeCheck } from 'lucide-react';

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useMemo } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { PostCard } from '../components/PostCard';
 import { Tag } from 'lucide-react';
 import './Feed.css'; // Reusable styles

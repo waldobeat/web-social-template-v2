@@ -1,4 +1,4 @@
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { User, X } from 'lucide-react';
 import './RepostMenu.css';
 
@@ -9,8 +9,8 @@ interface Props {
 
 export const RepostMenu = ({ postId, onClose }: Props) => {
   const { currentUser, communities, toggleRepost } = useAppContext();
-  
-  const joinedCommunities = Object.values(communities).filter(c => 
+
+  const joinedCommunities = Object.values(communities).filter(c =>
     currentUser?.joinedCommunityIds?.includes(c.id)
   );
 
@@ -24,9 +24,9 @@ export const RepostMenu = ({ postId, onClose }: Props) => {
       <div className="repost-menu" onClick={e => e.stopPropagation()}>
         <div className="repost-menu-header">
           <label>Compartir en...</label>
-          <button className="close-mini-btn" onClick={onClose}><X size={14}/></button>
+          <button className="close-mini-btn" onClick={onClose}><X size={14} /></button>
         </div>
-        
+
         <button className="repost-option-btn" onClick={() => handleRepost()}>
           <User size={18} color="var(--primary)" />
           <span>Mi Perfil ✨</span>
@@ -35,7 +35,7 @@ export const RepostMenu = ({ postId, onClose }: Props) => {
         {joinedCommunities.length > 0 && (
           <div className="repost-section-title">Comunidades</div>
         )}
-        
+
         <div className="repost-communities-list">
           {joinedCommunities.map(c => (
             <button key={c.id} className="repost-option-btn" onClick={() => handleRepost(c.id)}>

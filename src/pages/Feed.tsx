@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { PostCard } from '../components/PostCard';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { sortNew, sortHot, sortTop } from '../utils/sorting';
 import './Feed.css';
 
@@ -18,7 +18,7 @@ export const Feed = () => {
       const isFromFollowedUser = currentUser.following?.includes(post.authorId);
       const inFollowedCommunity = currentUser.joinedCommunityIds?.includes(post.communityId);
       const isOwnPost = currentUser.id === post.authorId;
-      
+
       // Admin posts are visible to everyone
       return isAdminPost || isFromFollowedUser || inFollowedCommunity || isOwnPost;
     });
@@ -40,12 +40,12 @@ export const Feed = () => {
           <button className={`sort-tab ${sortBy === 'top' ? 'active' : ''}`} onClick={() => setSortBy('top')}>🏆 Top</button>
         </div>
       </div>
-      
+
       <div className="create-post-trigger" onClick={openModal}>
         <img src={currentUser?.avatar} alt="me" className="trigger-avatar" />
         <div className="trigger-input">Cuéntame algo, amiga... ✨</div>
       </div>
-      
+
       <div className="posts-list">
         {sortedPosts.length > 0 ? (
           sortedPosts.map(post => <PostCard key={post.id} post={post} />)

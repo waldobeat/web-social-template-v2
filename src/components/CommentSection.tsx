@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import { Send, Smile, Gift, BadgeCheck } from 'lucide-react';
 import { GifPicker } from './GifPicker';
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';

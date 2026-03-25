@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, BadgeCheck, Sparkles, Wand2 } from 'lucide-react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 import './EditProfileModal.css';
 
 interface Props {
