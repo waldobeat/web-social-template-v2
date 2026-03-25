@@ -36,7 +36,7 @@ export const Sidebar = () => {
         </NavLink>
       </nav>
       <button className="btn-primary post-btn-sidebar" onClick={() => setCreatePostOpen(true)}>Publicar</button>
-      <button className="nav-item logout-btn" style={{ marginTop: 'auto', border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }} onClick={logout}>
+      <button className="nav-item logout-btn" onClick={logout}>
         <span>Cerrar Sesión</span>
       </button>
     </aside>
