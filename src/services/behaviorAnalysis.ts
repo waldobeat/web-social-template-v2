@@ -13,7 +13,7 @@ import {
     updateDoc,
     doc
 } from 'firebase/firestore';
-import { db, auth } from './firebase';
+import { db } from './firebase';
 
 // ============================================
 // TYPES

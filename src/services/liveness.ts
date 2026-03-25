@@ -250,15 +250,6 @@ export const checkUserLivenessStatus = async (): Promise<boolean> => {
     return !snapshot.empty;
 };
 
-// Placeholder function for AI gesture validation
-// In production, integrate with Vertex AI or similar service
-async function validateGestureWithAI(imageBase64: string, challenge: LivenessChallenge): Promise<boolean> {
-    // This would be implemented with Google Cloud Vision API or Vertex AI
-    // For now, return true to allow development
-    console.log('🤖 AI Gesture Validation:', { challenge, imageLength: imageBase64.length });
-    return true;
-}
-
 export default {
     createLivenessChallenge,
     verifyLivenessChallenge,
