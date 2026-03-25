@@ -81,8 +81,14 @@ export const useAppContext = (): AppContextState => {
         messages: data.messages,
         messageRequests: data.messageRequests,
         notifications: data.notifications,
-        addPost: data.addPost,
-        addComment: data.addComment,
+        addPost: async (post: any) => {
+            // Convert from object format to DataContext format
+            await data.addPost(post.content, post.communityId, post.category);
+        },
+        addComment: async (comment: any) => {
+            // Convert from object format to DataContext format
+            await data.addComment(comment.text, comment.parentId);
+        },
         updatePost: data.updatePost,
         deletePost: data.deletePost,
         toggleLike: data.toggleLike,
