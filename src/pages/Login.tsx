@@ -107,9 +107,11 @@ export const Login = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1 className="login-logo">🐻 Sheddit</h1>
-        <p className="login-subtitle">Comparte con la comunidad oso.</p>
-
+        <div className="login-header">
+          <img src="/mascot.png" alt="Sheddit Mascot" className="mascot-animated login-mascot" />
+          <h1 className="login-logo">Sheddit</h1>
+          <p className="login-subtitle">Donde las chicas reinan ✨</p>
+        </div>
         {/* Google Sign In Button */}
         <button
           type="button"
@@ -239,7 +241,7 @@ export const Login = () => {
           )}
 
           <button type="submit" className="login-btn premium">
-            {isRegister ? 'Crear mi cuenta ✨' : 'Entrar al feed 🐻'}
+            {isRegister ? 'Crear mi cuenta ✨' : 'Entrar al feed 🐱'}
           </button>
         </form>
 

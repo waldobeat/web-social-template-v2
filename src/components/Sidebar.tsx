@@ -10,7 +10,10 @@ export const Sidebar = () => {
 
   return (
     <aside className="sidebar">
-      <div className="logo">🐻 Sheddit</div>
+      <div className="logo-container">
+        <img src="/mascot.png" alt="Sheddit Mascot" className="mascot-animated" />
+        <h1 className="logo-text">Sheddit</h1>
+      </div>
       <nav className="nav-menu">
         <NavLink to="/" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
           <Home size={24} /> <span>Inicio</span>
