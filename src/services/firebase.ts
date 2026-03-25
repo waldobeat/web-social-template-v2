@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -25,14 +25,26 @@ const requiredKeys: (keyof typeof firebaseConfig)[] = [
 
 const missingKeys = requiredKeys.filter(key => !firebaseConfig[key]);
 if (missingKeys.length > 0) {
-  console.error(
-    '⚠️ Firebase configuration missing keys:',
-    missingKeys.join(', '),
-    '\n📁 Please copy .env.example to .env.local and fill in your Firebase credentials.'
-  );
+  const errorMsg = `⚠️ Firebase configuration missing keys: ${missingKeys.join(', ')}. Please set them in your deployment environment (Vercel).`;
+  console.error(errorMsg);
+  if (typeof window !== 'undefined') {
+    // Optional: alert the developer in the console with more details
+    console.warn('See .env.example for required variables.');
+  }
 }
 
-export const app = initializeApp(firebaseConfig);
+let app: FirebaseApp;
+try {
+  app = initializeApp(firebaseConfig);
+}
+ catch (error) {
+  console.error('❌ Failed to initialize Firebase:', error);
+  // Create a dummy app object to avoid crashing other services immediately, 
+  // but the app should ideally show a fallback UI.
+  app = { name: '[DEFAULT]', options: {}, automaticDataCollectionEnabled: false } as any;
+}
+
+export { app };
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 

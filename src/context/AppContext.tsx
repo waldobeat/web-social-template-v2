@@ -64,6 +64,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const currentUser = (currentUserId && users[currentUserId]) ? users[currentUserId] : null;
 
   useEffect(() => {
+    // Only initialize if Firebase is configured
+    if (!import.meta.env.VITE_FIREBASE_API_KEY) {
+      setIsLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsAuthenticated(true);
