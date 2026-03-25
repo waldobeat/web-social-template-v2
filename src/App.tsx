@@ -8,7 +8,6 @@ import { CreatePostModal } from './components/CreatePostModal';
 import { Login } from './pages/Login';
 import { LoadingScreen } from './components/LoadingScreen';
 import { CookieBanner } from './components/CookieBanner';
-import { ErrorBoundary } from './components/ErrorBoundary';
 import { ToastProvider } from './hooks/useToast';
 
 // Lazy load pages for code splitting - improves initial load time
@@ -104,13 +103,11 @@ function AppInner() {
 
 function App() {
   return (
-    <ErrorBoundary>
-      <AppProvider>
-        <ToastProvider>
-          <AppInner />
-        </ToastProvider>
-      </AppProvider>
-    </ErrorBoundary>
+    <AppProvider>
+      <ToastProvider>
+        <AppInner />
+      </ToastProvider>
+    </AppProvider>
   );
 }
 
