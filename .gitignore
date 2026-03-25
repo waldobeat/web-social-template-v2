@@ -26,8 +26,11 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-# Test credentials
+# Scripts and Test data
 test_users.json
+auth-users.json
+*.mjs
+*.cjs
 
 # Firebase
 .firebase/

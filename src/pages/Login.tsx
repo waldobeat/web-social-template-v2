@@ -131,19 +131,19 @@ export const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
-          <div className="input-group">
-            <label>Correo Electrónico</label>
-            <input
-              type="email"
-              placeholder="ana@ejemplo.com"
-              value={email}
-              onChange={(e) => handleEmailChange(e.target.value)}
-              required
-            />
-          </div>
+          <div className="form-row">
+            <div className="input-group">
+              <label>Correo Electrónico</label>
+              <input
+                type="email"
+                placeholder="ana@ejemplo.com"
+                value={email}
+                onChange={(e) => handleEmailChange(e.target.value)}
+                required
+              />
+            </div>
 
-          {isRegister && (
-            <>
+            {isRegister && (
               <div className="input-group">
                 <label>Nombre de usuario</label>
                 <input
@@ -154,18 +154,36 @@ export const Login = () => {
                   required
                 />
               </div>
-              <div className="input-group">
-                <label>Fecha de Nacimiento</label>
-                <input
-                  type="date"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  required
-                />
+            )}
+          </div>
+
+          {isRegister && (
+            <>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Fecha de Nacimiento</label>
+                  <input
+                    type="date"
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Contraseña</label>
+                  <input
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
+
               <div className="input-group">
                 <label>Tus intereses (Elige al menos 1)</label>
-                <div className="interests-grid">
+                <div className="interests-grid modern">
                   {availableInterests.map(i => (
                     <button
                       type="button"
@@ -181,13 +199,23 @@ export const Login = () => {
                   ))}
                 </div>
               </div>
-              <div className="input-group captcha-group">
-                <label>Validación de seguridad</label>
-                <div className="captcha-row">
-                  <span className="captcha-question">¿Cuánto es {captchaQ.a} {captchaQ.op} {captchaQ.b}?</span>
+
+              <div className="security-section">
+                <div className="security-header">
+                  <span className="security-shield">🛡️</span>
+                  <div className="security-info">
+                    <span className="security-title">Validación Humana</span>
+                    <span className="security-desc">Resuelve para continuar</span>
+                  </div>
+                </div>
+                <div className="captcha-modern">
+                  <div className="captcha-question-box">
+                    <span>¿Cuánto es {captchaQ.a} {captchaQ.op} {captchaQ.b}?</span>
+                  </div>
                   <input
                     type="number"
-                    placeholder="Respuesta..."
+                    placeholder="Tu respuesta"
+                    className="captcha-input"
                     value={captchaAnswer}
                     onChange={(e) => setCaptchaAnswer(e.target.value)}
                     required
@@ -197,19 +225,21 @@ export const Login = () => {
             </>
           )}
 
-          <div className="input-group">
-            <label>Contraseña</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          {!isRegister && (
+            <div className="input-group">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          )}
 
-          <button type="submit" className="login-btn">
-            {isRegister ? 'Registrarme' : 'Entrar'}
+          <button type="submit" className="login-btn premium">
+            {isRegister ? 'Crear mi cuenta ✨' : 'Entrar al feed 🐻'}
           </button>
         </form>
 
