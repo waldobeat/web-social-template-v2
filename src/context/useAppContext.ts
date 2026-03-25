@@ -28,8 +28,8 @@ interface AppContextState {
     messages: Record<string, Message[]>;
     messageRequests: Record<string, MessageRequest>;
     notifications: Record<string, AppNotification>;
-    addPost: (post: { content: string; communityId?: string; category?: string }) => Promise<void>;
-    addComment: (comment: { text: string; parentId: string }) => Promise<void>;
+    addPost: (post: any) => Promise<void>;
+    addComment: (comment: { text: string; parentId: string; authorId?: string; createdAt?: string }) => Promise<void>;
     updatePost: (postId: string, newContent: string) => Promise<void>;
     deletePost: (postId: string) => Promise<void>;
     toggleLike: (postId: string) => Promise<void>;
