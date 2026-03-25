@@ -3,7 +3,6 @@ import {
     createLivenessChallenge,
     verifyLivenessChallenge,
     CHALLENGE_INSTRUCTIONS,
-    type LivenessChallenge,
     type LivenessChallengeData
 } from '../services/liveness';
 import { doc, updateDoc } from 'firebase/firestore';
