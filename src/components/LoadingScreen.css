@@ -1,0 +1,66 @@
+.loading-screen-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--bg-main);
+  background: radial-gradient(circle at center, #ffffff 0%, #fff0f3 100%);
+}
+
+.lipstick-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.lipstick-svg {
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 10px 15px rgba(255, 71, 126, 0.25));
+}
+
+.lipstick-inner {
+  animation: revealLipstick 2s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+}
+
+@keyframes revealLipstick {
+  0%, 15% { transform: translateY(18px); } /* Hidden inside the tube */
+  85%, 100% { transform: translateY(0px); } /* Fully revealed */
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+.loading-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 1px;
+  animation: pulseOpacity 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseOpacity {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.dot-anim {
+  animation: ellipsis 1.5s infinite;
+  display: inline-block;
+  width: 20px;
+  text-align: left;
+}
+
+@keyframes ellipsis {
+  0% { content: "."; color: transparent; }
+  33% { content: "."; color: inherit; }
+  66% { content: ".."; }
+  100% { content: "..."; }
+}

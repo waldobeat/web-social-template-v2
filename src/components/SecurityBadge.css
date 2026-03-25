@@ -1,0 +1,78 @@
+/* Security Badge Component Styles */
+
+.security-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Badge variants */
+.security-badge--verified {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    color: #2E7D32;
+    border: 1px solid #A5D6A7;
+}
+
+.security-badge--pending {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    color: #F57F17;
+    border: 1px solid #FFE082;
+}
+
+.security-badge--flagged {
+    background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
+    color: #C62828;
+    border: 1px solid #EF9A9A;
+}
+
+.security-badge--human {
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+    color: #7B1FA2;
+    border: 1px solid #CE93D8;
+}
+
+.security-badge--trusted {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    color: #1565C0;
+    border: 1px solid #90CAF9;
+}
+
+/* Size variants */
+.security-badge--small {
+    padding: 2px 6px;
+    font-size: 9px;
+}
+
+.security-badge--large {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Icon styling */
+.security-badge__icon {
+    width: 14px;
+    height: 14px;
+}
+
+.security-badge--small .security-badge__icon {
+    width: 10px;
+    height: 10px;
+}
+
+.security-badge--large .security-badge__icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Badge container for multiple badges */
+.security-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}

@@ -1,0 +1,128 @@
+.comment-section {
+  padding: 15px 20px 20px;
+  background: #fafafa;
+  border-top: 1px solid var(--border-light);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.comments-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 15px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 12px;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-author {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.comment-gif {
+  max-width: 200px;
+  border-radius: 12px;
+}
+
+.comment-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.form-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.comment-input-wrapper {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  padding: 6px 6px 6px 16px;
+  position: relative;
+}
+
+.comment-input-wrapper input {
+  flex: 1;
+  border: none;
+  font-size: 14px;
+  outline: none;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-icon {
+  color: var(--text-muted);
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  transition: all 0.2s;
+}
+
+.action-icon:hover {
+  background: #f0f0f0;
+  color: var(--primary);
+}
+
+.send-btn {
+  background: var(--primary);
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 4px;
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+}

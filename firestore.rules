@@ -1,0 +1,197 @@
+// Sheddit Firestore Security Rules
+// Implements 4-layer security architecture
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user has verified email
+    function isEmailVerified() {
+      return request.auth.token.email_verified == true;
+    }
+    
+    // Check if user passed liveness verification (is human)
+    function isHuman() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.is_human == true;
+    }
+    
+    // Check if user account is active (not suspended)
+    function isAccountActive() {
+      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.account_status == 'active' || userData.account_status == null;
+    }
+    
+    // Check if user is temp blocked
+    function isNotBlocked() {
+      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.account_status != 'temp_blocked' && userData.account_status != 'suspended';
+    }
+    
+    // Check if user owns the resource
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    // ============================================
+    // USERS COLLECTION
+    // ============================================
+    
+    match /users/{userId} {
+      // Anyone can read user profiles (public)
+      allow read: if isAuthenticated();
+      
+      // Users can read their own full profile
+      allow read: if isOwner(userId) && isAuthenticated();
+      
+      // TEMPORARY: Allow create for test users (REMOVE AFTER TESTING)
+      allow create: if true;
+      
+      // Users can update their own profile
+      allow write: if isOwner(userId) && isAuthenticated() && isEmailVerified() && isAccountActive();
+      
+      // Only admins can update other users
+      allow write: if false;
+    }
+    
+    // ============================================
+    // POSTS COLLECTION
+    // ============================================
+    
+    match /posts/{postId} {
+      // Anyone can read posts
+      allow read: if isAuthenticated();
+      
+      // Authenticated users can create posts if verified human
+      allow create: if isAuthenticated() && isEmailVerified() && isHuman() && isAccountActive() && isNotBlocked();
+      
+      // Only post owner can update/delete
+      allow update, delete: if isAuthenticated() && isOwner(resource.data.authorId) && isAccountActive();
+    }
+    
+    // ============================================
+    // COMMUNITIES COLLECTION
+    // ============================================
+    
+    match /communities/{communityId} {
+      // Anyone can read community info
+      allow read: if isAuthenticated();
+      
+      // Only verified humans can create communities
+      allow create: if isAuthenticated() && isEmailVerified() && isHuman() && isAccountActive();
+      
+      // Only community owner can update
+      allow update: if isAuthenticated() && isOwner(resource.data.ownerId);
+      
+      // Only community owner can delete
+      allow delete: if isAuthenticated() && isOwner(resource.data.ownerId);
+    }
+    
+    // ============================================
+    // COMMENTS COLLECTION
+    // ============================================
+    
+    match /comments/{commentId} {
+      // Anyone can read comments
+      allow read: if isAuthenticated();
+      
+      // Authenticated humans can comment
+      allow create: if isAuthenticated() && isEmailVerified() && isHuman() && isAccountActive() && isNotBlocked();
+      
+      // Only comment owner can update/delete
+      allow update, delete: if isAuthenticated() && isOwner(resource.data.authorId);
+    }
+    
+    // ============================================
+    // MESSAGES COLLECTION
+    // ============================================
+    
+    match /messages/{messageId} {
+      // Only sender and recipient can read
+      allow read: if isAuthenticated() && 
+        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid);
+      
+      // Only send if verified human
+      allow create: if isAuthenticated() && isEmailVerified() && isHuman() && isAccountActive() && isNotBlocked();
+    }
+    
+    // ============================================
+    // NOTIFICATIONS COLLECTION
+    // ============================================
+    
+    match /notifications/{notificationId} {
+      // Only recipient can read their notifications
+      allow read: if isAuthenticated() && resource.data.recipientId == request.auth.uid;
+      
+      // System can create notifications
+      allow create: if true;
+      
+      // Only recipient can update (mark as read)
+      allow update: if isAuthenticated() && resource.data.recipientId == request.auth.uid;
+    }
+    
+    // ============================================
+    // FOLLOWS COLLECTION
+    // ============================================
+    
+    match /follows/{followId} {
+      // Anyone can read follows
+      allow read: if isAuthenticated();
+      
+      // Authenticated users can follow others
+      allow create: if isAuthenticated() && isEmailVerified() && isHuman() && isAccountActive() && isNotBlocked();
+      
+      // Only the follower can unfollow
+      allow delete: if isAuthenticated() && resource.data.followerId == request.auth.uid;
+    }
+    
+    // ============================================
+    // LIVENESS CHALLENGES (Admin only - for bot detection)
+    // ============================================
+    
+    match /liveness_challenges/{challengeId} {
+      // Only authenticated users can read their own challenges
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // System creates challenges (via Cloud Functions)
+      allow create: if true;
+    }
+    
+    // ============================================
+    // BEHAVIOR FLAGS (For security monitoring)
+    // ============================================
+    
+    match /behavior_flags/{flagId} {
+      // Users can read their own flags
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // System creates flags
+      allow create: if true;
+    }
+    
+    // ============================================
+    // MESSAGE REQUESTS
+    // ============================================
+    
+    match /message_requests/{requestId} {
+      // Only sender and recipient can read
+      allow read: if isAuthenticated() && 
+        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid);
+      
+      // Authenticated users can send requests
+      allow create: if isAuthenticated() && isEmailVerified() && isHuman() && isAccountActive();
+      
+      // Only recipient can accept/reject
+      allow update: if isAuthenticated() && resource.data.toId == request.auth.uid;
+    }
+  }
+}

@@ -1,0 +1,73 @@
+.user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.user-badge.badge-small {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+}
+
+.user-badge.badge-small .badge-label {
+    font-size: 0.65rem;
+}
+
+.user-badge.badge-medium {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+}
+
+.user-badge.badge-large {
+    font-size: 0.9rem;
+    padding: 4px 10px;
+}
+
+.badge-label {
+    margin-left: 2px;
+}
+
+.badge-list {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.badge-more {
+    background: #e0e0e0;
+    color: #666;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: help;
+}
+
+/* Badge hover effect */
+.user-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s;
+}
+
+/* Special styles for verified badge */
+.user-badge[title*="verificada"] {
+    border-radius: 50%;
+    padding: 4px;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Premium badge special style */
+.user-badge[title*="premium"] {
+    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}

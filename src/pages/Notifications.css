@@ -1,0 +1,120 @@
+.notifications-page {
+  flex: 1;
+  max-width: 600px;
+  border-right: 1px solid var(--border-light);
+  min-height: 100vh;
+  background: var(--bg-color);
+}
+
+.notifications-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-light);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.notifications-header h2 {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.notif-card {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-light);
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.notif-card:hover {
+  background: #fafafa;
+}
+
+.notif-card.unread {
+  background: #fff0f3;
+}
+
+.notif-card.unread:hover {
+  background: #ffe4e8;
+}
+
+.notif-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-card.unread .notif-icon-wrapper {
+  background: white;
+}
+
+.notif-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notif-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notif-content p {
+  font-size: 15px;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.notif-content p strong {
+  color: var(--primary-dark);
+}
+
+.notif-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.unread-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(255, 71, 126, 0.5);
+}
+
+.empty-notifs {
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.6;
+}
