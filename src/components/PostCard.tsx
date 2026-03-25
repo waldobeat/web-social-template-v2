@@ -1,10 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { type Post } from '../data/mockData';
 import { useAppContext } from '../context/AppContext';
 import { Heart, MessageCircle, Share2, Pin, RefreshCw, MoreVertical, Send, Link, BadgeCheck, AtSign } from 'lucide-react';
 import { CommentSection } from './CommentSection';
 import { RepostMenu } from './RepostMenu';
 import { useNavigate } from 'react-router-dom';
+import { sanitizeHtml, sanitizeMention } from '../utils/sanitize';
 import './PostCard.css';
 
 interface Props { post: Post; }
@@ -89,28 +90,38 @@ export const PostCard = ({ post }: Props) => {
 
   const hasMentions = mentionedUsers.length > 0 || mentionedCommunities.length > 0;
 
-  // Función para convertir etiquetas en enlaces
-  const renderContentWithLinks = (content: string) => {
-    // Reemplazar @u/username con enlace al perfil
-    let result = content.replace(/@u\/(\w+)/g, (match, username) => {
-      const user = Object.values(users).find(u => u.username.replace(/^u\//, '') === username);
+  // Función para convertir etiquetas en enlaces CON SANITIZACIÓN
+  const renderContentWithLinks = useCallback((content: string): string => {
+    if (!content || typeof content !== 'string') return '';
+
+    // First escape HTML to prevent XSS, then add links
+    let result = content;
+
+    // Sanitize the content first
+    result = sanitizeHtml(result);
+
+    // Reemplazar @u/username con enlace al perfil - SANITIZAR username
+    result = result.replace(/@u\/(\w+)/g, (match, username) => {
+      const safeUsername = sanitizeMention(username);
+      const user = Object.values(users).find(u => u.username.replace(/^u\//, '') === safeUsername);
       if (user) {
-        return `<a href="/profile/${user.id}" class="content-mention user-mention">@u/${username}</a>`;
+        return `<a href="/profile/${user.id}" class="content-mention user-mention">@u/${safeUsername}</a>`;
       }
       return match;
     });
 
-    // Reemplazar @c/community con enlace a la comunidad
+    // Reemplazar @c/community con enlace a la comunidad - SANITIZAR community name
     result = result.replace(/@c\/(\w+)/g, (match, commName) => {
-      const comm = Object.values(communities).find(c => c.name.replace(/^c\//, '') === commName);
+      const safeCommName = sanitizeMention(commName);
+      const comm = Object.values(communities).find(c => c.name.replace(/^c\//, '') === safeCommName);
       if (comm) {
-        return `<a href="/community/${comm.id}" class="content-mention community-mention">@c/${commName}</a>`;
+        return `<a href="/community/${comm.id}" class="content-mention community-mention">@c/${safeCommName}</a>`;
       }
       return match;
     });
 
     return result;
-  };
+  }, [users, communities]);
 
   const displayContent = post.originalPostId ? originalPost?.content : post.content.replace(/!\[gif\]\(.*?\)/, '');
 
