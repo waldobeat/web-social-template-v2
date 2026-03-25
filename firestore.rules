@@ -37,6 +37,12 @@ service cloud.firestore {
       return userData.account_status != 'temp_blocked' && userData.account_status != 'suspended';
     }
     
+    // Check if user has admin role
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
     // Check if user owns the resource
     function isOwner(userId) {
       return request.auth.uid == userId;
@@ -55,11 +61,11 @@ service cloud.firestore {
       // but ideally it should be isOwner(userId) && isAuthenticated()
       allow create: if true;
       
-      // Allow users to update their own profile without strict email/active checks for now
-      allow update: if isAuthenticated() && isOwner(userId);
+      // Admins can update any user, owners can update themselves
+      allow update: if isAdmin() || (isAuthenticated() && isOwner(userId));
       
-      // Restricted delete
-      allow delete: if false;
+      // Only admins can delete users
+      allow delete: if isAdmin();
     }
     
     // ============================================
@@ -80,11 +86,11 @@ service cloud.firestore {
       // Anyone authenticated can create
       allow create: if isAuthenticated();
       
-      // Anyone authenticated can update (for likes/reposts)
-      allow update: if isAuthenticated();
+      // Admins can update/delete any post, owners can update/delete theirs
+      allow update: if isAdmin() || isAuthenticated();
       
       // Only owner can delete
-      allow delete: if isAuthenticated() && isOwner(resource.data.authorId);
+      allow delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.authorId));
     }
     
     // ============================================
@@ -97,11 +103,11 @@ service cloud.firestore {
       // Anyone authenticated can create
       allow create: if isAuthenticated();
       
-      // Anyone authenticated can update (to join/leave)
-      allow update: if isAuthenticated();
+      // Admins can manage any community, owners can manage theirs
+      allow update: if isAdmin() || isAuthenticated();
       
       // Only owner can delete
-      allow delete: if isAuthenticated() && isOwner(resource.data.ownerId);
+      allow delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.ownerId));
     }
     
     // ============================================
@@ -111,8 +117,10 @@ service cloud.firestore {
     match /comments/{commentId} {
       allow read: if isAuthenticated();
       allow create: if isAuthenticated();
-      allow update: if isAuthenticated();
-      allow delete: if isAuthenticated() && isOwner(resource.data.authorId);
+      
+      // Admins and owners can manage
+      allow update: if isAdmin() || isAuthenticated();
+      allow delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.authorId));
     }
     
     // ============================================
@@ -120,9 +128,12 @@ service cloud.firestore {
     // ============================================
     
     match /messages/{messageId} {
-      allow read: if isAuthenticated() && 
-        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid);
+      allow read: if isAdmin() || (isAuthenticated() && 
+        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid));
       allow create: if isAuthenticated();
+      
+      // Admins can delete any message
+      allow delete: if isAdmin();
     }
     
     // ============================================
@@ -132,7 +143,29 @@ service cloud.firestore {
     match /follows/{followId} {
       allow read: if isAuthenticated();
       allow create: if isAuthenticated();
-      allow delete: if isAuthenticated() && (resource.data.followerId == request.auth.uid || isOwner(followId));
+      allow delete: if isAdmin() || (isAuthenticated() && (resource.data.followerId == request.auth.uid || isOwner(followId)));
+    }
+    
+    // ============================================
+    // NOTIFICATIONS, FLAGS, CHALLENGES
+    // ============================================
+    
+    match /notifications/{id} {
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.recipientId == request.auth.uid);
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+
+    match /behavior_flags/{id} {
+      allow read, write: if isAdmin();
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if true;
+    }
+
+    match /liveness_challenges/{id} {
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
+      allow create: if true;
+      allow update, delete: if isAdmin();
     }
     
     // ============================================
@@ -140,10 +173,11 @@ service cloud.firestore {
     // ============================================
     
     match /message_requests/{requestId} {
-      allow read: if isAuthenticated() && 
-        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid);
+      allow read: if isAdmin() || (isAuthenticated() && 
+        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid));
       allow create: if isAuthenticated();
-      allow update: if isAuthenticated() && (resource.data.toId == request.auth.uid || resource.data.fromId == request.auth.uid);
+      allow update: if isAdmin() || (isAuthenticated() && (resource.data.toId == request.auth.uid || resource.data.fromId == request.auth.uid));
+      allow delete: if isAdmin();
     }
   }
 }

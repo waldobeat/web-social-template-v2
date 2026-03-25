@@ -5,7 +5,7 @@ import { sortNew, sortHot, sortTop } from '../utils/sorting';
 import './Feed.css';
 
 export const Feed = () => {
-  const { posts, currentUser, setCreatePostOpen } = useAppContext();
+  const { posts, users, currentUser, setCreatePostOpen } = useAppContext();
   const [sortBy, setSortBy] = useState<'hot' | 'new' | 'top'>('hot');
 
   const openModal = () => setCreatePostOpen(true);
@@ -13,10 +13,14 @@ export const Feed = () => {
   const sortedPosts = useMemo(() => {
     const postsArray = Object.values(posts).filter(post => {
       if (!currentUser) return false;
+      const author = users[post.authorId];
+      const isAdminPost = author?.role === 'admin' || author?.username === 'a/sheddit';
       const isFromFollowedUser = currentUser.following?.includes(post.authorId);
       const inFollowedCommunity = currentUser.joinedCommunityIds?.includes(post.communityId);
       const isOwnPost = currentUser.id === post.authorId;
-      return isFromFollowedUser || inFollowedCommunity || isOwnPost;
+      
+      // Admin posts are visible to everyone
+      return isAdminPost || isFromFollowedUser || inFollowedCommunity || isOwnPost;
     });
 
     if (sortBy === 'hot') return sortHot(postsArray);

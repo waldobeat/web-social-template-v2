@@ -12,6 +12,7 @@ export interface UserProfile {
   interests?: string[];
   strikes?: number;
   isBanned?: boolean;
+  role?: 'admin' | 'user';
   mood?: string;
   isPremium?: boolean;
   badges?: BadgeType[];
