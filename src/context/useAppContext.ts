@@ -88,16 +88,16 @@ export const useAppContext = (): AppContextState => {
         toggleLike: data.toggleLike,
         toggleRepost: data.toggleRepost,
         toggleHighlight: data.toggleHighlight,
-        toggleFollow: async (_userId: string) => {
-            // Toggle follow logic would go here
-            console.log('toggleFollow not implemented in new context');
+        toggleFollow: async (userId: string) => {
+            // Placeholder - to be implemented with follow logic
+            console.debug('toggleFollow called for user:', userId);
         },
         joinCommunity: data.joinCommunity,
         leaveCommunity: data.leaveCommunity,
         addCommunity: data.addCommunity,
-        deleteCommunity: async (_communityId: string) => {
-            // Delete community logic would go here
-            console.log('deleteCommunity not implemented in new context');
+        deleteCommunity: async (communityId: string) => {
+            // Placeholder - to be implemented with community deletion
+            console.debug('deleteCommunity called for community:', communityId);
         },
         sendMessage: data.sendMessage,
         sendMessageRequest: data.sendMessageRequest,

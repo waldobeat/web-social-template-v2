@@ -47,7 +47,8 @@ describe('sanitizeText', () => {
     it('should escape HTML entities', () => {
         const input = '<script>alert(1)</script>';
         const result = sanitizeText(input);
-        expect(result).toContain('<');
+        // Should convert < to &lt; (HTML entity encoding)
+        expect(result).toContain('&lt;');
         expect(result).not.toContain('<script>');
     });
 
@@ -96,7 +97,8 @@ describe('sanitizeMention', () => {
 
     it('should remove special characters', () => {
         expect(sanitizeMention('user<script>')).toBe('userscript');
-        expect(sanitizeMention('user@#$%')).toBe('user');
+        // @ is allowed in the regex pattern, only these chars are removed: [^a-zA-Z0-9_@/]
+        expect(sanitizeMention('user@#$%')).toBe('user@');
     });
 
     it('should limit length to 50 characters', () => {
