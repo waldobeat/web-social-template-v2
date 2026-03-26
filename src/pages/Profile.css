@@ -137,10 +137,26 @@
 .btn-follow.following {
     background: #f0f0f0;
     color: #666;
+    border: 1px solid transparent;
+    padding: 7px 19px; /* compensate for border */
+}
+
+.btn-follow.following .unfollow-text {
+    display: none;
 }
 
 .btn-follow.following:hover {
-    background: #e0e0e0;
+    background: #fff0f3;
+    color: #e63946;
+    border-color: #ffb3c1;
+}
+
+.btn-follow.following:hover .following-text {
+    display: none;
+}
+
+.btn-follow.following:hover .unfollow-text {
+    display: inline;
 }
 
 /* Communities Section */

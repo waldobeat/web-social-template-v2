@@ -53,7 +53,12 @@ export const Profile = () => {
                 className={`btn-follow ${isCurrentlyFollowing ? 'following' : 'primary'}`}
                 onClick={() => toggleFollow(displayedUser.id)}
               >
-                {isCurrentlyFollowing ? 'Siguiendo' : 'Seguir'}
+                {isCurrentlyFollowing ? (
+                  <>
+                    <span className="following-text">Siguiendo</span>
+                    <span className="unfollow-text">Dejar de seguir</span>
+                  </>
+                ) : 'Seguir'}
               </button>
             )}
           </div>

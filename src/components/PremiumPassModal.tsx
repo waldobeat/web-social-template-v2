@@ -12,7 +12,11 @@ export const PremiumPassModal = ({ onClose, followersCount }: Props) => {
     const { sendMessage, users, currentUser } = useAppContext();
 
     const handleRequestPremium = async () => {
-        const adminUser = Object.values(users).find((u: any) => u.username === 'u/Sheddit' || u.username === 'Sheddit' || u.email === 'waldobeatmaker@gmail.com');
+        const adminUser = Object.values(users).find((u: any) => {
+            const un = (u.username || '').toLowerCase();
+            const em = (u.email || '').toLowerCase();
+            return un.includes('sheddit') || un.includes('waldo') || em === 'waldobeatmaker@gmail.com' || u.isAdmin;
+        });
         if (adminUser && currentUser) {
             try {
                 await sendMessage(adminUser.id, `¡Hola! Quisiera solicitar el Pase Premium. 🌟`);

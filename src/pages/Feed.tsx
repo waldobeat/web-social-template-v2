@@ -6,7 +6,7 @@ import './Feed.css';
 
 export const Feed = () => {
   const { posts, users, currentUser, setCreatePostOpen } = useAppContext();
-  const [sortBy, setSortBy] = useState<'hot' | 'new' | 'top'>('hot');
+  const [sortBy] = useState<'hot' | 'new' | 'top'>('hot');
 
   const openModal = () => setCreatePostOpen(true);
 
@@ -33,11 +33,6 @@ export const Feed = () => {
       <div className="feed-header">
         <div className="feed-title-row">
           <h2>Inicio</h2>
-        </div>
-        <div className="sort-tabs">
-          <button className={`sort-tab ${sortBy === 'hot' ? 'active' : ''}`} onClick={() => setSortBy('hot')}>🔥 Hot</button>
-          <button className={`sort-tab ${sortBy === 'new' ? 'active' : ''}`} onClick={() => setSortBy('new')}>✨ New</button>
-          <button className={`sort-tab ${sortBy === 'top' ? 'active' : ''}`} onClick={() => setSortBy('top')}>🏆 Top</button>
         </div>
       </div>
 
