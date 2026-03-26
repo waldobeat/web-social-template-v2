@@ -1,5 +1,5 @@
 /**
- * Utility helper functions for SoloChicasWeb
+ * Utility helper functions for Sheddit
  */
 
 /**

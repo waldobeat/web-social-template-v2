@@ -1,5 +1,5 @@
 /**
- * Moderation Configuration for SoloChicasWeb
+ * Moderation Configuration for Sheddit
  * Contains all configurable moderation rules
  */
 

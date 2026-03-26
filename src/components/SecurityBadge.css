@@ -1,78 +1,49 @@
-/* Security Badge Component Styles */
+/* =========================================================================
+   SECURITY BADGES - MIDNIGHT GLASS EDITION
+   ========================================================================= */
 
 .security-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 600;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 10px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1em;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
 }
 
-/* Badge variants */
 .security-badge--verified {
-    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
-    color: #2E7D32;
-    border: 1px solid #A5D6A7;
-}
-
-.security-badge--pending {
-    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
-    color: #F57F17;
-    border: 1px solid #FFE082;
-}
-
-.security-badge--flagged {
-    background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
-    color: #C62828;
-    border: 1px solid #EF9A9A;
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: rgba(0, 229, 255, 0.05);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
 }
 
 .security-badge--human {
-    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
-    color: #7B1FA2;
-    border: 1px solid #CE93D8;
+    border-color: var(--accent-secondary);
+    color: var(--accent-secondary);
+    background: rgba(255, 0, 127, 0.05);
 }
 
 .security-badge--trusted {
-    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-    color: #1565C0;
-    border: 1px solid #90CAF9;
+    border-color: var(--success);
+    color: var(--success);
+    background: rgba(0, 255, 136, 0.05);
 }
 
-/* Size variants */
-.security-badge--small {
-    padding: 2px 6px;
-    font-size: 9px;
+.security-badge--flagged {
+    border-color: var(--error);
+    color: var(--error);
+    background: rgba(255, 51, 102, 0.05);
 }
 
-.security-badge--large {
-    padding: 6px 12px;
-    font-size: 13px;
-}
-
-/* Icon styling */
-.security-badge__icon {
-    width: 14px;
-    height: 14px;
-}
-
-.security-badge--small .security-badge__icon {
-    width: 10px;
-    height: 10px;
-}
-
-.security-badge--large .security-badge__icon {
-    width: 18px;
-    height: 18px;
-}
-
-/* Badge container for multiple badges */
 .security-badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-}
+    gap: 8px;
+}

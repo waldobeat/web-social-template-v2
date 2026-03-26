@@ -1,5 +1,5 @@
-// Sheddit Firestore Security Rules
-// Implements 4-layer security architecture
+// Sheddit Firestore Security Rules - v2.2 (Midnight Glass Edition)
+// Ensuring high-speed interaction and reliable publishing
 
 rules_version = '2';
 
@@ -7,177 +7,102 @@ service cloud.firestore {
   match /databases/{database}/documents {
     
     // ============================================
-    // HELPER FUNCTIONS
+    // CORE HELPERS
     // ============================================
     
-    // Check if user is authenticated
     function isAuthenticated() {
       return request.auth != null;
     }
     
-    // Check if user has verified email
-    function isEmailVerified() {
-      return request.auth.token.email_verified == true;
-    }
-    
-    // Check if user passed liveness verification (is human)
-    function isHuman() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.is_human == true;
-    }
-    
-    // Check if user account is active (not suspended)
-    function isAccountActive() {
-      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
-      return userData.account_status == 'active' || userData.account_status == null;
-    }
-    
-    // Check if user is temp blocked
-    function isNotBlocked() {
-      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
-      return userData.account_status != 'temp_blocked' && userData.account_status != 'suspended';
-    }
-    
-    // Check if user has admin role
     function isAdmin() {
       return isAuthenticated() && 
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
     
-    // Check if user owns the resource
-    function isOwner(userId) {
-      return request.auth.uid == userId;
+    function isOwner(authorId) {
+      return request.auth.uid == authorId;
     }
-    
+
     // ============================================
-    // USERS COLLECTION
+    // COLLECTIONS
     // ============================================
     
+    // Users Profile Collection
     match /users/{userId} {
-      // Allow public read for profiles and username checks
       allow read: if true;
-      
-      // Allow creation of own profile for any authenticated user
-      // Note: We keep "if true" version for now to fix the immediate blocker, 
-      // but ideally it should be isOwner(userId) && isAuthenticated()
-      allow create: if true;
-      
-      // Admins can update any user, owners can update themselves, and authenticated users can follow others
-      allow update: if isAuthenticated();
-      
-      // Only admins can delete users
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
       allow delete: if isAdmin();
     }
     
-    // ============================================
-    // POSTS COLLECTION
-    // ============================================
-    
-    // ============================================
-    // POSTS COLLECTION
-    // ============================================
-    
-    // ============================================
-    // POSTS COLLECTION
-    // ============================================
-    
+    // Posts & Content
     match /posts/{postId} {
-      allow read: if isAuthenticated();
-      
-      // Anyone authenticated can create
+      allow read: if true; // Public feed
       allow create: if isAuthenticated();
-      
-      // Admins can update/delete any post, owners can update/delete theirs
-      allow update: if isAdmin() || isAuthenticated();
-      
-      // Only owner can delete
-      allow delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.authorId));
+      allow update: if isAuthenticated() && (isOwner(request.resource.data.authorId) || isOwner(resource.data.authorId) || isAdmin());
+      allow delete: if isAuthenticated() && (isOwner(resource.data.authorId) || isAdmin());
     }
     
-    // ============================================
-    // COMMUNITIES COLLECTION
-    // ============================================
-    
-    match /communities/{communityId} {
-      allow read: if isAuthenticated();
-      
-      // Anyone authenticated can create
-      allow create: if isAuthenticated();
-      
-      // Admins can manage any community, owners can manage theirs
-      allow update: if isAdmin() || isAuthenticated();
-      
-      // Only owner can delete
-      allow delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.ownerId));
-    }
-    
-    // ============================================
-    // COMMENTS COLLECTION
-    // ============================================
-    
+    // Comments
     match /comments/{commentId} {
-      allow read: if isAuthenticated();
+      allow read: if true;
       allow create: if isAuthenticated();
-      
-      // Admins and owners can manage
-      allow update: if isAdmin() || isAuthenticated();
-      allow delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.authorId));
+      allow update: if isAuthenticated() && (isOwner(resource.data.authorId) || isAdmin());
+      allow delete: if isAuthenticated() && (isOwner(resource.data.authorId) || isAdmin());
     }
     
-    // ============================================
-    // MESSAGES COLLECTION
-    // ============================================
-    
-    match /messages/{messageId} {
-      allow read: if isAdmin() || (isAuthenticated() && 
-        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid));
+    // Communities
+    match /communities/{communityId} {
+      allow read: if true;
       allow create: if isAuthenticated();
-      
-      // Admins can delete any message
+      allow update: if isAuthenticated() && (isOwner(resource.data.ownerId) || isAdmin());
       allow delete: if isAdmin();
     }
     
-    // ============================================
-    // FOLLOWS COLLECTION
-    // ============================================
-    
-    match /follows/{followId} {
-      allow read: if isAuthenticated();
+    // Messages (Private)
+    match /messages/{messageId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.fromId) || isOwner(resource.data.toId) || isAdmin());
       allow create: if isAuthenticated();
-      allow delete: if isAdmin() || (isAuthenticated() && (resource.data.followerId == request.auth.uid || isOwner(followId)));
-    }
-    
-    // ============================================
-    // NOTIFICATIONS, FLAGS, CHALLENGES
-    // ============================================
-    
-    match /notifications/{id} {
-      allow read: if isAdmin() || (isAuthenticated() && resource.data.recipientId == request.auth.uid);
-      allow create, update: if true;
       allow delete: if isAdmin();
     }
 
+    // Message Requests
+    match /message_requests/{requestId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.fromId) || isOwner(resource.data.toId) || isAdmin());
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (isOwner(resource.data.toId) || isAdmin());
+      allow delete: if isAdmin();
+    }
+    
+    // Follows & Relationships
+    match /follows/{followId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow delete: if isAuthenticated() && (isOwner(resource.data.followerId) || isAdmin());
+    }
+    
+    // Notifications (Locked to recipient)
+    match /notifications/{id} {
+      allow read: if isAuthenticated() && (resource.data.recipientId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (resource.data.recipientId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // System & Moderation
     match /behavior_flags/{id} {
-      allow read, write: if isAdmin();
-      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if true;
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
+      allow create, update: if isAuthenticated(); // Bot can also trigger this
+      allow delete: if isAdmin();
     }
 
     match /liveness_challenges/{id} {
       allow read: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
-      allow create: if true;
+      allow create: if true; // For registration flow
       allow update, delete: if isAdmin();
     }
-    
-    // ============================================
-    // MESSAGE REQUESTS
-    // ============================================
-    
-    match /message_requests/{requestId} {
-      allow read: if isAdmin() || (isAuthenticated() && 
-        (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid));
-      allow create: if isAuthenticated();
-      allow update: if isAdmin() || (isAuthenticated() && (resource.data.toId == request.auth.uid || resource.data.fromId == request.auth.uid));
-      allow delete: if isAdmin();
-    }
+  }
+}
+
   }
 }

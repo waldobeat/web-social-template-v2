@@ -10,7 +10,7 @@ export interface ModerationResponse {
 }
 
 /**
- * ModBot - Moderation Bot for SoloChicasWeb
+ * ModBot - Moderation Bot for Sheddit
  * Analyzes content and manages user strikes
  */
 export class ModeratorBot {

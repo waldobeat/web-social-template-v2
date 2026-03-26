@@ -67,18 +67,18 @@ export const BADGE_CONFIG: Record<BadgeType, BadgeConfig> = {
         description: 'Crecimiento acelerado'
     },
     writer: {
-        label: 'Redactora',
+        label: 'Redactor',
         emoji: '✍️',
         color: '#2ECC71',
         bgColor: 'linear-gradient(135deg, #2ECC71, #27AE60)',
-        description: 'Creadora de contenido destacado'
+        description: 'Creador de contenido destacado'
     },
     journalist: {
         label: 'Periodista',
         emoji: '📰',
         color: '#3498DB',
         bgColor: 'linear-gradient(135deg, #3498DB, #2980B9)',
-        description: 'Reportera verificada'
+        description: 'Periodista verificado'
     },
     celebrity: {
         label: 'Farándula',
@@ -99,7 +99,7 @@ export const BADGE_CONFIG: Record<BadgeType, BadgeConfig> = {
         emoji: '👗',
         color: '#FF69B4',
         bgColor: 'linear-gradient(135deg, #FF69B4, #FF1493)',
-        description: 'Experta en moda'
+        description: 'Estilo y Tendencias'
     },
     foodie: {
         label: 'Foodie',
@@ -109,11 +109,11 @@ export const BADGE_CONFIG: Record<BadgeType, BadgeConfig> = {
         description: 'Amante de la gastronomía'
     },
     travel: {
-        label: 'Viajera',
+        label: 'Viajero',
         emoji: '✈️',
         color: '#00BCD4',
         bgColor: 'linear-gradient(135deg, #00BCD4, #0097A7)',
-        description: 'Aventurera frecuente'
+        description: 'Aventurero frecuente'
     },
     tech: {
         label: 'Tech',
@@ -127,7 +127,7 @@ export const BADGE_CONFIG: Record<BadgeType, BadgeConfig> = {
         emoji: '🎨',
         color: '#9C27B0',
         bgColor: 'linear-gradient(135deg, #9C27B0, #7B1FA2)',
-        description: 'Artista creativa'
+        description: 'Artista creativo'
     },
     music: {
         label: 'Música',
@@ -141,35 +141,35 @@ export const BADGE_CONFIG: Record<BadgeType, BadgeConfig> = {
         emoji: '💪',
         color: '#F44336',
         bgColor: 'linear-gradient(135deg, #F44336, #D32F2F)',
-        description: 'Deportista dedicada'
+        description: 'Deportista dedicado'
     },
     beauty: {
-        label: 'Belleza',
-        emoji: '💄',
+        label: 'Cuidado',
+        emoji: '✨',
         color: '#F06292',
         bgColor: 'linear-gradient(135deg, #F06292, #EC407A)',
-        description: 'Experta en belleza'
+        description: 'Estilo Personal'
     },
     mom: {
-        label: 'Mamá',
-        emoji: '👶',
+        label: 'Familia',
+        emoji: '🏠',
         color: '#FF9800',
         bgColor: 'linear-gradient(135deg, #FF9800, #F57C00)',
-        description: 'Mamá orgullosa'
+        description: 'Contenido familiar'
     },
     entrepreneur: {
-        label: 'Emprendedora',
+        label: 'Emprendedor',
         emoji: '💼',
         color: '#795548',
         bgColor: 'linear-gradient(135deg, #795548, #5D4037)',
-        description: 'Empresaria exitosa'
+        description: 'Emprendedor de éxito'
     },
     moderator: {
-        label: 'Moderadora',
+        label: 'Moderador',
         emoji: '🛡️',
         color: '#27AE60',
         bgColor: 'linear-gradient(135deg, #27AE60, #2ECC71)',
-        description: 'Moderadora de la comunidad'
+        description: 'Moderador de la comunidad'
     }
 };
 

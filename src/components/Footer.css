@@ -1,16 +1,20 @@
+/* =========================================================================
+   GLOBAL FOOTER - MIDNIGHT GLASS EDITION
+   ========================================================================= */
+
 .global-footer {
   width: 100%;
-  padding: 24px 16px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-primary);
+  padding: 48px 24px;
+  background: transparent;
   margin-top: auto;
+  border-top: 1px solid var(--border-light);
 }
 
 .footer-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
   max-width: var(--max-content-width);
   margin: 0 auto;
 }
@@ -20,51 +24,56 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 24px;
 }
 
 .footer-link {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all var(--transition-fast);
 }
 
 .footer-link:hover {
   color: var(--text-primary);
+  transform: translateY(-2px);
 }
 
 .footer-dot {
-  color: var(--border);
+  color: var(--border-light);
   font-size: 10px;
 }
 
 .footer-copyright {
   display: flex;
   align-items: center;
-  gap: 6px;
-  color: var(--text-secondary);
-  font-size: 12px;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.6;
 }
 
 .heart-icon {
   color: var(--error);
   fill: var(--error);
-  animation: pulse 2s infinite;
+  filter: drop-shadow(0 0 5px var(--error));
+  animation: heartPulse 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes heartPulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
 
 @media (max-width: 768px) {
   .global-footer {
-    padding-bottom: 90px; /* Space for mobile nav */
+    padding-bottom: 120px;
   }
 }
+

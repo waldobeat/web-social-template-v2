@@ -153,7 +153,7 @@ export const CommunityPage = () => {
             {displayedPosts.length > 0 ? (
               displayedPosts.map(post => <PostCard key={post.id} post={post} />)
             ) : (
-              <p className="no-posts-msg">Aún no hay publicaciones en esta comunidad. ¡Sé la primera! ✨</p>
+              <p className="no-posts-msg">Aún no hay publicaciones en esta comunidad. ¡Sé quien publique primero! ✨</p>
             )}
           </div>
         </div>
@@ -184,12 +184,12 @@ export const CommunityPage = () => {
                   <div className="mod-info">
                     <span className="mod-name">u/{users[community.ownerId].username.replace(/^u\//, '')}</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span className="mod-type">Fundadora</span>
+                      <span className="mod-type">Fundador</span>
                       {community.ownerId === currentUser?.id && (
                         <button 
                           className="btn-delete-community"
                           onClick={async () => {
-                            if (window.confirm('¿Estás segura de eliminar esta comunidad? Esta acción no se puede deshacer y se borrarán todos los datos asociados.')) {
+                            if (window.confirm('¿Estás seguro de eliminar esta comunidad? Esta acción no se puede deshacer y se borrarán todos los datos asociados.')) {
                               await deleteCommunity(community.id);
                               navigate('/');
                             }
@@ -247,7 +247,7 @@ export const CommunityPage = () => {
                         <button 
                           className="btn-add-mod" 
                           onClick={() => toggleCommunityMod(community.id, u.id)}
-                          title="Hacer Moderadora"
+                          title="Hacer Moderador"
                         >
                           <Plus size={12} />
                         </button>
