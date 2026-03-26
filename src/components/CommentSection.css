@@ -126,3 +126,20 @@
 .send-btn:disabled {
   opacity: 0.5;
 }
+
+.reply-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+  transition: color 0.2s;
+}
+
+.reply-btn:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}

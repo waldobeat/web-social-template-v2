@@ -55,9 +55,6 @@ export const PostCard = ({ post }: Props) => {
     }
   };
 
-  const isGif = post.content.includes('![gif](');
-  const gifUrl = isGif ? post.content.match(/!\[gif\]\((.*?)\)/)?.[1] : post.mediaUrl;
-
   // Extraer menciones del contenido
   const mentions = useMemo(() => {
     const userMentions: string[] = [];
@@ -123,7 +120,7 @@ export const PostCard = ({ post }: Props) => {
     return result;
   }, [users, communities]);
 
-  const displayContent = post.originalPostId ? originalPost?.content : post.content.replace(/!\[gif\]\(.*?\)/, '');
+  const displayContent = post.originalPostId ? originalPost?.content : post.content;
 
   return (
     <div className={`post-card-wrapper ${post.originalPostId ? 'is-repost' : ''}`}>
@@ -236,12 +233,6 @@ export const PostCard = ({ post }: Props) => {
                 </button>
               ))}
             </div>
-          </div>
-        )}
-
-        {(isGif || post.mediaType === 'gif') && (
-          <div className="post-media">
-            <img src={gifUrl || ''} alt="gif content" className="post-gif" />
           </div>
         )}
 

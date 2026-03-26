@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/useAppContext';
-import { Send, Smile, Gift, BadgeCheck } from 'lucide-react';
-import { GifPicker } from './GifPicker';
+import { Send, Smile, BadgeCheck } from 'lucide-react';
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';
 import { useNavigate } from 'react-router-dom';
 import './CommentSection.css';
@@ -14,7 +13,6 @@ export const CommentSection = ({ postId }: Props) => {
   const { comments, users, currentUser, addComment } = useAppContext();
   const navigate = useNavigate();
   const [newComment, setNewComment] = useState('');
-  const [showGifs, setShowGifs] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
 
   const postComments = Object.values(comments).filter(c => c.parentId === postId);
@@ -40,17 +38,6 @@ export const CommentSection = ({ postId }: Props) => {
     }
   };
 
-  const onGifSelect = async (url: string) => {
-    if (!currentUser) return;
-    await addComment({
-      authorId: currentUser.id,
-      text: `![gif](${url})`,
-      parentId: postId,
-      createdAt: new Date().toISOString()
-    });
-    setShowGifs(false);
-  };
-
   const onEmojiClick = (emojiData: EmojiClickData) => {
     setNewComment(prev => prev + emojiData.emoji);
     setShowEmoji(false);
@@ -63,8 +50,6 @@ export const CommentSection = ({ postId }: Props) => {
       <div className="comments-list">
         {postComments.map(comment => {
           const author = users[comment.authorId];
-          const isGif = comment.text.startsWith('![gif](');
-          const gifUrl = isGif ? comment.text.match(/\((.*?)\)/)?.[1] : null;
 
           return (
             <div key={comment.id} className="comment-item">
@@ -80,11 +65,7 @@ export const CommentSection = ({ postId }: Props) => {
                   u/{author?.username?.replace(/^u\//, '')}
                   {author?.isVerified && <BadgeCheck size={12} color="#1DA1F2" style={{ marginLeft: 4 }} />}
                 </div>
-                {isGif ? (
-                  <img src={gifUrl!} alt="comment gif" className="comment-gif" />
-                ) : (
-                  <p className="comment-text">{comment.text}</p>
-                )}
+                <p className="comment-text">{comment.text}</p>
                 <div className="comment-meta">
                   Hace un momento •
                   <button className="reply-btn" onClick={() => setNewComment(`u/${author?.username?.replace(/^u\//, '')} `)}>Responder</button>
@@ -105,9 +86,6 @@ export const CommentSection = ({ postId }: Props) => {
             onChange={(e) => setNewComment(e.target.value)}
           />
           <div className="comment-actions">
-            <button type="button" onClick={() => setShowGifs(!showGifs)} className="action-icon">
-              <Gift size={20} />
-            </button>
             <div style={{ position: 'relative' }}>
               <button type="button" className="action-icon" onClick={() => setShowEmoji(!showEmoji)}>
                 <Smile size={20} />
@@ -122,7 +100,6 @@ export const CommentSection = ({ postId }: Props) => {
               <Send size={20} />
             </button>
           </div>
-          {showGifs && <GifPicker onSelect={onGifSelect} onClose={() => setShowGifs(false)} />}
         </div>
       </form>
     </div>

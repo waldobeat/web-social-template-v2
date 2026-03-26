@@ -4,7 +4,6 @@ import { useAppContext } from '../context/useAppContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { onNewContent } from '../services/botEngine';
 import { Smile, X, Send, Image as ImageIcon, AtSign } from 'lucide-react';
-import { GifPicker } from './GifPicker';
 import './CreatePostModal.css';
 
 interface Props {
@@ -30,7 +29,6 @@ export const CreatePostModal = ({ onClose }: Props) => {
   // Estado simple
   const [content, setContent] = useState('');
   const [showEmoji, setShowEmoji] = useState(false);
-  const [showGif, setShowGif] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -52,12 +50,6 @@ export const CreatePostModal = ({ onClose }: Props) => {
   const handleEmoji = (emoji: EmojiClickData) => {
     setContent(prev => prev + emoji.emoji);
     setShowEmoji(false);
-    textAreaRef.current?.focus();
-  };
-
-  const handleGif = (url: string) => {
-    setContent(prev => prev + `\n![gif](${url})`);
-    setShowGif(false);
     textAreaRef.current?.focus();
   };
 
@@ -167,21 +159,6 @@ export const CreatePostModal = ({ onClose }: Props) => {
               {showEmoji && (
                 <div className="cpm-emoji-pop">
                   <EmojiPicker onEmojiClick={handleEmoji} height={350} width={320} />
-                </div>
-              )}
-            </div>
-
-            <div style={{ position: 'relative' }}>
-              <button
-                className="cpm-action-btn"
-                onClick={() => setShowGif(!showGif)}
-                title="GIF"
-              >
-                <span style={{ fontSize: '20px' }}>GIF</span>
-              </button>
-              {showGif && (
-                <div className="cpm-emoji-pop">
-                  <GifPicker onSelect={handleGif} onClose={() => setShowGif(false)} />
                 </div>
               )}
             </div>
