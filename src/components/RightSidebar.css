@@ -13,17 +13,16 @@
 .widget {
   background: var(--bg-soft);
   backdrop-filter: none;
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  margin-bottom: 16px;
-  border: 1px solid var(--glass-border);
-  box-shadow: none;
-  transition: none;
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s;
 }
 
 .widget:hover {
-  box-shadow: none;
-  transform: none;
+  box-shadow: var(--shadow-md);
 }
 
 .widget-header {
@@ -138,19 +137,21 @@
 }
 
 .btn-join {
-  background: white;
-  padding: 8px 16px;
+  background: var(--bg-main);
+  padding: 8px 18px;
   border-radius: 9999px;
   font-size: 13px;
   font-weight: 700;
   color: var(--text-main);
-  transition: background 0.2s;
+  transition: all 0.2s;
   border: 1px solid var(--border-light);
   cursor: pointer;
 }
 
 .btn-join:hover {
-  background: #e0e0e0;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary-light);
 }
 
 .btn-join.joined {

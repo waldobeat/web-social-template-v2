@@ -58,10 +58,10 @@
 }
 
 .create-post-trigger {
-  padding: 8px 16px;
+  padding: 12px 16px;
   background: var(--bg-soft);
   border: 1px solid var(--border-light);
-  border-radius: 4px;
+  border-radius: 16px;
   margin: 16px 20px;
   display: flex;
   align-items: center;
@@ -83,10 +83,10 @@
 
 .trigger-input {
   flex: 1;
-  background: #f6f7f8;
-  border: 1px solid #edeff1;
-  border-radius: 4px;
-  padding: 8px 12px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 10px 16px;
   color: var(--text-muted);
   font-size: 14px;
   transition: background 0.2s, border-color 0.2s;
@@ -94,7 +94,8 @@
 
 .create-post-trigger:hover .trigger-input {
   background: #fff;
-  border-color: var(--primary);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px var(--primary-light);
 }
 
 .emoji-btn {
