@@ -11,8 +11,8 @@ interface SEOProps {
 export const SEO = ({
   title = 'Sheddit - La Comunidad Digital de Chicas',
   description = 'Únete a Sheddit, el espacio seguro y vibrante donde hablamos de nuestras pasiones, retos y belleza. Publica, comparte y conecta con chicas de todo el mundo. ✨',
-  image = '/og-image.png', // A default OG image (should exist in public folder)
-  url = 'https://sheddit.web.app',
+  image = 'https://www.sheddit.blog/og-image.png',
+  url = 'https://www.sheddit.blog',
   type = 'website'
 }: SEOProps) => {
   const fullTitle = title.includes('Sheddit') ? title : `${title} | Sheddit`;
