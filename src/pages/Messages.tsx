@@ -34,7 +34,10 @@ export const Messages = () => {
     // Check for pending request from them
     const hasPendingFromThem = pendingRequests.some(r => r.fromId === u.id);
 
-    return followsMe && iFollowThem || hasAcceptedRequest || hasPendingFromThem;
+    // Check if there is already an active message thread
+    const hasActiveThread = !!messages[u.id] && messages[u.id].length > 0;
+
+    return (followsMe && iFollowThem) || hasAcceptedRequest || hasPendingFromThem || hasActiveThread;
   });
 
   const chatThread = activeChat ? (messages[activeChat] || []) : [];
