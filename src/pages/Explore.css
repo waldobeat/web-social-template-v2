@@ -1,7 +1,13 @@
 .explore-container { flex: 1; max-width: 600px; border-right: 1px solid var(--border-light); min-height: 100vh; background: var(--bg-color); }
 .explore-header { padding: 20px; border-bottom: 1px solid var(--border-light); background: #fff; display: flex; align-items: center; gap: 10px; }
 .explore-header h2 { font-size: 20px; display: flex; align-items: center; gap: 10px; }
-.communities-grid { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+.communities-grid { 
+  padding: 20px; 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 20px; 
+}
+
 .explore-community-card { 
   background: rgba(255, 255, 255, 0.7); 
   backdrop-filter: blur(20px);
@@ -9,12 +15,19 @@
   padding: 24px; 
   border: 1px solid rgba(255, 255, 255, 0.8); 
   box-shadow: var(--shadow-sm); 
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
+
 .explore-community-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 .explore-community-card h3 { font-size: 20px; margin-bottom: 8px; color: var(--text-main); }
-.explore-community-card p { font-size: 15px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+.explore-community-card p { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; flex: 1; }
 .c-stats { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 20px; font-weight: 500;}
+
+.c-actions {
+  margin-top: auto;
+}
 
 .explore-join-btn {
   background: var(--comm-color, var(--primary));

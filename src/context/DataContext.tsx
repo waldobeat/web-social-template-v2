@@ -174,30 +174,51 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (!currentUser) return;
 
-        const q = query(collection(db, 'messages'), limit(200));
+        const msgsMap: Map<string, Message> = new Map();
 
-        const unsubscribe = onSnapshot(q,
-            (snapshot) => {
-                const msgs: Record<string, Message[]> = {};
-                snapshot.forEach(d => {
-                    const m = { id: d.id, ...d.data() } as Message;
-                    const otherId = m.fromId === currentUser.id ? m.toId : m.fromId;
-                    if (!msgs[otherId]) msgs[otherId] = [];
-                    msgs[otherId].push(m);
-                });
-                Object.keys(msgs).forEach(k => msgs[k].sort((a, b) =>
-                    new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-                ));
-                setMessages(msgs);
-                setIsLoadingMessages(false);
-            },
-            (err) => {
-                console.error('Messages listener error:', err.message);
-                setIsLoadingMessages(false);
-            }
-        );
+        const processMessages = () => {
+            const msgs: Record<string, Message[]> = {};
+            Array.from(msgsMap.values()).forEach(m => {
+                const otherId = m.fromId === currentUser.id ? m.toId : m.fromId;
+                if (!msgs[otherId]) msgs[otherId] = [];
+                msgs[otherId].push(m);
+            });
+            Object.keys(msgs).forEach(k => msgs[k].sort((a, b) =>
+                new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            ));
+            setMessages(msgs);
+            setIsLoadingMessages(false);
+        };
 
-        return () => unsubscribe();
+        const qFrom = query(collection(db, 'messages'), where('fromId', '==', currentUser.id));
+        const qTo = query(collection(db, 'messages'), where('toId', '==', currentUser.id));
+
+        const unsubFrom = onSnapshot(qFrom, (snapshot) => {
+            snapshot.docChanges().forEach(change => {
+                if (change.type === 'removed') {
+                    msgsMap.delete(change.doc.id);
+                } else {
+                    msgsMap.set(change.doc.id, { id: change.doc.id, ...change.doc.data() } as Message);
+                }
+            });
+            processMessages();
+        }, (err) => console.error('Messages fromListener err:', err.message));
+
+        const unsubTo = onSnapshot(qTo, (snapshot) => {
+            snapshot.docChanges().forEach(change => {
+                if (change.type === 'removed') {
+                    msgsMap.delete(change.doc.id);
+                } else {
+                    msgsMap.set(change.doc.id, { id: change.doc.id, ...change.doc.data() } as Message);
+                }
+            });
+            processMessages();
+        }, (err) => console.error('Messages toListener err:', err.message));
+
+        return () => {
+            unsubFrom();
+            unsubTo();
+        };
     }, [currentUser?.id]);
 
     // Notifications subscription
@@ -467,7 +488,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const targetUser = users[userId];
         if (!targetUser) return;
 
-        const isFollowing = ((currentUser as any).following || []).includes(userId);
+        const realCurrentUser = (users[currentUser.id] as any) || currentUser;
+        const isFollowing = (realCurrentUser.following || []).includes(userId);
 
         const currentUserRef = doc(db, 'users', currentUser.id);
         const targetUserRef = doc(db, 'users', userId);
