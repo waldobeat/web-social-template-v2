@@ -4,7 +4,7 @@ import { useAppContext } from '../context/useAppContext';
 import './Sidebar.css';
 
 export const Sidebar = () => {
-  const { setCreatePostOpen, logout, notifications } = useAppContext();
+  const { setCreatePostOpen, notifications } = useAppContext();
 
   const unreadCount = Object.values(notifications).filter(n => !n.read).length;
 
@@ -36,9 +36,6 @@ export const Sidebar = () => {
         </NavLink>
       </nav>
       <button className="btn-primary post-btn-sidebar" onClick={() => setCreatePostOpen(true)}>Publicar</button>
-      <button className="nav-item logout-btn" onClick={logout}>
-        <span>Cerrar Sesión</span>
-      </button>
     </aside>
   );
 };

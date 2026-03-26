@@ -3,14 +3,14 @@ import { useParams, Link } from 'react-router-dom';
 import { useAppContext } from '../context/useAppContext';
 import { PostCard } from '../components/PostCard';
 import { type Post } from '../data/mockData';
-import { Users, Plus, Globe, Edit3, Sparkles, BadgeCheck } from 'lucide-react';
+import { Users, Plus, Globe, Edit3, Sparkles, BadgeCheck, LogOut } from 'lucide-react';
 import { EditProfileModal } from '../components/EditProfileModal';
 import { UserBadge } from '../components/UserBadge';
 import './Profile.css';
 
 export const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { currentUser, posts, users, toggleFollow, communities } = useAppContext();
+  const { currentUser, posts, users, toggleFollow, communities, logout } = useAppContext();
   const [showEditModal, setShowEditModal] = useState(false);
 
   const displayedUser = userId ? users[userId] : currentUser;
@@ -41,12 +41,23 @@ export const Profile = () => {
             {displayedUser.isVerified && <BadgeCheck size={20} color="#1DA1F2" />}
             {displayedUser.isPremium && <UserBadge type="premium" size="medium" />}
             {isMe && (
-              <button
-                className="edit-profile-btn"
-                onClick={() => setShowEditModal(true)}
-              >
-                <Edit3 size={16} /> Editar
-              </button>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  className="edit-profile-btn"
+                  onClick={() => setShowEditModal(true)}
+                >
+                  <Edit3 size={16} /> Editar
+                </button>
+                <button
+                  className="btn-follow following"
+                  onClick={logout}
+                  style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'transparent', border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ff4d6d'; e.currentTarget.style.color = '#ff4d6d'; e.currentTarget.style.background = '#fff0f3'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent'; }}
+                >
+                  <LogOut size={16} /> Salir
+                </button>
+              </div>
             )}
             {!isMe && (
               <button

@@ -4,7 +4,7 @@
   align-items: flex-start; /* Ensure items dock to top */
   gap: 20px; /* Spacing between sidebars and feed */
   width: 100%;
-  max-width: 1200px;
+  max-width: 1350px;
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
