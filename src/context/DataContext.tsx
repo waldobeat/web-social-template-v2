@@ -44,6 +44,10 @@ interface DataContextType {
     joinCommunity: (communityId: string) => Promise<void>;
     leaveCommunity: (communityId: string) => Promise<void>;
     addCommunity: (community: Omit<Community, 'id'>) => Promise<string | null>;
+    deleteCommunity: (communityId: string) => Promise<void>;
+    
+    // User operations
+    toggleFollow: (userId: string) => Promise<void>;
 
     // Message operations
     sendMessage: (toId: string, text: string) => Promise<void>;
@@ -444,6 +448,48 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         return docRef.id;
     };
 
+    const deleteCommunity = async (communityId: string) => {
+        if (!currentUser) return;
+        const community = communities[communityId];
+        if (community && community.ownerId === currentUser.id) {
+            if ((community.memberCount || 0) >= 1000) {
+                alert("No puedes eliminar una comunidad con más de 1000 miembros. Debes abandonarla.");
+                return;
+            }
+            if (window.confirm('¿Estás segura de eliminar esta comunidad? Esta acción no se puede deshacer.')) {
+                await deleteDoc(doc(db, 'communities', communityId));
+            }
+        }
+    };
+
+    const toggleFollow = async (userId: string) => {
+        if (!currentUser) return;
+        const targetUser = users[userId];
+        if (!targetUser) return;
+
+        const isFollowing = ((currentUser as any).following || []).includes(userId);
+
+        const currentUserRef = doc(db, 'users', currentUser.id);
+        const targetUserRef = doc(db, 'users', userId);
+
+        if (isFollowing) {
+            await updateDoc(currentUserRef, { following: arrayRemove(userId) });
+            await updateDoc(targetUserRef, { followers: arrayRemove(currentUser.id) });
+        } else {
+            await updateDoc(currentUserRef, { following: arrayUnion(userId) });
+            await updateDoc(targetUserRef, { followers: arrayUnion(currentUser.id) });
+            await addDoc(collection(db, 'notifications'), {
+                recipientId: userId,
+                senderId: currentUser.id,
+                type: 'follow',
+                referenceId: currentUser.id,
+                message: '',
+                createdAt: new Date().toISOString(),
+                read: false
+            });
+        }
+    };
+
     // Message operations
     const sendMessage = async (toId: string, text: string) => {
         if (!currentUser) return;
@@ -502,6 +548,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         joinCommunity,
         leaveCommunity,
         addCommunity,
+        deleteCommunity,
+        toggleFollow,
         sendMessage,
         sendMessageRequest,
         acceptMessageRequest,

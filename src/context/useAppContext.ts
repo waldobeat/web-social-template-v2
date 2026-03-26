@@ -94,17 +94,11 @@ export const useAppContext = (): AppContextState => {
         toggleLike: data.toggleLike,
         toggleRepost: data.toggleRepost,
         toggleHighlight: data.toggleHighlight,
-        toggleFollow: async (userId: string) => {
-            // Placeholder - to be implemented with follow logic
-            console.debug('toggleFollow called for user:', userId);
-        },
+        toggleFollow: data.toggleFollow,
         joinCommunity: data.joinCommunity,
         leaveCommunity: data.leaveCommunity,
         addCommunity: data.addCommunity,
-        deleteCommunity: async (communityId: string) => {
-            // Placeholder - to be implemented with community deletion
-            console.debug('deleteCommunity called for community:', communityId);
-        },
+        deleteCommunity: data.deleteCommunity,
         sendMessage: data.sendMessage,
         sendMessageRequest: data.sendMessageRequest,
         acceptMessageRequest: data.acceptMessageRequest,

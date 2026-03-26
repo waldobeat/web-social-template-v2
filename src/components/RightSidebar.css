@@ -1,27 +1,28 @@
 .right-sidebar {
   width: 300px;
-  padding: 20px;
+  flex-shrink: 0;
+  padding: 20px 0;
   height: 100vh;
   overflow-y: auto;
   position: sticky;
   top: 0;
-  border-left: 1px solid var(--border-light);
+  border-left: 1px solid transparent; /* Remove left border since we have gap */
 }
 
 .widget {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(16px);
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
+  background: var(--bg-soft);
+  backdrop-filter: none;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: none;
+  transition: none;
 }
 
 .widget:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: none;
+  transform: none;
 }
 
 .widget-header {

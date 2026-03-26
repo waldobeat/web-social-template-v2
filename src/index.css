@@ -1,9 +1,9 @@
 :root {
-  /* Brand Colors - Luxury Pink Palette */
-  --primary: #FF8DA1;
-  --primary-hover: #ff758f;
-  --primary-light: #FFF0F3;
-  --primary-dark: #FF4D6D;
+  /* Brand Colors - Reddit-style Palette */
+  --primary: #FF4500;
+  --primary-hover: #E03D00;
+  --primary-light: #FFEDED;
+  --primary-dark: #CC3700;
   
   /* Status Colors */
   --success: #10B981;
@@ -12,27 +12,27 @@
   --info: #3B82F6;
   
   /* Grays & Neutrals */
-  --bg-main: #fcfcfd;
-  --bg-soft: #FFF5F7;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  --bg-main: #DAE0E6; /* Reddit Gray Background */
+  --bg-soft: #FFFFFF; /* White Cards */
+  --glass-bg: #FFFFFF; /* Removed glassmorphism, flat white */
+  --glass-border: #CCCCCC; /* Solid borders */
   
-  --text-main: #2D2D2D;
-  --text-muted: #666666;
-  --text-light: #9ca3af;
-  --border-light: #F0F0F0;
+  --text-main: #1C1C1C;
+  --text-muted: #787C7E;
+  --text-light: #878A8C;
+  --border-light: #EDEFF1; /* Subtle border */
   
-  /* Shadows - Enhanced for Luxury Feel */
-  --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
-  --shadow-md: 0 12px 24px rgba(255, 141, 161, 0.08);
-  --shadow-lg: 0 20px 40px rgba(255, 141, 161, 0.12);
+  /* Shadows - Minimal for Reddit Style */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
   
   /* Layout */
-  --sidebar-width: 280px;
+  --sidebar-width: 250px;
   --max-width: 1200px;
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 32px;
+  --radius-sm: 4px; /* Reddit uses sharper corners */
+  --radius-md: 8px;
+  --radius-lg: 12px;
 }
 
 /* Mascot Animations */

@@ -1,6 +1,8 @@
 .app-container {
   display: flex;
   justify-content: center;
+  align-items: flex-start; /* Ensure items dock to top */
+  gap: 20px; /* Spacing between sidebars and feed */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
