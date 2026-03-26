@@ -174,7 +174,7 @@ export const PostCard = ({ post }: Props) => {
             )}
             {showOptionsMenu && (
               <div className="post-options-menu">
-                {(!post.commentIds || post.commentIds.length === 0) && (
+                {(!post.originalPostId && (!post.commentIds || post.commentIds.length === 0) && (post.repostCount || 0) === 0) && (
                   <button className="opt-item" onClick={() => { setIsEditing(true); setShowOptionsMenu(false); }}>
                     Editar post
                   </button>
