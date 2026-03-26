@@ -4,7 +4,7 @@ import './App.css';
 import { Sidebar } from './components/Sidebar';
 import { RightSidebar } from './components/RightSidebar';
 import { AppProvider } from './context/AppProvider';
-import { useAuth, useData, useUI } from './context';
+import { useAuth, useUI } from './context';
 import { CreatePostModal } from './components/CreatePostModal';
 import { Login } from './pages/Login';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -19,12 +19,14 @@ const Messages = lazy(() => import('./pages/Messages').then(m => ({ default: m.M
 const CommunityPage = lazy(() => import('./pages/CommunityPage').then(m => ({ default: m.CommunityPage })));
 const Notifications = lazy(() => import('./pages/Notifications').then(m => ({ default: m.Notifications })));
 
+import { useLocation } from 'react-router-dom';
+
 function AppInner() {
   const { isAuthenticated, isLoading, profileLoaded } = useAuth();
-  const { } = useData();
   const { isCreatePostOpen, setCreatePostOpen } = useUI();
+  const location = useLocation();
 
-  // Check for missing Firebase config (Layer 0 security check)
+  // Check for missing Firebase config
   const isFirebaseConfigured = !!import.meta.env.VITE_FIREBASE_API_KEY;
   if (!isFirebaseConfigured) {
     return (
@@ -42,10 +44,6 @@ function AppInner() {
       }}>
         <h1 style={{ color: '#ff4081' }}>⚠️ Configuración Incompleta</h1>
         <p>No se encontraron las variables de entorno de Firebase.</p>
-        <p style={{ opacity: 0.7, maxWidth: '500px' }}>
-          Por favor, asegúrate de haber configurado las variables (API Key, Project ID, etc.) en el panel de Vercel.
-          Consulta <code>.env.example</code> para ver la lista de variables requeridas.
-        </p>
       </div>
     );
   }
@@ -53,52 +51,26 @@ function AppInner() {
   if (isLoading || (isAuthenticated && !profileLoaded)) return <LoadingScreen />;
   if (!isAuthenticated) return <Login />;
 
+  const isCommunityPage = location.pathname.startsWith('/community/');
+
   return (
-    <BrowserRouter>
+    <>
       <div className="app-container">
         <Sidebar />
         <Routes>
-          <Route path="/" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <Feed />
-            </Suspense>
-          } />
-          <Route path="/explore" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <Explore />
-            </Suspense>
-          } />
-          <Route path="/messages" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <Messages />
-            </Suspense>
-          } />
-          <Route path="/notifications" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <Notifications />
-            </Suspense>
-          } />
-          <Route path="/profile" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <Profile />
-            </Suspense>
-          } />
-          <Route path="/profile/:userId" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <Profile />
-            </Suspense>
-          } />
-          <Route path="/community/:communityId" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <CommunityPage />
-            </Suspense>
-          } />
+          <Route path="/" element={<Suspense fallback={<LoadingScreen />}><Feed /></Suspense>} />
+          <Route path="/explore" element={<Suspense fallback={<LoadingScreen />}><Explore /></Suspense>} />
+          <Route path="/messages" element={<Suspense fallback={<LoadingScreen />}><Messages /></Suspense>} />
+          <Route path="/notifications" element={<Suspense fallback={<LoadingScreen />}><Notifications /></Suspense>} />
+          <Route path="/profile" element={<Suspense fallback={<LoadingScreen />}><Profile /></Suspense>} />
+          <Route path="/profile/:userId" element={<Suspense fallback={<LoadingScreen />}><Profile /></Suspense>} />
+          <Route path="/community/:communityId" element={<Suspense fallback={<LoadingScreen />}><CommunityPage /></Suspense>} />
         </Routes>
-        <RightSidebar />
+        {!isCommunityPage && <RightSidebar />}
       </div>
       <CookieBanner />
       {isCreatePostOpen && <CreatePostModal onClose={() => setCreatePostOpen(false)} />}
-    </BrowserRouter>
+    </>
   );
 }
 
@@ -106,7 +78,9 @@ function App() {
   return (
     <AppProvider>
       <ToastProvider>
-        <AppInner />
+        <BrowserRouter>
+          <AppInner />
+        </BrowserRouter>
       </ToastProvider>
     </AppProvider>
   );

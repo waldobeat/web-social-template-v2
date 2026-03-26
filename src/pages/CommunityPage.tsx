@@ -140,118 +140,122 @@ export const CommunityPage = () => {
         </div>
       )}
 
-      {isJoined && (
-        <div className="create-post-trigger" onClick={() => setCreatePostOpen(true)}>
-          <img src={currentUser?.avatar} alt="me" className="trigger-avatar" />
-          <div className="trigger-input">Publicar en {community.name}... ✨</div>
-        </div>
-      )}
-
-      <div className="posts-list">
-        {displayedPosts.length > 0 ? (
-          displayedPosts.map(post => <PostCard key={post.id} post={post} />)
-        ) : (
-          <p className="no-posts-msg">Aún no hay publicaciones en esta comunidad. ¡Sé la primera! ✨</p>
-        )}
-      </div>
-
-      {/* Moderation Sidebar / Section */}
-      <div className="community-sidebar-info">
-        <div className="sidebar-section">
-          <div className="section-header">
-            <Shield size={18} color="var(--primary)" />
-            <h3>Equipo de Moderación</h3>
-          </div>
-          <div className="mod-team-list">
-            {/* The Bot */}
-            <div className="mod-item bot-mod">
-              <div className="mod-avatar bot">
-                <Bot size={16} />
-              </div>
-              <div className="mod-info">
-                <span className="mod-name">{community.botModeratorId || 'b/ModBot'}</span>
-                <span className="mod-type">Inteligencia Anti-Spam</span>
-              </div>
+      <div className="community-main-grid">
+        <div className="community-content-column">
+          {isJoined && (
+            <div className="create-post-trigger" onClick={() => setCreatePostOpen(true)}>
+              <img src={currentUser?.avatar} alt="me" className="trigger-avatar" />
+              <div className="trigger-input">Publicar en {community.name}... ✨</div>
             </div>
+          )}
 
-            {/* The Owner */}
-            {users[community.ownerId] && (
-              <div className="mod-item">
-                <img src={users[community.ownerId].avatar} alt="" className="mod-avatar" />
-                <div className="mod-info">
-                  <span className="mod-name">u/{users[community.ownerId].username.replace(/^u\//, '')}</span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span className="mod-type">Fundadora</span>
-                    {community.ownerId === currentUser?.id && (
-                      <button 
-                        className="btn-delete-community"
-                        onClick={async () => {
-                          if (window.confirm('¿Estás segura de eliminar esta comunidad? Esta acción no se puede deshacer y se borrarán todos los datos asociados.')) {
-                            await deleteCommunity(community.id);
-                            navigate('/');
-                          }
-                        }}
-                        title="Eliminar Comunidad"
-                      >
-                        <Trash2 size={12} />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
+          <div className="posts-list">
+            {displayedPosts.length > 0 ? (
+              displayedPosts.map(post => <PostCard key={post.id} post={post} />)
+            ) : (
+              <p className="no-posts-msg">Aún no hay publicaciones en esta comunidad. ¡Sé la primera! ✨</p>
             )}
-
-            {/* Human Moderators */}
-            {(community.moderatorIds || []).map(modId => {
-              const mod = users[modId];
-              if (!mod) return null;
-              return (
-                <div key={modId} className="mod-item">
-                  <img src={mod.avatar} alt="" className="mod-avatar" />
-                  <div className="mod-info">
-                    <span className="mod-name">u/{mod.username.replace(/^u\//, '')}</span>
-                    <UserBadge type="moderator" size="small" showLabel />
-                  </div>
-                  {(community.ownerId === currentUser?.id) && (
-                    <button 
-                      className="btn-remove-mod" 
-                      onClick={() => toggleCommunityMod(community.id, modId)}
-                      title="Quitar moderación"
-                    >
-                      ×
-                    </button>
-                  )}
-                </div>
-              );
-            })}
           </div>
         </div>
 
-        <div className="sidebar-section">
-          <div className="section-header">
-            <UsersIcon size={18} color="var(--primary)" />
-            <h3>Miembros Destacados</h3>
-          </div>
-          <div className="featured-members">
-             {Object.values(users)
-               .filter(u => community.memberIds?.includes(u.id) && u.id !== community.ownerId && !(community.moderatorIds || []).includes(u.id))
-               .slice(0, 5)
-               .map(u => (
-                 <div key={u.id} className="member-item">
-                    <img src={u.avatar} alt="" className="member-avatar" />
-                    <span className="member-username">u/{u.username.replace(/^u\//, '')}</span>
+        {/* Moderation Sidebar */}
+        <div className="community-sidebar-info">
+          <div className="sidebar-section">
+            <div className="section-header">
+              <Shield size={18} color="var(--primary)" />
+              <h3>Equipo de Moderación</h3>
+            </div>
+            <div className="mod-team-list">
+              {/* The Bot */}
+              <div className="mod-item bot-mod">
+                <div className="mod-avatar bot">
+                  <Bot size={16} />
+                </div>
+                <div className="mod-info">
+                  <span className="mod-name">{community.botModeratorId || 'b/ModBot'}</span>
+                  <span className="mod-type">Inteligencia Anti-Spam</span>
+                </div>
+              </div>
+
+              {/* The Owner */}
+              {users[community.ownerId] && (
+                <div className="mod-item">
+                  <img src={users[community.ownerId].avatar} alt="" className="mod-avatar" />
+                  <div className="mod-info">
+                    <span className="mod-name">u/{users[community.ownerId].username.replace(/^u\//, '')}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span className="mod-type">Fundadora</span>
+                      {community.ownerId === currentUser?.id && (
+                        <button 
+                          className="btn-delete-community"
+                          onClick={async () => {
+                            if (window.confirm('¿Estás segura de eliminar esta comunidad? Esta acción no se puede deshacer y se borrarán todos los datos asociados.')) {
+                              await deleteCommunity(community.id);
+                              navigate('/');
+                            }
+                          }}
+                          title="Eliminar Comunidad"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Human Moderators */}
+              {(community.moderatorIds || []).map(modId => {
+                const mod = users[modId];
+                if (!mod) return null;
+                return (
+                  <div key={modId} className="mod-item">
+                    <img src={mod.avatar} alt="" className="mod-avatar" />
+                    <div className="mod-info">
+                      <span className="mod-name">u/{mod.username.replace(/^u\//, '')}</span>
+                      <UserBadge type="moderator" size="small" showLabel />
+                    </div>
                     {(community.ownerId === currentUser?.id) && (
                       <button 
-                        className="btn-add-mod" 
-                        onClick={() => toggleCommunityMod(community.id, u.id)}
-                        title="Hacer Moderadora"
+                        className="btn-remove-mod" 
+                        onClick={() => toggleCommunityMod(community.id, modId)}
+                        title="Quitar moderación"
                       >
-                        <Plus size={12} />
+                        ×
                       </button>
                     )}
-                 </div>
-               ))
-             }
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="sidebar-section">
+            <div className="section-header">
+              <UsersIcon size={18} color="var(--primary)" />
+              <h3>Miembros Destacados</h3>
+            </div>
+            <div className="featured-members">
+               {Object.values(users)
+                 .filter(u => community.memberIds?.includes(u.id) && u.id !== community.ownerId && !(community.moderatorIds || []).includes(u.id))
+                 .slice(0, 5)
+                 .map(u => (
+                   <div key={u.id} className="member-item">
+                      <img src={u.avatar} alt="" className="member-avatar" />
+                      <span className="member-username">u/{u.username.replace(/^u\//, '')}</span>
+                      {(community.ownerId === currentUser?.id) && (
+                        <button 
+                          className="btn-add-mod" 
+                          onClick={() => toggleCommunityMod(community.id, u.id)}
+                          title="Hacer Moderadora"
+                        >
+                          <Plus size={12} />
+                        </button>
+                      )}
+                   </div>
+                 ))
+               }
+            </div>
           </div>
         </div>
       </div>
