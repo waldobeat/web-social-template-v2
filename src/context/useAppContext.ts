@@ -60,10 +60,16 @@ export const useAppContext = (): AppContextState => {
     const data = useData();
     const ui = useUI();
 
+    // The auth context does a one-off fetch for currentUser. 
+    // We use data.users to provide a real-time reactive version of the currentUser so the UI updates
+    // immediately when the user joins a community, follows someone, etc.
+    const currentUserId = auth.currentUser?.id;
+    const realtimeCurrentUser = currentUserId && data.users ? (data.users[currentUserId] as UserProfile) : null;
+
     // Combine all contexts into single interface
     return {
         // Auth
-        currentUser: auth.currentUser,
+        currentUser: realtimeCurrentUser || auth.currentUser,
         isAuthenticated: auth.isAuthenticated,
         isLoading: auth.isLoading,
         profileLoaded: auth.profileLoaded,
