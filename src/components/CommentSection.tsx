@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/useAppContext';
-import { Send, Smile, BadgeCheck } from 'lucide-react';
+import { Send, Smile, BadgeCheck, Trash2 } from 'lucide-react';
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';
 import { useNavigate } from 'react-router-dom';
 import './CommentSection.css';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const CommentSection = ({ postId }: Props) => {
-  const { comments, users, currentUser, addComment } = useAppContext();
+  const { comments, users, currentUser, addComment, deleteComment } = useAppContext();
   const navigate = useNavigate();
   const [newComment, setNewComment] = useState('');
   const [showEmoji, setShowEmoji] = useState(false);
@@ -50,6 +50,9 @@ export const CommentSection = ({ postId }: Props) => {
       <div className="comments-list">
         {postComments.map(comment => {
           const author = users[comment.authorId];
+          const isMyComment = currentUser?.id === comment.authorId;
+          const isAdmin = (currentUser as any)?.email === 'waldobeatmaker@gmail.com' || currentUser?.username === 'u/Sheddit' || currentUser?.id === 'xhE6DhfT6dbNkzKH9dMCVn8mpXi2';
+          const canDelete = isMyComment || isAdmin;
 
           return (
             <div key={comment.id} className="comment-item">
@@ -68,7 +71,20 @@ export const CommentSection = ({ postId }: Props) => {
                 <p className="comment-text">{comment.text}</p>
                 <div className="comment-meta">
                   Hace un momento •
-                  <button className="reply-btn" onClick={() => setNewComment(`u/${author?.username?.replace(/^u\//, '')} `)}>Responder</button>
+                  <button className="reply-btn" onClick={() => setNewComment(`@u/${author?.username?.replace(/^u\//, '')} `)}>Responder</button>
+                  {canDelete && (
+                    <>
+                      <span style={{ margin: '0 4px' }}>•</span>
+                      <button 
+                        className="reply-btn" 
+                        onClick={() => { if (window.confirm('¿Borrar comentario?')) deleteComment(comment.id, postId); }} 
+                        style={{ color: 'var(--error)' }}
+                      >
+                        <Trash2 size={12} style={{ marginRight: 2, marginBottom: -2 }} />
+                        Borrar
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

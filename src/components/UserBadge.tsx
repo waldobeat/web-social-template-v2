@@ -19,7 +19,8 @@ export type BadgeType =
     | 'fitness'
     | 'beauty'
     | 'mom'
-    | 'entrepreneur';
+    | 'entrepreneur'
+    | 'moderator';
 
 interface BadgeConfig {
     label: string;
@@ -162,6 +163,13 @@ export const BADGE_CONFIG: Record<BadgeType, BadgeConfig> = {
         color: '#795548',
         bgColor: 'linear-gradient(135deg, #795548, #5D4037)',
         description: 'Empresaria exitosa'
+    },
+    moderator: {
+        label: 'Moderadora',
+        emoji: '🛡️',
+        color: '#27AE60',
+        bgColor: 'linear-gradient(135deg, #27AE60, #2ECC71)',
+        description: 'Moderadora de la comunidad'
     }
 };
 

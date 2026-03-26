@@ -57,10 +57,9 @@ export interface Community {
   botId: string; colorTheme: string;
   ownerId: string;
   memberIds: string[];
-  // Moderation types (Layer 3: Hybrid Moderation)
-  moderationType?: 'bot' | 'human' | 'hybrid';
-  botModeratorId?: string;       // m/AutoMod_c/NombreComunidad
   moderatorIds?: string[];       // UIDs de moderadores humanos
+  botModeratorId?: string;       // b/NombreBot
+  moderationType?: 'bot' | 'human' | 'hybrid';
 }
 export interface Message {
   id: string;

@@ -39,12 +39,14 @@ interface DataContextType {
 
     // Comment operations
     addComment: (text: string, parentId: string) => Promise<void>;
+    deleteComment: (commentId: string, parentId: string) => Promise<void>;
 
     // Community operations
     joinCommunity: (communityId: string) => Promise<void>;
     leaveCommunity: (communityId: string) => Promise<void>;
     addCommunity: (community: Omit<Community, 'id'>) => Promise<string | null>;
     deleteCommunity: (communityId: string) => Promise<void>;
+    toggleCommunityMod: (communityId: string, userId: string) => Promise<void>;
     
     // User operations
     toggleFollow: (userId: string) => Promise<void>;
@@ -431,6 +433,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const deleteComment = async (commentId: string, parentId: string) => {
+        if (!currentUser) return;
+        const isPost = !!posts[parentId];
+        const parentRef = doc(db, isPost ? 'posts' : 'comments', parentId);
+        
+        await deleteDoc(doc(db, 'comments', commentId));
+        await updateDoc(parentRef, {
+            commentIds: arrayRemove(commentId)
+        });
+    };
+
     // Community operations
     const joinCommunity = async (communityId: string) => {
         if (!currentUser) return;
@@ -462,6 +475,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
             ownerId: currentUser.id,
             memberIds: [currentUser.id],
             memberCount: 1,
+            moderatorIds: [], // Human moderators
+            botModeratorId: `b/Mod_${community.name.replace(/^c\//, '')}`, // Professional bot name
+            moderationType: 'hybrid',
             createdAt: serverTimestamp()
         });
 
@@ -484,6 +500,23 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
                 await deleteDoc(doc(db, 'communities', communityId));
             }
         }
+    };
+
+    const toggleCommunityMod = async (communityId: string, userId: string) => {
+        if (!currentUser) return;
+        const community = communities[communityId];
+        if (!community) return;
+        
+        const isOwner = community.ownerId === currentUser.id;
+        const isAdmin = (currentUser as any).email === 'waldobeatmaker@gmail.com' || currentUser.username === 'u/Sheddit';
+        
+        if (!isOwner && !isAdmin) return;
+
+        const isMod = (community.moderatorIds || []).includes(userId);
+        
+        await updateDoc(doc(db, 'communities', communityId), {
+            moderatorIds: isMod ? arrayRemove(userId) : arrayUnion(userId)
+        });
     };
 
     const toggleFollow = async (userId: string) => {
@@ -590,10 +623,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         toggleRepost,
         toggleHighlight,
         addComment,
+        deleteComment,
         joinCommunity,
         leaveCommunity,
         addCommunity,
         deleteCommunity,
+        toggleCommunityMod,
         toggleFollow,
         sendMessage,
         sendMessageRequest,

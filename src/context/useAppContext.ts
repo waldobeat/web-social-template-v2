@@ -30,6 +30,7 @@ interface AppContextState {
     notifications: Record<string, AppNotification>;
     addPost: (post: any) => Promise<void>;
     addComment: (comment: { text: string; parentId: string; authorId?: string; createdAt?: string }) => Promise<void>;
+    deleteComment: (commentId: string, parentId: string) => Promise<void>;
     updatePost: (postId: string, newContent: string) => Promise<void>;
     deletePost: (postId: string) => Promise<void>;
     toggleLike: (postId: string) => Promise<void>;
@@ -40,6 +41,7 @@ interface AppContextState {
     leaveCommunity: (communityId: string) => Promise<void>;
     addCommunity: (community: Omit<Community, 'id'>) => Promise<string | null>;
     deleteCommunity: (communityId: string) => Promise<void>;
+    toggleCommunityMod: (communityId: string, userId: string) => Promise<void>;
     sendMessage: (toId: string, text: string) => Promise<void>;
     sendMessageRequest: (toId: string, message: string) => Promise<void>;
     acceptMessageRequest: (requestId: string) => Promise<void>;
@@ -96,6 +98,7 @@ export const useAppContext = (): AppContextState => {
             // Convert from object format to DataContext format
             await data.addComment(comment.text, comment.parentId);
         },
+        deleteComment: data.deleteComment,
         updatePost: data.updatePost,
         deletePost: data.deletePost,
         toggleLike: data.toggleLike,
@@ -106,6 +109,7 @@ export const useAppContext = (): AppContextState => {
         leaveCommunity: data.leaveCommunity,
         addCommunity: data.addCommunity,
         deleteCommunity: data.deleteCommunity,
+        toggleCommunityMod: data.toggleCommunityMod,
         sendMessage: data.sendMessage,
         sendMessageRequest: data.sendMessageRequest,
         acceptMessageRequest: data.acceptMessageRequest,

@@ -2,12 +2,13 @@ import { useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useAppContext } from '../context/useAppContext';
 import { PostCard } from '../components/PostCard';
-import { Tag } from 'lucide-react';
+import { Tag, Shield, Bot, Users as UsersIcon, Plus } from 'lucide-react';
+import { UserBadge } from '../components/UserBadge';
 import './Feed.css'; // Reusable styles
 
 export const CommunityPage = () => {
   const { communityId } = useParams<{ communityId: string }>();
-  const { communities, posts, users, currentUser, joinCommunity, leaveCommunity, setCreatePostOpen } = useAppContext();
+  const { communities, posts, users, currentUser, joinCommunity, leaveCommunity, setCreatePostOpen, toggleCommunityMod } = useAppContext();
 
   const community = communities[communityId || ''];
   if (!community) return <div className="feed-container">Comunidad no encontrada. ☹️</div>;
@@ -141,6 +142,91 @@ export const CommunityPage = () => {
         ) : (
           <p className="no-posts-msg">Aún no hay publicaciones en esta comunidad. ¡Sé la primera! ✨</p>
         )}
+      </div>
+
+      {/* Moderation Sidebar / Section */}
+      <div className="community-sidebar-info">
+        <div className="sidebar-section">
+          <div className="section-header">
+            <Shield size={18} color="var(--primary)" />
+            <h3>Equipo de Moderación</h3>
+          </div>
+          <div className="mod-team-list">
+            {/* The Bot */}
+            <div className="mod-item bot-mod">
+              <div className="mod-avatar bot">
+                <Bot size={16} />
+              </div>
+              <div className="mod-info">
+                <span className="mod-name">{community.botModeratorId || 'b/ModBot'}</span>
+                <span className="mod-type">Inteligencia Anti-Spam</span>
+              </div>
+            </div>
+
+            {/* The Owner */}
+            {users[community.ownerId] && (
+              <div className="mod-item">
+                <img src={users[community.ownerId].avatar} alt="" className="mod-avatar" />
+                <div className="mod-info">
+                  <span className="mod-name">u/{users[community.ownerId].username.replace(/^u\//, '')}</span>
+                  <span className="mod-type">Fundadora</span>
+                </div>
+              </div>
+            )}
+
+            {/* Human Moderators */}
+            {(community.moderatorIds || []).map(modId => {
+              const mod = users[modId];
+              if (!mod) return null;
+              return (
+                <div key={modId} className="mod-item">
+                  <img src={mod.avatar} alt="" className="mod-avatar" />
+                  <div className="mod-info">
+                    <span className="mod-name">u/{mod.username.replace(/^u\//, '')}</span>
+                    <UserBadge type="moderator" size="small" showLabel />
+                  </div>
+                  {(community.ownerId === currentUser?.id) && (
+                    <button 
+                      className="btn-remove-mod" 
+                      onClick={() => toggleCommunityMod(community.id, modId)}
+                      title="Quitar moderación"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="sidebar-section">
+          <div className="section-header">
+            <UsersIcon size={18} color="var(--primary)" />
+            <h3>Miembros Destacados</h3>
+          </div>
+          <div className="featured-members">
+             {Object.values(users)
+               .filter(u => community.memberIds?.includes(u.id) && u.id !== community.ownerId && !(community.moderatorIds || []).includes(u.id))
+               .slice(0, 5)
+               .map(u => (
+                 <div key={u.id} className="member-item">
+                    <img src={u.avatar} alt="" className="member-avatar" />
+                    <span className="member-username">u/{u.username.replace(/^u\//, '')}</span>
+                    {(community.ownerId === currentUser?.id) && (
+                      <button 
+                        className="btn-add-mod" 
+                        onClick={() => toggleCommunityMod(community.id, u.id)}
+                        title="Hacer Moderadora"
+                      >
+                        <Plus size={12} />
+                      </button>
+                    )}
+                 </div>
+               ))
+             }
+          </div>
+        </div>
       </div>
     </div>
   );
