@@ -1,4 +1,4 @@
-// Sheddit Firestore Security Rules - v2.2 (Midnight Glass Edition)
+// Sheddit Firestore Security Rules - v2.3 (Midnight Glass Edition)
 // Ensuring high-speed interaction and reliable publishing
 
 rules_version = '2';
@@ -67,7 +67,7 @@ service cloud.firestore {
     }
 
     // Message Requests
-    match /message_requests/{requestId} {
+    match /messageRequests/{requestId} {
       allow read: if isAuthenticated() && (isOwner(resource.data.fromId) || isOwner(resource.data.toId) || isAdmin());
       allow create: if isAuthenticated();
       allow update: if isAuthenticated() && (isOwner(resource.data.toId) || isAdmin());
@@ -101,8 +101,5 @@ service cloud.firestore {
       allow create: if true; // For registration flow
       allow update, delete: if isAdmin();
     }
-  }
-}
-
   }
 }

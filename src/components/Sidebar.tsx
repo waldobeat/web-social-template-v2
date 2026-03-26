@@ -1,13 +1,11 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, Compass, Bell, User, MessageCircle, LogOut, PlusCircle, Globe, Zap, Hash } from 'lucide-react';
+import { Home, Compass, LogOut, PlusCircle, Zap, Hash, MessageCircle } from 'lucide-react';
 import { useAppContext } from '../context/useAppContext';
 import './Sidebar.css';
 
 export const Sidebar = () => {
-  const { setCreatePostOpen, notifications, currentUser, logout, communities } = useAppContext();
+  const { setCreatePostOpen, currentUser, logout, communities } = useAppContext();
   const navigate = useNavigate();
-
-  const unreadCount = Object.values(notifications).filter(n => !n.read).length;
 
   // Last 3 joined communities for "RECIENTES"
   const recentCommunities = (currentUser?.joinedCommunityIds || [])

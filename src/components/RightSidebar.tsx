@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/useAppContext';
 import { useNavigate } from 'react-router-dom';
-import { PlusCircle, MessageCircle, BadgeCheck, Users, Globe, ExternalLink, Clock } from 'lucide-react';
+import { PlusCircle, Users, Globe, Clock } from 'lucide-react';
 import { PremiumPassModal } from './PremiumPassModal';
 import { CommunitySearch } from './CommunitySearch';
 import './RightSidebar.css';
 
-const THEME_COLORS = ['#FF8DA1', '#B39DFF', '#FF7F50', '#A8D8A8', '#F4A261', '#E9C46A', '#E63946', '#E76F51'];
-
 export const RightSidebar = () => {
-  const { communities, users, currentUser, toggleFollow, addCommunity, sendMessage, joinCommunity, leaveCommunity, posts } = useAppContext();
+  const { communities, users, currentUser, toggleFollow, joinCommunity, leaveCommunity, posts } = useAppContext();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
-  const [newCommName, setNewCommName] = useState('');
-  const [newCommDesc, setNewCommDesc] = useState('');
-  const [newCommColor, setNewCommColor] = useState('#B39DFF');
-  const [isCreating, setIsCreating] = useState(false);
 
   const communitiesList = Object.values(communities);
 
@@ -39,8 +32,6 @@ export const RightSidebar = () => {
   ).slice(0, 5);
 
   const followersCount = currentUser?.followers?.length || 0;
-  const isAdmin = (currentUser as any)?.email === 'waldobeatmaker@gmail.com' || currentUser?.username === 'u/Sheddit';
-  const canCreateCommunity = currentUser?.isPremium || isAdmin;
 
   return (
     <aside className="right-sidebar">
