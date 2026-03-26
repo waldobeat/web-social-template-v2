@@ -37,7 +37,7 @@ export const Sidebar = () => {
         
         {/* Publicidad La Tasa */}
         <a 
-          href="https://a-tasa-dolar-en-venezuela.uptodown.com/android" 
+          href="https://la-tasa-dolar-en-venezuela.en.uptodown.com/android" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="sidebar-ad"
