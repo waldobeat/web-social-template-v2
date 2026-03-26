@@ -42,7 +42,7 @@ export const seedDefaultCommunities = async () => {
         id: 'system_modbot',
         username: 'u/ModBot',
         avatar: 'https://cdn-icons-png.flaticon.com/512/4712/4712010.png',
-        bio: '🤖 Moderadora Oficial de SoloChicas. Protegiendo a mis amigas del spam y malas palabras juntas. ✨',
+        bio: '🤖 Moderación Oficial de Sheddit. Protegiendo a la comunidad del spam y malas palabras. ✨',
         followers: [],
         following: [],
         joinedCommunityIds: [],

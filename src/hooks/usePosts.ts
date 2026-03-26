@@ -123,7 +123,7 @@ export const usePosts = (): UsePostsReturn => {
         const post = posts[postId];
         if (post && post.authorId === currentUser.id) {
             if (post.commentIds && post.commentIds.length > 0) {
-                throw new Error("No se puede editar un post que ya tiene comentarios, amiga. ✨");
+                throw new Error("No se puede editar un post que ya tiene comentarios. ✨");
             }
             await updateDoc(doc(db, 'posts', postId), { content: newContent });
         }

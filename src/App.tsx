@@ -10,6 +10,7 @@ import { Login } from './pages/Login';
 import { LoadingScreen } from './components/LoadingScreen';
 import { CookieBanner } from './components/CookieBanner';
 import { ToastProvider } from './hooks/useToast';
+import { Footer } from './components/Footer';
 
 // Lazy load pages for code splitting - improves initial load time
 const Feed = lazy(() => import('./pages/Feed').then(m => ({ default: m.Feed })));
@@ -69,6 +70,7 @@ function AppInner() {
         {!isCommunityPage && <RightSidebar />}
       </div>
       <CookieBanner />
+      <Footer />
       {isCreatePostOpen && <CreatePostModal onClose={() => setCreatePostOpen(false)} />}
     </>
   );

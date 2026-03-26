@@ -36,7 +36,7 @@ export const PostCard = ({ post }: Props) => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Mira este post en SoloChicas ✨',
+          title: 'Mira este post en Sheddit ✨',
           text: post.content,
           url: window.location.href,
         });

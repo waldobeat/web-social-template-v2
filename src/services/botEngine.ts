@@ -33,7 +33,7 @@ export const BOTS: Record<string, { name: string; validate: (text: string) => Bo
       // Bloqueo de groserías (provisional list)
       const badWords = ['puta', 'perra', 'maldita', 'estupida', 'idiota', 'culia', 'mierda', 'coño', 'carajo', 'pendeja'];
       if (badWords.some(word => lower.includes(word))) {
-        return { isApproved: false, reason: 'Moderación Universal: Mantén un lenguaje respetuoso con tus amigas. ✨' };
+        return { isApproved: false, reason: 'Moderación Universal: Mantén un lenguaje respetuoso con la comunidad. ✨' };
       }
       // Bloqueo de NSFW / Armas / Violencia
       const forbidden = ['sexo', 'porn', 'xxx', 'arma', 'pistola', 'cuchillo', 'sangre', 'matar', 'muerte', 'droga'];

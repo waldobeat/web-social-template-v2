@@ -29,7 +29,7 @@ export const CookieBanner = () => {
         <div className="cookie-content">
           <h3>🍪 Política de Cookies</h3>
           <p>
-            En <strong>SoloChicas</strong> utilizamos cookies propias y de terceros para mejorar tu experiencia, personalizar el contenido y analizar nuestro tráfico. Al continuar navegando, consideramos que aceptas su uso. ¡Queremos que tu experiencia sea la mejor y más segura! 💖
+            En <strong>Sheddit</strong> utilizamos cookies propias y de terceros para mejorar tu experiencia, personalizar el contenido y analizar nuestro tráfico. Al continuar navegando, consideramos que aceptas su uso. ¡Tu experiencia es nuestra prioridad! 🌐
           </p>
         </div>
         <div className="cookie-actions">

@@ -94,7 +94,7 @@ export const Login = () => {
           throw new Error("El resultado del Captcha es incorrecto. Por favor, intenta de nuevo.");
         }
 
-        if (interests.length === 0) throw new Error("Amiga, por favor elige al menos un interés para recomendarte contenido.");
+        if (interests.length === 0) throw new Error("Por favor, elige al menos un interés para recomendarte contenido.");
         await register(email, password, username, { age: birthDate, interests });
       } else {
         await login(email, password);
@@ -110,7 +110,7 @@ export const Login = () => {
         <div className="login-header">
           <img src="/mascot.png" alt="Sheddit Mascot" className="mascot-animated login-mascot" />
           <h1 className="login-logo">Sheddit</h1>
-          <p className="login-subtitle">Donde las chicas reinan ✨</p>
+          <p className="login-subtitle">Tu red social sin tabú ✨</p>
         </div>
         {/* Google Sign In Button */}
         <button
@@ -250,7 +250,7 @@ export const Login = () => {
         </button>
 
         <div className="login-footer">
-          Al entrar, aceptas nuestras normas de convivencia y protección entre amigas. 💖
+          Al entrar, aceptas nuestros <a href="/privacidad" style={{color:'inherit', textDecoration:'underline'}}>Términos y Política de Privacidad</a>. 🌐
         </div>
       </div>
     </div>

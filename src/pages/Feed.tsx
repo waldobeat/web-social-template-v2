@@ -31,7 +31,7 @@ export const Feed = () => {
 
   return (
     <div className="feed-container">
-      <SEO title="Inicio | Mi Feed Chicas ✨" />
+      <SEO title="Inicio | Mi Feed ✨" />
       <div className="feed-header">
         <div className="feed-title-row">
           <h2>Inicio</h2>
@@ -40,7 +40,7 @@ export const Feed = () => {
 
       <div className="create-post-trigger" onClick={openModal}>
         <img src={currentUser?.avatar} alt="me" className="trigger-avatar" />
-        <div className="trigger-input">Cuéntame algo, amiga... ✨</div>
+        <div className="trigger-input">Cuéntame algo... ✨</div>
       </div>
 
       <div className="posts-list">
@@ -49,7 +49,7 @@ export const Feed = () => {
         ) : (
           <div className="empty-feed">
             <h3>Tu feed está muy tranquilo... ✨</h3>
-            <p>Sigue a más chicas o únete a comunidades para ver sus publicaciones aquí.</p>
+            <p>Sigue a más personas o únete a comunidades para ver sus publicaciones aquí.</p>
           </div>
         )}
       </div>

@@ -76,7 +76,7 @@ export const MODERATION_CONFIG = {
     // Warning messages in Spanish
     warningMessages: {
         forbiddenWord: 'Hemos detectado lenguaje inapropiado en tu mensaje. ⚠️',
-        linkDetected: 'Los enlaces externos no están permitidos en SoloChicas. 🔗',
+        linkDetected: 'Los enlaces externos no están permitidos en Sheddit. 🔗',
         tooShort: 'Tu mensaje es demasiado corto. ¡Cuéntanos más! ✨',
         tooLong: 'Tu mensaje es demasiado largo. ¡Sé más concisa! 📝',
         spamDetected: 'Tu mensaje parece spam y no será publicado. 🚫'

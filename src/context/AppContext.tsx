@@ -234,7 +234,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         id: user.uid,
         username: defaultUsername,
         avatar: googleAvatar,
-        bio: '¡Nueva en SoloChicas! ✨',
+        bio: '¡Nueva persona en Sheddit! ✨',
         followers: [],
         following: [],
         joinedCommunityIds: [],
@@ -256,7 +256,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const q = query(collection(db, 'users'), where('username', '==', username));
     const snapshot = await getDocs(q);
     if (!snapshot.empty) {
-      throw new Error('Este nombre de usuario ya está en uso. Elige otro, amiga. ✨');
+      throw new Error('Este nombre de usuario ya está en uso. Elige otro. ✨');
     }
 
     // 2. Create Auth User
@@ -270,7 +270,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       id: res.user.uid,
       username,
       avatar: robotAvatar,
-      bio: '¡Nueva en SoloChicas! ✨',
+      bio: '¡Nueva persona en Sheddit! ✨',
       followers: [],
       following: [],
       joinedCommunityIds: [],
@@ -390,7 +390,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const post = posts[postId];
     if (post && post.authorId === currentUser.id) {
       if (post.commentIds && post.commentIds.length > 0) {
-        throw new Error("No se puede editar un post que ya tiene comentarios, amiga. ✨");
+        throw new Error("No se puede editar un post que ya tiene comentarios. ✨");
       }
       await updateDoc(doc(db, 'posts', postId), { content: newContent });
     }

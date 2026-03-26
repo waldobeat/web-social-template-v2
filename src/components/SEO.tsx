@@ -9,8 +9,8 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = 'Sheddit - La Comunidad Digital de Chicas',
-  description = 'Únete a Sheddit, el espacio seguro y vibrante donde hablamos de nuestras pasiones, retos y belleza. Publica, comparte y conecta con chicas de todo el mundo. ✨',
+  title = 'Sheddit - Tu red social sin tabú',
+  description = 'Únete a Sheddit, la red social abierta y sin tabú. Publica, comparte y conecta con personas de todo el mundo. ✨',
   image = 'https://www.sheddit.blog/og-image.png',
   url = 'https://www.sheddit.blog',
   type = 'website'
@@ -22,7 +22,7 @@ export const SEO = ({
       {/* Standard Metadata */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content="comunidad mujer, social network chicas, belleza, moda, consejos, sheddit, red social femenina" />
+      <meta name="keywords" content="red social, comunidad online, sheddit, compartir, posts, sin tabú, social network" />
       <link rel="canonical" href={url} />
 
       {/* Open Graph / Facebook */}

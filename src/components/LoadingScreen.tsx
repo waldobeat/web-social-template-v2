@@ -33,7 +33,7 @@ export const LoadingScreen = () => {
             <rect x="20" y="33" width="24" height="2" fill="#FFE58F"/>
           </g>
         </svg>
-        <div className="loading-text">SoloChicas<span className="dot-anim">...</span></div>
+        <div className="loading-text">Sheddit<span className="dot-anim">...</span></div>
       </div>
     </div>
   );
