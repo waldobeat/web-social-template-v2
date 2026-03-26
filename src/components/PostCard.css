@@ -88,9 +88,18 @@
 .more-btn {
   color: var(--text-muted);
   cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
 }
 
 .more-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
   color: var(--primary);
 }
 
@@ -238,18 +247,16 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(255, 141, 161, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-light);
   padding: 8px;
   z-index: 100;
   display: flex;
   flex-direction: column;
-  min-width: 160px;
-  animation: fadeIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  min-width: 140px;
+  animation: fadeIn 0.2s ease-out;
 }
 
 @keyframes fadeIn {
@@ -267,11 +274,11 @@
 .opt-item {
   background: none;
   border: none;
-  padding: 8px 12px;
+  padding: 10px 12px;
   text-align: left;
   cursor: pointer;
-  border-radius: 8px;
-  font-size: 13px;
+  border-radius: 4px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-main);
   transition: background 0.2s;

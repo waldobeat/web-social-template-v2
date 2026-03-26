@@ -150,7 +150,7 @@ const getBioSuggestions = (username: string): string[] => {
 };
 
 export const EditProfileModal = ({ onClose }: Props) => {
-    const { currentUser, updateProfile } = useAppContext();
+    const { currentUser, updateProfile, users, sendMessage } = useAppContext();
 
     const [username, setUsername] = useState(currentUser?.username?.replace(/^u\//, '') || '');
     const [bio, setBio] = useState(currentUser?.bio || '');
@@ -196,10 +196,23 @@ export const EditProfileModal = ({ onClose }: Props) => {
                 username: `u/${username.replace(/^u\//, '')}`,
                 bio,
                 avatar: selectedAvatar || currentUser?.avatar,
-                isVerified: requestVerified || currentUser?.isVerified
+                isVerified: currentUser?.isVerified || false
             });
 
-            if (newPassword) {
+            if (requestVerified && !currentUser?.isVerified) {
+                const adminUser = Object.values(users).find((u: any) => u.username === 'u/Sheddit' || u.username === 'Sheddit' || u.email === 'waldobeatmaker@gmail.com');
+                if (adminUser && currentUser) {
+                    try {
+                        await sendMessage(adminUser.id, `¡Hola! Quisiera solicitar la verificación de mi cuenta (palomita azul) para el usuario ${currentUser.username}. Quedo atenta a los requisitos. ✨`);
+                        alert('Los requisitos para tu verificación serán enviados por mensaje privado. 💖');
+                    } catch (err) {
+                        console.error('Error enviando solicitud de verificación:', err);
+                        alert('Los requisitos para tu verificación serán enviados por mensaje privado.');
+                    }
+                } else {
+                    alert('Los requisitos para tu verificación serán enviados por mensaje privado. 💖');
+                }
+            } else if (newPassword) {
                 alert('Perfil actualizado. 💖');
             }
 

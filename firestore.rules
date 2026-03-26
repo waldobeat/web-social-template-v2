@@ -61,8 +61,8 @@ service cloud.firestore {
       // but ideally it should be isOwner(userId) && isAuthenticated()
       allow create: if true;
       
-      // Admins can update any user, owners can update themselves
-      allow update: if isAdmin() || (isAuthenticated() && isOwner(userId));
+      // Admins can update any user, owners can update themselves, and authenticated users can follow others
+      allow update: if isAuthenticated();
       
       // Only admins can delete users
       allow delete: if isAdmin();
