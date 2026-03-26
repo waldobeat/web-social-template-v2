@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/useAppContext';
 import { useNavigate } from 'react-router-dom';
-import { PlusCircle, Users, Globe, Clock, Sparkles, TrendingUp, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Users, Globe, Clock, Sparkles, TrendingUp, ShieldCheck, ChevronRight } from 'lucide-react';
 import { PremiumPassModal } from './PremiumPassModal';
 import { CommunitySearch } from './CommunitySearch';
 import './RightSidebar.css';
