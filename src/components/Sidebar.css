@@ -5,7 +5,7 @@
   height: 100vh;
   position: sticky;
   top: 0;
-  border-right: 1px solid transparent; /* Let the gap handle spacing */
+  border: none;
   display: flex;
   flex-direction: column;
 }

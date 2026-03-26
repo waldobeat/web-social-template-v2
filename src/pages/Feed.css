@@ -2,10 +2,11 @@
   flex: 1;
   width: 100%;
   max-width: 750px;
-  border-right: 1px solid var(--border-light);
+  border-right: none;
+  border-left: none;
   min-height: 100vh;
   padding-bottom: 80px; /* Base padding for mobile bottom nav, won't hurt desktop much */
-  background: var(--bg-color);
+  background: transparent;
 }
 
 @media (max-width: 768px) {
