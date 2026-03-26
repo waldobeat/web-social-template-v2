@@ -3,7 +3,7 @@ import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';
 import { useAppContext } from '../context/useAppContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { onNewContent } from '../services/botEngine';
-import { Smile, X, Send, Image as ImageIcon, AtSign } from 'lucide-react';
+import { Smile, X, Send, AtSign } from 'lucide-react';
 import './CreatePostModal.css';
 
 interface Props {
@@ -104,15 +104,18 @@ export const CreatePostModal = ({ onClose }: Props) => {
     <div className="cpm-overlay" onClick={onClose}>
       <div className="cpm-modal cpm-simple" onClick={e => e.stopPropagation()}>
 
-        {/* Header simple */}
-        <div className="cpm-header">
-          <h2>
-            {isInCommunityPage && isMemberOfCommunity
-              ? `Publicar en c/${communityFromUrl?.name}`
-              : '¿Qué estás pensando?'}
-          </h2>
+        {/* Header Premium */}
+        <div className="cpm-header premium">
+          <div className="cpm-header-title">
+            <span className="sparkle-icon">✨</span>
+            <h2>
+              {isInCommunityPage && isMemberOfCommunity
+                ? `Publicar en c/${communityFromUrl?.name}`
+                : 'Crear Publicación'}
+            </h2>
+          </div>
           <button className="cpm-close-btn" onClick={onClose}>
-            <X size={22} />
+            <X size={20} />
           </button>
         </div>
 
@@ -146,26 +149,33 @@ export const CreatePostModal = ({ onClose }: Props) => {
         )}
 
         {/* Acciones */}
-        <div className="cpm-simple-actions">
+        <div className="cpm-simple-actions premium">
           <div className="cpm-actions-left">
-            <div style={{ position: 'relative' }}>
+            <div className="emoji-trigger-wrapper">
               <button
-                className="cpm-action-btn"
+                className={`cpm-action-btn ${showEmoji ? 'active' : ''}`}
                 onClick={() => setShowEmoji(!showEmoji)}
-                title="Emoji"
+                title="Añadir Emoji"
               >
-                <Smile size={22} />
+                <Smile size={24} />
               </button>
               {showEmoji && (
-                <div className="cpm-emoji-pop">
-                  <EmojiPicker onEmojiClick={handleEmoji} height={350} width={320} />
+                <div className="cpm-emoji-pop-fixed">
+                  <div className="emoji-pop-header">
+                    <span>Elige un emoji ✨</span>
+                    <button onClick={() => setShowEmoji(false)}><X size={14} /></button>
+                  </div>
+                  <EmojiPicker 
+                    onEmojiClick={handleEmoji} 
+                    height={380} 
+                    width={340}
+                    lazyLoadEmojis={true}
+                    skinTonesDisabled={true}
+                    searchPlaceholder="Buscar..."
+                  />
                 </div>
               )}
             </div>
-
-            <button className="cpm-action-btn" title="Imagen">
-              <ImageIcon size={22} />
-            </button>
           </div>
 
           <button
