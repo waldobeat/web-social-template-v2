@@ -80,7 +80,7 @@ export const CommunityPage = () => {
   }, [recentTags, users]);
 
   return (
-    <div className="feed-container">
+    <div className="feed-container has-sidebar">
       <SEO 
         title={`${community.name} | Comunidad en Sheddit ✨`}
         description={community.description}

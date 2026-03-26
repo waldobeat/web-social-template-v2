@@ -1,5 +1,5 @@
 .sidebar {
-  width: 250px;
+  width: 220px;
   flex-shrink: 0;
   padding: 20px 0;
   height: 100vh;
@@ -12,9 +12,9 @@
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding-left: 10px;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-left: 8px;
 }
 
 .logo-text {
@@ -23,10 +23,10 @@
   color: var(--primary);
   margin: 0;
 }
-.nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.nav-menu { display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .nav-item {
-  display: flex; align-items: center; gap: 15px; padding: 12px 15px;
-  border-radius: 12px; font-size: 16px; font-weight: 600; color: var(--text-main);
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  border-radius: 12px; font-size: 15px; font-weight: 600; color: var(--text-main);
   transition: all 0.2s ease;
 }
 .nav-item:hover {

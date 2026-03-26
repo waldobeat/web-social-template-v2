@@ -1,7 +1,7 @@
 .feed-container {
   flex: 1;
   width: 100%;
-  max-width: 750px;
+  max-width: 850px; /* Expandido para mejor uso del espacio */
   border-right: none;
   border-left: none;
   min-height: 100vh;
@@ -195,7 +195,7 @@
 }
 
 .posts-list {
-  padding: 20px;
+  padding: 12px 0; /* Reducido padding lateral */
 }
 
 /* Emoji picker popover */
@@ -334,12 +334,12 @@
 }
 
 @media (min-width: 1100px) {
-  .feed-container {
+  .feed-container.has-sidebar {
     display: grid;
     grid-template-columns: 1fr 280px;
-    max-width: 1080px;
+    max-width: 1140px; /* Expandido para acomodar sidebar interno */
     align-items: start;
-    gap: 12px;
+    gap: 15px;
   }
 }
 

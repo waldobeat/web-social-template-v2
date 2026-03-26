@@ -1,10 +1,10 @@
 .app-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Ensure items dock to top */
-  gap: 12px; /* Spacing between sidebars and feed - tightened */
+  align-items: flex-start;
+  gap: 8px; /* Reducido para mayor densidad */
   width: 100%;
-  max-width: 1320px;
+  max-width: 1400px; /* Expandido */
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
