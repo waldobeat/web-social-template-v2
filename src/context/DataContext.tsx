@@ -553,12 +553,21 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     // Admin operations
     const grantPremiumRole = async (userId: string) => {
         if (!currentUser) return;
-        // Check if admin by email
-        if ((currentUser as any).email !== 'waldobeatmaker@gmail.com') {
-            console.error('Unauthorized');
+        // Check if admin by email or username
+        const isAdmin = (currentUser as any).email === 'waldobeatmaker@gmail.com' || currentUser.username === 'u/Sheddit' || currentUser.id === 'xhE6DhfT6dbNkzKH9dMCVn8mpXi2';
+        if (!isAdmin) {
+            console.error('Unauthorized: Solo el administrador puede otorgar Premium.');
+            alert('No tienes permisos de administrador.');
             return;
         }
-        await updateDoc(doc(db, 'users', userId), { isPremium: true });
+        
+        try {
+            await updateDoc(doc(db, 'users', userId), { isPremium: true });
+            alert("¡Usuario ascendido a Premium exitosamente! 🌟");
+        } catch (error) {
+            console.error("Error al otorgar premium:", error);
+            alert("Hubo un error al guardar en la base de datos.");
+        }
     };
 
     const value: DataContextType = {
