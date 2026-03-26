@@ -130,14 +130,14 @@
 }
 
 .btn-join {
-  background: var(--bg-soft);
+  background: white;
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 9999px;
   font-size: 13px;
   font-weight: 700;
   color: var(--text-main);
-  transition: all 0.2s;
-  border: none;
+  transition: background 0.2s;
+  border: 1px solid var(--border-light);
   cursor: pointer;
 }
 
@@ -170,8 +170,20 @@
   display: inline;
 }
 
+.btn-follow {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
 .btn-follow:hover {
-  background: #ff758f;
+  background: var(--primary-hover);
 }
 
 /* Modal */
@@ -250,8 +262,9 @@
   background: none;
   border: 1px solid #ddd;
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 9999px;
   font-weight: 600;
+  font-size: 14px;
   color: #666;
   cursor: pointer;
   transition: all 0.2s;
@@ -262,6 +275,27 @@
 }
 
 .btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

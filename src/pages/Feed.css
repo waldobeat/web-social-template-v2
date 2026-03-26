@@ -59,9 +59,9 @@
 
 .create-post-trigger {
   padding: 8px 16px;
-  background: var(--card-bg);
+  background: var(--bg-soft);
   border: 1px solid var(--border-light);
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 16px 20px;
   display: flex;
   align-items: center;
@@ -87,8 +87,9 @@
   border: 1px solid #edeff1;
   border-radius: 4px;
   padding: 8px 12px;
-  color: #7c7c7c;
+  color: var(--text-muted);
   font-size: 14px;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .create-post-trigger:hover .trigger-input {

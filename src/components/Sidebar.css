@@ -26,18 +26,16 @@
 .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .nav-item {
   display: flex; align-items: center; gap: 15px; padding: 12px 15px;
-  border-radius: 20px; font-size: 18px; font-weight: 600; color: var(--text-main);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 8px; font-size: 16px; font-weight: 600; color: var(--text-main);
+  transition: background 0.2s;
 }
 .nav-item:hover {
-  background-color: var(--primary-light);
-  transform: translateX(4px);
-  color: var(--primary-dark);
+  background-color: rgba(0, 0, 0, 0.05);
 }
-.nav-item.active { font-weight: 800; color: var(--primary); }
-.nav-item.active svg { color: var(--primary); }
-.post-btn-sidebar { margin-top: auto; padding: 15px; font-size: 16px; width: 100%; border-radius: 30px; }
-.post-btn-sidebar:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 141, 161, 0.4); }
+.nav-item.active { font-weight: 800; color: var(--text-main); background-color: rgba(0,0,0,0.05); }
+.nav-item.active svg { color: var(--text-main); }
+.post-btn-sidebar { margin-top: auto; padding: 15px; font-size: 16px; width: 100%; border-radius: 9999px; background: var(--primary); color: white; font-weight: 700; border: none; cursor: pointer; transition: background 0.2s; }
+.post-btn-sidebar:hover { background: var(--primary-hover); }
 
 .nav-badge {
   position: absolute;
