@@ -6,6 +6,7 @@ import { type Post } from '../data/mockData';
 import { Users, Plus, Globe, Edit3, Sparkles, BadgeCheck, LogOut } from 'lucide-react';
 import { EditProfileModal } from '../components/EditProfileModal';
 import { UserBadge } from '../components/UserBadge';
+import { SEO } from '../components/SEO';
 import './Profile.css';
 
 export const Profile = () => {
@@ -30,6 +31,12 @@ export const Profile = () => {
 
   return (
     <div className="profile-container">
+      <SEO 
+        title={`${displayedUser.username?.replace(/^u\//, '')} | Perfil en Sheddit ✨`}
+        description={displayedUser.bio || "Conoce a esta integrante de la comunidad Sheddit."}
+        image={displayedUser.avatar}
+        type="profile"
+      />
       {showEditModal && <EditProfileModal onClose={() => setShowEditModal(false)} />}
 
       <div className="profile-header">

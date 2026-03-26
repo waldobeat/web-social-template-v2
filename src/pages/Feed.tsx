@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { PostCard } from '../components/PostCard';
 import { useAppContext } from '../context/useAppContext';
 import { sortNew, sortHot, sortTop } from '../utils/sorting';
+import { SEO } from '../components/SEO';
 import './Feed.css';
 
 export const Feed = () => {
@@ -30,6 +31,7 @@ export const Feed = () => {
 
   return (
     <div className="feed-container">
+      <SEO title="Inicio | Mi Feed Chicas ✨" />
       <div className="feed-header">
         <div className="feed-title-row">
           <h2>Inicio</h2>

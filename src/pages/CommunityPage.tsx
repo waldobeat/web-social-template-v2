@@ -4,6 +4,7 @@ import { useAppContext } from '../context/useAppContext';
 import { PostCard } from '../components/PostCard';
 import { Tag, Shield, Bot, Users as UsersIcon, Plus } from 'lucide-react';
 import { UserBadge } from '../components/UserBadge';
+import { SEO } from '../components/SEO';
 import './Feed.css'; // Reusable styles
 
 export const CommunityPage = () => {
@@ -75,6 +76,11 @@ export const CommunityPage = () => {
 
   return (
     <div className="feed-container">
+      <SEO 
+        title={`${community.name} | Comunidad en Sheddit ✨`}
+        description={community.description}
+        type="website"
+      />
       <div className="feed-header community-page-header" style={{ borderBottom: `4px solid ${community.colorTheme}` }}>
         <div className="feed-title-row">
           <div className="community-info-large">
