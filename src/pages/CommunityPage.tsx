@@ -1,15 +1,20 @@
-import { useParams } from 'react-router-dom';
+import { PostCard } from '../components/PostCard';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useAppContext } from '../context/useAppContext';
-import { PostCard } from '../components/PostCard';
-import { Tag, Shield, Bot, Users as UsersIcon, Plus } from 'lucide-react';
+import { Tag, Shield, Bot, Users as UsersIcon, Plus, Trash2 } from 'lucide-react';
 import { UserBadge } from '../components/UserBadge';
 import { SEO } from '../components/SEO';
 import './Feed.css'; // Reusable styles
 
 export const CommunityPage = () => {
   const { communityId } = useParams<{ communityId: string }>();
-  const { communities, posts, users, currentUser, joinCommunity, leaveCommunity, setCreatePostOpen, toggleCommunityMod } = useAppContext();
+  const navigate = useNavigate();
+  const { 
+    communities, posts, users, currentUser, 
+    joinCommunity, leaveCommunity, setCreatePostOpen, 
+    toggleCommunityMod, deleteCommunity 
+  } = useAppContext();
 
   const community = communities[communityId || ''];
   if (!community) return <div className="feed-container">Comunidad no encontrada. ☹️</div>;
@@ -66,7 +71,7 @@ export const CommunityPage = () => {
 
     // Ordenar por cantidad y limitar a 10
     return Array.from(tagMap.values()).sort((a, b) => b.count - a.count).slice(0, 10);
-  }, [communityPosts]);
+  }, [displayedPosts]); // Dependency changed from communityPosts to displayedPosts
 
   // Obtener info de usuarios mencionados
   const mentionedUsers = useMemo(() => {
@@ -175,7 +180,23 @@ export const CommunityPage = () => {
                 <img src={users[community.ownerId].avatar} alt="" className="mod-avatar" />
                 <div className="mod-info">
                   <span className="mod-name">u/{users[community.ownerId].username.replace(/^u\//, '')}</span>
-                  <span className="mod-type">Fundadora</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span className="mod-type">Fundadora</span>
+                    {community.ownerId === currentUser?.id && (
+                      <button 
+                        className="btn-delete-community"
+                        onClick={async () => {
+                          if (window.confirm('¿Estás segura de eliminar esta comunidad? Esta acción no se puede deshacer y se borrarán todos los datos asociados.')) {
+                            await deleteCommunity(community.id);
+                            navigate('/');
+                          }
+                        }}
+                        title="Eliminar Comunidad"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             )}

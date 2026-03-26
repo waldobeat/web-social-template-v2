@@ -346,9 +346,27 @@
     grid-column: 1;
   }
   
-  .community-sidebar-info {
-    grid-column: 2;
-    position: sticky;
-    top: 80px;
   }
+}
+
+.btn-delete-community {
+  background: #fff0f3;
+  border: 1px solid #ffd1dc;
+  color: #ff4d6d;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.btn-delete-community:hover {
+  background: #ff4d6d;
+  color: white;
+  border-color: #ff4d6d;
+  transform: scale(1.1);
 }
