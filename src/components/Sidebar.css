@@ -1,5 +1,5 @@
 /* =========================================================================
-   SIDEBAR - FLOATING CAPSULE DESIGN
+   SIDEBAR - FLOATING CAPSULE DESIGN (REDDIT STYLE)
    ========================================================================= */
 
    .sidebar {
@@ -8,14 +8,28 @@
     display: flex;
     flex-direction: column;
     padding: 24px 20px;
-    
-    /* Glass Effect */
     background: var(--bg-glass);
     backdrop-filter: var(--blur-lg);
     -webkit-backdrop-filter: var(--blur-lg);
     border: 1px solid var(--border-light);
     border-radius: inherit;
     box-shadow: var(--shadow-glass);
+    overflow: hidden;
+  }
+
+  .sidebar-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-right: -10px; /* Offset for internal scroll */
+    padding-right: 10px;
+  }
+
+  .sidebar-scrollable::-webkit-scrollbar {
+    display: none;
   }
   
   /* Brand Header */
@@ -23,147 +37,130 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     padding: 0 12px;
     text-decoration: none;
   }
   
   .logo-text {
-    font-size: 24px;
-    font-weight: 800;
-    font-family: var(--font-display);
-    /* Iridescent Text Effect */
+    font-size: 26px;
+    font-weight: 900;
     background: linear-gradient(135deg, #fff 0%, var(--accent-primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0;
     letter-spacing: -0.05em;
   }
+
+  /* Section Categories */
+  .sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    padding: 0 16px;
+    text-transform: uppercase;
+  }
   
   /* Navigation Menu */
   .nav-menu {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex: 1;
+    gap: 4px;
   }
   
   /* Nav Pills */
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 14px 16px;
+    gap: 14px;
+    padding: 10px 16px;
     border-radius: var(--radius-md);
-    font-size: var(--text-base);
+    font-size: 14px;
     font-weight: 500;
     color: var(--text-secondary);
     text-decoration: none;
     transition: all var(--transition-fast);
-    position: relative;
+    cursor: pointer;
     border: 1px solid transparent;
+    background: transparent;
   }
   
   .nav-item svg {
-    width: 24px;
-    height: 24px;
-    stroke-width: 2px;
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
     transition: all var(--transition-spring);
   }
   
-  /* Hover State */
   .nav-item:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05);
   }
   
   .nav-item:hover svg {
-    transform: scale(1.1);
     color: var(--accent-primary);
+    transform: translateX(2px);
   }
   
-  /* Active State */
   .nav-item.active {
     color: var(--text-primary);
     font-weight: 600;
-    background: rgba(0, 229, 255, 0.08);
-    border-color: rgba(0, 229, 255, 0.15);
-    box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--border-light);
   }
-  
+
   .nav-item.active svg {
     color: var(--accent-primary);
-    fill: rgba(0, 229, 255, 0.2);
   }
-  
-  /* Notification Badge */
-  .nav-badge {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--error);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 800;
-    min-width: 20px;
-    height: 20px;
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 6px;
-    box-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
-    animation: neonPulse 2s infinite;
+
+  /* Specific Nav Items */
+  .recent-item {
+    padding: 8px 16px;
   }
-  
-  @keyframes neonPulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 51, 102, 0.4); }
-    70% { box-shadow: 0 0 0 6px rgba(255, 51, 102, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 51, 102, 0); }
+
+  .c-mini-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .topic-item span {
+    opacity: 0.8;
+  }
+
+  .see-more {
+    font-size: 12px;
+    color: var(--accent-primary);
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  .create-comm-item {
+    color: var(--text-primary);
+    font-weight: 700;
   }
   
   /* Create Post Button */
   .post-btn-sidebar {
-    margin-top: 24px;
-    margin-bottom: 24px;
-    padding: 16px;
+    margin: 12px 0;
+    padding: 14px;
     width: 100%;
     border-radius: var(--radius-full);
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     color: #fff;
-    font-weight: 700;
-    font-size: var(--text-base);
+    font-weight: 800;
+    font-size: 15px;
     border: none;
-    cursor: pointer;
-    transition: all var(--transition-spring);
-    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .post-btn-sidebar::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transform: skewX(-20deg);
-    transition: all 0.5s ease;
-  }
-  
-  .post-btn-sidebar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
-  }
-  
-  .post-btn-sidebar:hover::before {
-    left: 150%;
-  }
-  
-  .post-btn-sidebar:active {
-    transform: translateY(1px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
   
   /* User Profile Bottom Area */
@@ -173,180 +170,46 @@
     gap: 12px;
     padding: 12px 16px;
     border-radius: var(--radius-lg);
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: var(--blur-sm);
+    background: var(--bg-glass-heavy);
     border: 1px solid var(--border-light);
-    margin-top: auto;
+    margin-top: 24px;
     cursor: pointer;
     transition: all var(--transition-spring);
   }
   
-  .user-sidebar-profile:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: var(--accent-primary-dim);
-    transform: translateY(-2px);
-  }
-  
   .user-sb-avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    object-fit: cover;
     border: 2px solid var(--accent-primary-dim);
-    box-shadow: 0 0 10px var(--accent-primary-dim);
-  }
-  
-  .user-sb-info {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
   }
   
   .user-sb-name {
     font-size: 14px;
     font-weight: 700;
     color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   
   .user-sb-username {
     font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 600;
+    color: var(--success);
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
   
   .logout-btn-mini {
     margin-left: auto;
     color: var(--text-muted);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    transition: all var(--transition-fast);
+    background: transparent;
   }
   
   .logout-btn-mini:hover {
     color: var(--error);
-    background: rgba(255, 51, 102, 0.15);
-    transform: rotate(90deg);
   }
   
-  /* =========================================================================
-     RESPONSIVE (TABLET 1024px)
-     ========================================================================= */
   @media (max-width: 1024px) {
-    .sidebar {
-      padding: 24px 12px;
-      align-items: center;
-    }
-    
-    .logo-text,
-    .nav-item span,
-    .user-sb-info {
-      display: none;
-    }
-  
-    .logo-container {
-      margin-bottom: 30px;
-      padding: 0;
-    }
-    
-    .nav-item {
-      padding: 14px;
-      justify-content: center;
-    }
-    
-    .nav-badge {
-      right: 4px;
-      top: 10px;
-      min-width: 16px;
-      height: 16px;
-      font-size: 9px;
-    }
-  
-    .post-btn-sidebar {
-      font-size: 0;
-      width: 48px;
-      height: 48px;
-      padding: 0;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 16px 0;
-    }
-    
-    .post-btn-sidebar::after {
-      content: '+';
-      font-size: 28px;
-      line-height: 1;
-    }
-  
-    .user-sidebar-profile {
-      flex-direction: column;
-      padding: 8px;
-      gap: 12px;
-      background: transparent;
-      border: none;
-    }
-  
-    .logout-btn-mini {
-      margin: 0;
-    }
-  }
-  
-  /* =========================================================================
-     RESPONSIVE (MOBILE 768px)
-     ========================================================================= */
-  @media (max-width: 768px) {
-    .sidebar {
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 16px;
-      border: none;
-      box-shadow: none;
-      /* Background is handled by App.css for mobile nav */
-    }
-  
-    .logo-container,
-    .post-btn-sidebar,
-    .user-sidebar-profile {
-      display: none;
-    }
-  
-    .nav-menu {
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-      gap: 0;
-    }
-  
-    .nav-item {
-      padding: 12px;
-      border: none;
-      background: transparent !important;
-      box-shadow: none !important;
-    }
-  
-    .nav-item svg {
-      width: 26px;
-      height: 26px;
-    }
-  
-    .nav-item:hover svg {
-      transform: translateY(-2px);
-    }
-  
-    .nav-item.active svg {
-      color: var(--accent-primary);
-      filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.4));
-    }
+    .section-label, .nav-item span, .user-sb-info { display: none; }
+    .sidebar { width: 80px; align-items: center; padding: 20px 0; }
+    .nav-item { padding: 12px; justify-content: center; }
+    .logo-container { padding: 0; margin-bottom: 24px; }
   }
