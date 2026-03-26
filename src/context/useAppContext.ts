@@ -19,6 +19,7 @@ interface AppContextState {
     loginWithGoogle: () => Promise<void>;
     logout: () => Promise<void>;
     updateProfile: (data: { username?: string; bio?: string; avatar?: string; isVerified?: boolean }) => Promise<void>;
+    updateAccountPassword: (newPassword: string) => Promise<void>;
 
     // From Data
     posts: Record<string, Post>;
@@ -81,6 +82,7 @@ export const useAppContext = (): AppContextState => {
         loginWithGoogle: auth.loginWithGoogle,
         logout: auth.logout,
         updateProfile: auth.updateProfile,
+        updateAccountPassword: auth.updateAccountPassword,
 
         // Data (cast users to correct type)
         posts: data.posts,

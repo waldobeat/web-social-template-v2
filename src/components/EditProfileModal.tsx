@@ -150,7 +150,7 @@ const getBioSuggestions = (username: string): string[] => {
 };
 
 export const EditProfileModal = ({ onClose }: Props) => {
-    const { currentUser, updateProfile, users, sendMessage } = useAppContext();
+    const { currentUser, updateProfile, updateAccountPassword, users, sendMessage } = useAppContext();
 
     const [username, setUsername] = useState(currentUser?.username?.replace(/^u\//, '') || '');
     const [bio, setBio] = useState(currentUser?.bio || '');
@@ -198,6 +198,13 @@ export const EditProfileModal = ({ onClose }: Props) => {
                 avatar: selectedAvatar || currentUser?.avatar,
                 isVerified: currentUser?.isVerified || false
             });
+
+            if (newPassword) {
+                await updateAccountPassword(newPassword);
+                alert('¡Perfil y contraseña actualizados exitosamente! 💖');
+            } else {
+                alert('Perfil actualizado. 💖');
+            }
 
             if (requestVerified && !currentUser?.isVerified) {
                 const adminUser = Object.values(users).find((u: any) => {

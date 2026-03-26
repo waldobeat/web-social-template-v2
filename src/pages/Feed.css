@@ -341,12 +341,6 @@
     align-items: start;
     gap: 12px;
   }
-  
-  .posts-list, .feed-header, .community-tags-section, .create-post-trigger {
-    grid-column: 1;
-  }
-  
-  }
 }
 
 .btn-delete-community {

@@ -4,8 +4,8 @@
  */
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { auth, db, signInWithGoogle } from '../services/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, updatePassword } from 'firebase/auth';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import type { UserProfile } from '../data/mockData';
 
 interface AuthContextType {
@@ -18,6 +18,7 @@ interface AuthContextType {
     loginWithGoogle: () => Promise<void>;
     logout: () => Promise<void>;
     updateProfile: (data: { username?: string; bio?: string; avatar?: string; isVerified?: boolean }) => Promise<void>;
+    updateAccountPassword: (newPassword: string) => Promise<void>;
     error: string | null;
 }
 
@@ -154,7 +155,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const updateProfile = async (data: { username?: string; bio?: string; avatar?: string; isVerified?: boolean }) => {
-        if (!currentUser) return;
+        if (!currentUser || !auth.currentUser) return;
+        setError(null);
 
         const updateData: Record<string, unknown> = {};
         if (data.username) updateData.username = data.username;
@@ -162,9 +164,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (data.avatar) updateData.avatar = data.avatar;
         if (data.isVerified !== undefined) updateData.isVerified = data.isVerified;
 
-        await doc; // Placeholder - actual updateDoc call would be in real implementation
-        // Update local state
-        setCurrentUser(prev => prev ? { ...prev, ...data } : null);
+        try {
+            await updateDoc(doc(db, 'users', auth.currentUser.uid), updateData);
+            // Update local state
+            setCurrentUser(prev => prev ? { ...prev, ...data } : null);
+        } catch (err: any) {
+            setError(err.message);
+            throw err;
+        }
+    };
+
+    const updateAccountPassword = async (newPassword: string) => {
+        if (!auth.currentUser) return;
+        setError(null);
+        try {
+            await updatePassword(auth.currentUser, newPassword);
+        } catch (err: any) {
+            setError(err.message);
+            throw err;
+        }
     };
 
     const value = {
@@ -177,6 +195,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loginWithGoogle,
         logout,
         updateProfile,
+        updateAccountPassword,
         error,
     };
 
