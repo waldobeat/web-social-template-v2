@@ -18,8 +18,6 @@ export const Profile = () => {
   if (!displayedUser) return <div className="profile-container">Usuario no encontrado. ☹️</div>;
 
   const myPosts = Object.values(posts).filter((p: Post) => p.authorId === displayedUser.id);
-  const followersList = (displayedUser.followers || []).map((id: string) => users[id]).filter(Boolean);
-  const followingList = (displayedUser.following || []).map((id: string) => users[id]).filter(Boolean);
   const isCurrentlyFollowing = currentUser?.following?.includes(displayedUser.id) || false;
   const isMe = currentUser?.id === displayedUser.id;
   const isAdmin = (currentUser as any)?.email === 'waldobeatmaker@gmail.com' || currentUser?.username === 'u/Sheddit';
@@ -89,8 +87,8 @@ export const Profile = () => {
 
           <p className="profile-bio">{displayedUser.bio}</p>
           <div className="stats">
-            <span><strong>{followersList.length}</strong> Seguidores</span>
-            <span><strong>{followingList.length}</strong> Siguiendo</span>
+            <span><strong>{displayedUser.followers?.length || 0}</strong> Seguidores</span>
+            <span><strong>{displayedUser.following?.length || 0}</strong> Siguiendo</span>
           </div>
         </div>
       </div>
