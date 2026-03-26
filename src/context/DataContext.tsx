@@ -57,6 +57,9 @@ interface DataContextType {
 
     // Notification operations
     markNotificationRead: (id: string) => Promise<void>;
+
+    // Admin operations
+    grantPremiumRole: (userId: string) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -547,6 +550,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         await updateDoc(doc(db, 'notifications', id), { read: true });
     };
 
+    // Admin operations
+    const grantPremiumRole = async (userId: string) => {
+        if (!currentUser) return;
+        // Check if admin by email
+        if ((currentUser as any).email !== 'waldobeatmaker@gmail.com') {
+            console.error('Unauthorized');
+            return;
+        }
+        await updateDoc(doc(db, 'users', userId), { isPremium: true });
+    };
+
     const value: DataContextType = {
         posts,
         comments,
@@ -577,6 +591,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         acceptMessageRequest,
         rejectMessageRequest,
         markNotificationRead,
+        grantPremiumRole,
     };
 
     return (

@@ -10,7 +10,7 @@ import './Profile.css';
 
 export const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { currentUser, posts, users, toggleFollow, communities, logout } = useAppContext();
+  const { currentUser, posts, users, toggleFollow, communities, logout, grantPremiumRole } = useAppContext();
   const [showEditModal, setShowEditModal] = useState(false);
 
   const displayedUser = userId ? users[userId] : currentUser;
@@ -22,6 +22,7 @@ export const Profile = () => {
   const followingList = (displayedUser.following || []).map((id: string) => users[id]).filter(Boolean);
   const isCurrentlyFollowing = currentUser?.following?.includes(displayedUser.id) || false;
   const isMe = currentUser?.id === displayedUser.id;
+  const isAdmin = (currentUser as any)?.email === 'waldobeatmaker@gmail.com' || currentUser?.username === 'u/Sheddit';
 
   // Get user's communities
   const myCommunities = Object.values(communities).filter(c => c.ownerId === displayedUser.id);
@@ -60,17 +61,29 @@ export const Profile = () => {
               </div>
             )}
             {!isMe && (
-              <button
-                className={`btn-follow ${isCurrentlyFollowing ? 'following' : 'primary'}`}
-                onClick={() => toggleFollow(displayedUser.id)}
-              >
-                {isCurrentlyFollowing ? (
-                  <>
-                    <span className="following-text">Siguiendo</span>
-                    <span className="unfollow-text">Dejar de seguir</span>
-                  </>
-                ) : 'Seguir'}
-              </button>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <button
+                  className={`btn-follow ${isCurrentlyFollowing ? 'following' : 'primary'}`}
+                  onClick={() => toggleFollow(displayedUser.id)}
+                >
+                  {isCurrentlyFollowing ? (
+                    <>
+                      <span className="following-text">Siguiendo</span>
+                      <span className="unfollow-text">Dejar de seguir</span>
+                    </>
+                  ) : 'Seguir'}
+                </button>
+                
+                {isAdmin && !displayedUser.isPremium && (
+                  <button
+                    className="btn-primary"
+                    onClick={() => grantPremiumRole(displayedUser.id)}
+                    style={{ background: 'var(--warning)', color: '#fff', fontSize: '13px' }}
+                  >
+                    ⭐ Hacer Premium
+                  </button>
+                )}
+              </div>
             )}
           </div>
 

@@ -45,6 +45,7 @@ interface AppContextState {
     acceptMessageRequest: (requestId: string) => Promise<void>;
     rejectMessageRequest: (requestId: string) => Promise<void>;
     markNotificationRead: (id: string) => Promise<void>;
+    grantPremiumRole: (userId: string) => Promise<void>;
 
     // From UI
     isCreatePostOpen: boolean;
@@ -110,6 +111,7 @@ export const useAppContext = (): AppContextState => {
         acceptMessageRequest: data.acceptMessageRequest,
         rejectMessageRequest: data.rejectMessageRequest,
         markNotificationRead: data.markNotificationRead,
+        grantPremiumRole: data.grantPremiumRole,
 
         // UI
         isCreatePostOpen: ui.isCreatePostOpen,

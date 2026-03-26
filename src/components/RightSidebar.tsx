@@ -7,7 +7,6 @@ import { CommunitySearch } from './CommunitySearch';
 import './RightSidebar.css';
 
 const THEME_COLORS = ['#FF8DA1', '#B39DFF', '#FF7F50', '#A8D8A8', '#F4A261', '#E9C46A', '#E63946', '#E76F51'];
-const FOLLOWERS_REQUIRED = 100;
 
 export const RightSidebar = () => {
   const { communities, users, currentUser, toggleFollow, addCommunity, sendMessage, joinCommunity, leaveCommunity } = useAppContext();
@@ -38,8 +37,8 @@ export const RightSidebar = () => {
 
   // Check if user can create community
   const followersCount = currentUser?.followers?.length || 0;
-  const canCreateCommunity = followersCount >= FOLLOWERS_REQUIRED || currentUser?.isPremium;
-  const followersNeeded = Math.max(0, FOLLOWERS_REQUIRED - followersCount);
+  const isAdmin = (currentUser as any)?.email === 'waldobeatmaker@gmail.com' || currentUser?.username === 'u/Sheddit';
+  const canCreateCommunity = currentUser?.isPremium || isAdmin;
 
   const handleCreateClick = () => {
     if (canCreateCommunity) {
@@ -95,7 +94,7 @@ export const RightSidebar = () => {
           <button
             className={`icon-btn ${!canCreateCommunity ? 'locked' : ''}`}
             onClick={handleCreateClick}
-            title={canCreateCommunity ? 'Crear comunidad' : `Necesitas ${followersNeeded} seguidores más`}
+            title={canCreateCommunity ? 'Crear comunidad' : 'Requiere Pase Premium'}
           >
             <PlusCircle size={20} />
           </button>
