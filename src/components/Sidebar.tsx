@@ -34,6 +34,22 @@ export const Sidebar = () => {
         <NavLink to="/profile" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
           <User size={24} /> <span>Perfil</span>
         </NavLink>
+        
+        {/* Publicidad La Tasa */}
+        <a 
+          href="https://a-tasa-dolar-en-venezuela.uptodown.com/android" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="sidebar-ad"
+        >
+          <div className="ad-content">
+            <img src="/ad-tasa.png" alt="La Tasa" className="ad-banner" />
+            <div className="ad-overlay">
+              <span className="ad-badge">AD</span>
+              <span className="ad-title">La Tasa ☕</span>
+            </div>
+          </div>
+        </a>
       </nav>
       <button className="btn-primary post-btn-sidebar" onClick={() => setCreatePostOpen(true)}>Publicar</button>
     </aside>

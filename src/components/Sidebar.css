@@ -148,3 +148,64 @@
     transform: translateY(-2px);
   }
 }
+.sidebar-ad {
+  margin: 15px 12px;
+  display: block;
+  text-decoration: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-light);
+}
+
+.sidebar-ad:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.ad-content {
+  position: relative;
+  width: 100%;
+}
+
+.ad-banner {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  object-fit: cover;
+}
+
+.ad-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ad-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.ad-title {
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-ad {
+    display: none;
+  }
+}
