@@ -2,9 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start; /* Ensure items dock to top */
-  gap: 20px; /* Spacing between sidebars and feed */
+  gap: 12px; /* Spacing between sidebars and feed - tightened */
   width: 100%;
-  max-width: 1350px;
+  max-width: 1320px;
   margin: 0 auto;
   min-height: 100vh;
   position: relative;

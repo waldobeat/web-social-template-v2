@@ -1,4 +1,4 @@
-.explore-container { flex: 1; max-width: 750px; border: none; min-height: 100vh; background: transparent; }
+.explore-container { flex: 1; max-width: 850px; padding: 15px 20px; border: none; min-height: 100vh; background: transparent; }
 .explore-header { padding: 20px; border-bottom: none; background: transparent; display: flex; align-items: center; gap: 10px; margin-bottom: 10px;}
 .explore-header h2 { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
 .communities-grid { 
