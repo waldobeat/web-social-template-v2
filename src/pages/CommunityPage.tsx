@@ -86,62 +86,62 @@ export const CommunityPage = () => {
         description={community.description}
         type="website"
       />
-      <div className="feed-header community-page-header" style={{ borderBottom: `4px solid ${community.colorTheme}` }}>
-        <div className="feed-title-row">
-          <div className="community-info-large">
-            <div className="comm-dot-large" style={{ backgroundColor: community.colorTheme }} />
-            <div>
-              <h2>{community.name}</h2>
-              <p className="text-muted">{community.description}</p>
-              <div className="comm-meta-row">
-                <span><strong>{community.memberCount || 0}</strong> miembros</span>
-              </div>
-            </div>
-          </div>
-          <button
-            className={`btn-join-large ${isJoined ? 'joined' : 'primary'}`}
-            onClick={() => isJoined ? leaveCommunity(community.id) : joinCommunity(community.id)}
-          >
-            {isJoined ? 'Unido' : 'Unirse'}
-          </button>
-        </div>
-      </div>
-
-      {/* Etiquetas Recientes */}
-      {recentTags.length > 0 && (
-        <div className="community-tags-section">
-          <div className="tags-section-header">
-            <Tag size={16} />
-            <span>Etiquetas Recientes</span>
-          </div>
-          <div className="tags-list">
-            {recentTags.map((tag, index) => {
-              if (tag.type === 'user') {
-                const user = mentionedUsers.find(u => u.username.replace(/^u\//, '') === tag.name);
-                return user ? (
-                  <a key={index} href={`/profile/${user.id}`} className="tag-chip user-tag">
-                    <img src={user.avatar} alt="" className="tag-avatar" />
-                    <span>u/{tag.name}</span>
-                    <span className="tag-count">{tag.count}</span>
-                  </a>
-                ) : null;
-              } else {
-                const comm = Object.values(communities).find(c => c.name === tag.name);
-                return (
-                  <a key={index} href={`/community/${comm?.id || ''}`} className="tag-chip community-tag" style={comm ? { borderColor: comm.colorTheme } : {}}>
-                    <span className="tag-icon" style={comm ? { background: comm.colorTheme } : {}}>🌐</span>
-                    <span>c/{tag.name}</span>
-                    <span className="tag-count">{tag.count}</span>
-                  </a>
-                );
-              }
-            })}
-          </div>
-        </div>
-      )}
-
       <div className="community-main-grid">
         <div className="community-content-column">
+          <div className="feed-header community-page-header" style={{ borderBottom: `4px solid ${community.colorTheme}` }}>
+            <div className="feed-title-row">
+              <div className="community-info-large">
+                <div className="comm-dot-large" style={{ backgroundColor: community.colorTheme }} />
+                <div>
+                  <h2>{community.name}</h2>
+                  <p className="text-muted">{community.description}</p>
+                  <div className="comm-meta-row">
+                    <span><strong>{community.memberCount || 0}</strong> miembros</span>
+                  </div>
+                </div>
+              </div>
+              <button
+                className={`btn-join-large ${isJoined ? 'joined' : 'primary'}`}
+                onClick={() => isJoined ? leaveCommunity(community.id) : joinCommunity(community.id)}
+              >
+                {isJoined ? 'Unido' : 'Unirse'}
+              </button>
+            </div>
+          </div>
+
+          {/* Etiquetas Recientes */}
+          {recentTags.length > 0 && (
+            <div className="community-tags-section">
+              <div className="tags-section-header">
+                <Tag size={16} />
+                <span>Etiquetas Recientes</span>
+              </div>
+              <div className="tags-list">
+                {recentTags.map((tag, index) => {
+                  if (tag.type === 'user') {
+                    const user = mentionedUsers.find(u => u.username.replace(/^u\//, '') === tag.name);
+                    return user ? (
+                      <a key={index} href={`/profile/${user.id}`} className="tag-chip user-tag">
+                        <img src={user.avatar} alt="" className="tag-avatar" />
+                        <span>u/{tag.name}</span>
+                        <span className="tag-count">{tag.count}</span>
+                      </a>
+                    ) : null;
+                  } else {
+                    const comm = Object.values(communities).find(c => c.name === tag.name);
+                    return (
+                      <a key={index} href={`/community/${comm?.id || ''}`} className="tag-chip community-tag" style={comm ? { borderColor: comm.colorTheme } : {}}>
+                        <span className="tag-icon" style={comm ? { background: comm.colorTheme } : {}}>🌐</span>
+                        <span>c/{tag.name}</span>
+                        <span className="tag-count">{tag.count}</span>
+                      </a>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+          )}
+
           {isJoined && (
             <div className="create-post-trigger" onClick={() => setCreatePostOpen(true)}>
               <img src={currentUser?.avatar} alt="me" className="trigger-avatar" />
