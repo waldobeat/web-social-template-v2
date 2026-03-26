@@ -171,25 +171,29 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    background: rgba(255,255,255,0.02);
+    padding: 12px 16px;
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: var(--blur-sm);
     border: 1px solid var(--border-light);
     margin-top: auto;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all var(--transition-spring);
   }
   
   .user-sidebar-profile:hover {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent-primary-dim);
+    transform: translateY(-2px);
   }
   
   .user-sb-avatar {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--border-light);
+    border: 2px solid var(--accent-primary-dim);
+    box-shadow: 0 0 10px var(--accent-primary-dim);
   }
   
   .user-sb-info {
@@ -200,7 +204,7 @@
   
   .user-sb-name {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
@@ -208,20 +212,30 @@
   }
   
   .user-sb-username {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
   
   .logout-btn-mini {
     margin-left: auto;
     color: var(--text-muted);
-    padding: 8px;
-    border-radius: var(--radius-sm);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-fast);
   }
   
   .logout-btn-mini:hover {
     color: var(--error);
-    background: rgba(255,51,102,0.1);
+    background: rgba(255, 51, 102, 0.15);
+    transform: rotate(90deg);
   }
   
   /* =========================================================================
@@ -278,7 +292,7 @@
     .user-sidebar-profile {
       flex-direction: column;
       padding: 8px;
-      gap: 16px;
+      gap: 12px;
       background: transparent;
       border: none;
     }

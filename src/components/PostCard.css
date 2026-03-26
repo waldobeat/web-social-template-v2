@@ -26,6 +26,7 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .avatar {
@@ -127,6 +128,30 @@
   color: var(--text-primary);
   font-weight: 600;
   transition: all var(--transition-fast);
+}
+
+.header-actions {
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+.more-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.more-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
 }
 
 .opt-item:hover, .share-option:hover {
