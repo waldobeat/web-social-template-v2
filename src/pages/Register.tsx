@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TermsModal from '../components/TermsModal'
 
 interface RegisterProps {
     onRegister: () => void
@@ -11,6 +12,7 @@ function Register({ onRegister }: RegisterProps) {
     const [acceptedTerms, setAcceptedTerms] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
+    const [isTermsModalOpen, setIsTermsModalOpen] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -24,10 +26,8 @@ function Register({ onRegister }: RegisterProps) {
         setError('')
 
         try {
-            // Simulación de registro
             await new Promise(resolve => setTimeout(resolve, 1500))
 
-            // Validaciones básicas
             if (!email || !password || !username) {
                 throw new Error('Todos los campos son requeridos')
             }
@@ -36,11 +36,6 @@ function Register({ onRegister }: RegisterProps) {
                 throw new Error('La contraseña debe tener al menos 6 caracteres')
             }
 
-            if (!email.includes('@')) {
-                throw new Error('Ingresa un email válido')
-            }
-
-            // Registro exitoso
             onRegister()
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Error al registrarse')
@@ -52,9 +47,22 @@ function Register({ onRegister }: RegisterProps) {
     return (
         <div className="register-container">
             <div className="register-card">
+                <div className="promo-badge">
+                    ⚡ ¡OFERTA LANZAMIENTO: Primeros 1000 Nodos obtienen PREMIUM DE POR VIDA! ⚡
+                </div>
+
                 <div className="register-header">
                     <h1 className="register-title">SHEDDIT</h1>
-                    <p className="register-subtitle">Únete a la revolución de las redes sociales</p>
+                    <p className="register-subtitle">Únete a la red social donde tu privacidad es ley.</p>
+                </div>
+
+                <div className="auth-methods">
+                    <button className="google-button">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="google-icon" />
+                        <span>Continuar con Google</span>
+                    </button>
+                    
+                    <div className="divider">o regístrate con email</div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="register-form">
@@ -71,7 +79,7 @@ function Register({ onRegister }: RegisterProps) {
                             id="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="tu_nombre_usuario"
+                            placeholder="@nombre_unico"
                             disabled={isLoading}
                         />
                     </div>
@@ -83,7 +91,7 @@ function Register({ onRegister }: RegisterProps) {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="tu@email.com"
+                            placeholder="tu@nodo.com"
                             disabled={isLoading}
                         />
                     </div>
@@ -109,7 +117,7 @@ function Register({ onRegister }: RegisterProps) {
                                 disabled={isLoading}
                             />
                             <span>
-                                He leído y acepto los <a href="/terms" target="_blank" rel="noopener noreferrer">Términos de Servicio</a> de Sheddit. Entiendo que mi privacidad es total y mi responsabilidad sobre lo que publico es absoluta.
+                                He leído y acepto los <button type="button" className="terms-link-btn" onClick={() => setIsTermsModalOpen(true)}>Términos de Servicio</button> de Sheddit. Entiendo mi responsabilidad absoluta.
                             </span>
                         </label>
                     </div>
@@ -119,14 +127,19 @@ function Register({ onRegister }: RegisterProps) {
                         className="register-button"
                         disabled={isLoading}
                     >
-                        {isLoading ? 'Registrando...' : 'Crear Cuenta'}
+                        {isLoading ? 'Creando Nodo...' : 'Unirme a la Red'}
                     </button>
                 </form>
 
                 <div className="register-footer">
-                    <p>¿Ya tienes cuenta? <a href="#login">Iniciar sesión</a></p>
+                    <p>¿Ya eres parte? <a href="#login">Iniciar sesión</a></p>
                 </div>
             </div>
+
+            <TermsModal 
+                isOpen={isTermsModalOpen} 
+                onClose={() => setIsTermsModalOpen(false)} 
+            />
         </div>
     )
 }
