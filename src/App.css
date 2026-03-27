@@ -332,3 +332,16 @@ body {
         font-size: 2.5rem;
     }
 }
+
+.subtle-user-count {
+    position: fixed;
+    bottom: 12px;
+    right: 16px;
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    font-weight: 400;
+    pointer-events: none;
+    letter-spacing: 1px;
+    user-select: none;
+    z-index: 1000;
+}

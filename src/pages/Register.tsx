@@ -7,7 +7,7 @@ interface RegisterProps {
 }
 
 function Register({ onRegister }: RegisterProps) {
-    const { registerWithEmail, loginWithGoogle } = useAuth()
+    const { registerWithEmail, loginWithGoogle, userCount } = useAuth()
     
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -159,6 +159,7 @@ function Register({ onRegister }: RegisterProps) {
                 isOpen={isTermsModalOpen} 
                 onClose={() => setIsTermsModalOpen(false)} 
             />
+            <div className="subtle-user-count" title="Nodos activos">{userCount}</div>
         </div>
     )
 }
