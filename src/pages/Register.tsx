@@ -153,10 +153,6 @@ function Register({ onRegister }: RegisterProps) {
                         {isLoading ? 'Creando Nodo...' : 'Unirme a la Red'}
                     </button>
                 </form>
-
-                <div className="register-footer">
-                    <p>¿Ya eres parte? <a href="#login">Iniciar sesión</a></p>
-                </div>
             </div>
 
             <TermsModal 

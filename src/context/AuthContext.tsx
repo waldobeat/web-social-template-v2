@@ -1,70 +1,154 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-    onAuthStateChanged, 
-    signInWithPopup, 
-    signOut, 
-    createUserWithEmailAndPassword 
-} from 'firebase/auth';
-import type { User } from 'firebase/auth';
-import { auth, googleProvider, db } from '../firebase/config';
+import { onAuthStateChanged, type User } from 'firebase/auth';
+import { auth, db, signInWithGoogle, signOut, createUserWithEmailAndPassword } from '../services/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+interface UserProfile {
+    id: string;
+    username: string;
+    email: string | null;
+    avatar: string;
+    bio: string;
+    followers: string[];
+    following: string[];
+    joinedCommunityIds: string[];
+    createdAt: string;
+}
+
 interface AuthContextType {
-    user: User | null;
-    loading: boolean;
+    currentUser: UserProfile | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    profileLoaded: boolean;
+    loginWithEmail: (email: string, pass: string) => Promise<void>;
     registerWithEmail: (email: string, pass: string, username: string) => Promise<void>;
     loginWithGoogle: () => Promise<void>;
     logout: () => Promise<void>;
+    error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [profileLoaded, setProfileLoaded] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-            setUser(authUser);
-            setLoading(false);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                setIsAuthenticated(true);
+                try {
+                    const docSnap = await getDoc(doc(db, 'users', user.uid));
+                    if (docSnap.exists()) {
+                        setCurrentUser({ id: docSnap.id, ...docSnap.data() } as UserProfile);
+                    }
+                } catch (err) {
+                    console.error('Error loading profile:', err);
+                }
+            } else {
+                setIsAuthenticated(false);
+                setCurrentUser(null);
+            }
+            setProfileLoaded(true);
+            setIsLoading(false);
         });
-        return unsubscribe;
+
+        return () => unsubscribe();
     }, []);
 
     const registerWithEmail = async (email: string, pass: string, username: string) => {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-        const newUser = userCredential.user;
-        
-        await setDoc(doc(db, 'users', newUser.uid), {
-            username: username.startsWith('u/') ? username : `u/${username}`,
-            email: email,
-            createdAt: new Date().toISOString(),
-            isPremiumCandidate: true 
-        });
-    };
+        setError(null);
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, pass);
+            const finalUsername = username.startsWith('u/') ? username : `u/${username}`;
+            const robotAvatar = `https://robohash.org/${res.user.uid}?set=set4&bgset=bg1&size=200x200`;
 
-    const loginWithGoogle = async () => {
-        const result = await signInWithPopup(auth, googleProvider);
-        const loggedUser = result.user;
-        
-        const userRef = doc(db, 'users', loggedUser.uid);
-        const userSnap = await getDoc(userRef);
-        
-        if (!userSnap.exists()) {
-            const baseName = loggedUser.displayName?.split(' ')[0].toLowerCase() || 'user';
-            await setDoc(userRef, {
-                username: `u/${baseName}_${Math.floor(Math.random() * 1000)}`,
-                email: loggedUser.email,
-                createdAt: new Date().toISOString(),
-                isPremiumCandidate: true
-            });
+            const userProfile: UserProfile = {
+                id: res.user.uid,
+                username: finalUsername,
+                email: email,
+                avatar: robotAvatar,
+                bio: '¡Nueva en Sheddit! ✨',
+                followers: [],
+                following: [],
+                joinedCommunityIds: [],
+                createdAt: new Date().toISOString()
+            };
+
+            await setDoc(doc(db, 'users', res.user.uid), userProfile);
+            setCurrentUser(userProfile);
+        } catch (err: any) {
+            setError(err.message);
+            throw err;
         }
     };
 
-    const logout = () => signOut(auth);
+    const loginWithGoogle = async () => {
+        setError(null);
+        try {
+            const result = await signInWithGoogle();
+            const user = result.user;
+
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (!userDoc.exists()) {
+                const emailParts = user.email?.split('@') || ['user'];
+                const defaultUsername = `u/${emailParts[0]}`;
+                const googleAvatar = user.photoURL || `https://robohash.org/${user.uid}?set=set4&bgset=bg1&size=200x200`;
+
+                const newProfile: UserProfile = {
+                    id: user.uid,
+                    username: defaultUsername,
+                    email: user.email,
+                    avatar: googleAvatar,
+                    bio: '¡Nueva en Sheddit! ✨',
+                    followers: [],
+                    following: [],
+                    joinedCommunityIds: [],
+                    createdAt: new Date().toISOString()
+                };
+
+                await setDoc(doc(db, 'users', user.uid), newProfile);
+                setCurrentUser(newProfile);
+            } else {
+                setCurrentUser({ id: userDoc.id, ...userDoc.data() } as UserProfile);
+            }
+        } catch (err: any) {
+            setError(err.message);
+            throw err;
+        }
+    };
+
+    const logout = async () => {
+        setError(null);
+        try {
+            await signOut(auth);
+            setCurrentUser(null);
+            setIsAuthenticated(false);
+        } catch (err: any) {
+            setError(err.message);
+            throw err;
+        }
+    };
+
+    const loginWithEmail = async (_email: string, _pass: string) => {
+        // Logic for email login...
+    };
 
     return (
-        <AuthContext.Provider value={{ user, loading, registerWithEmail, loginWithGoogle, logout }}>
+        <AuthContext.Provider value={{ 
+            currentUser, 
+            isAuthenticated, 
+            isLoading, 
+            profileLoaded, 
+            registerWithEmail, 
+            loginWithGoogle, 
+            logout,
+            loginWithEmail,
+            error 
+        }}>
             {children}
         </AuthContext.Provider>
     );
