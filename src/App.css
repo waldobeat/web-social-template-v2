@@ -95,11 +95,11 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    position: relative;
-    background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+    background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
     overflow: hidden;
+    position: relative;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .register-container.visible {
@@ -109,28 +109,43 @@ body {
 .register-container::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.05) 0%, transparent 60%);
+    top: -50%;
+    left: -50%;
+    animation: pulse-bg 15s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-bg {
+    from { transform: translate(-5%, -5%) scale(1); }
+    to { transform: translate(5%, 5%) scale(1.1); }
 }
 
 .register-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    padding: 48px;
     border-radius: 24px;
-    padding: 32px;
+    border: 1px solid rgba(168, 85, 247, 0.3);
     width: 100%;
-    max-width: 380px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    max-width: 420px;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(168, 85, 247, 0.1);
+    position: relative;
+    z-index: 10;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: slideUp 0.6s ease-out;
+}
+
+.register-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 30px 60px -12px rgba(0, 0, 0, 0.6),
+        0 0 50px rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.5);
 }
 
 @keyframes slideUp {
