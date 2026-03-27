@@ -79,7 +79,7 @@ function TermsOfService() {
 
                 <div className="tos-footer">
                     <button className="tos-back-button" onClick={() => navigate(-1)}>
-                        Volver al registro
+                        Cerrar y Volver
                     </button>
                 </div>
             </div>

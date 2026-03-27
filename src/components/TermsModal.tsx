@@ -33,7 +33,7 @@ function TermsModal({ isOpen, onClose }: TermsModalProps) {
                     </p>
                 </div>
                 <div className="modal-footer">
-                    <button className="modal-accept-button" onClick={onClose}>Entendido</button>
+                    <button className="modal-accept-button" onClick={onClose}>Cerrar y Regresar</button>
                 </div>
             </div>
         </div>
