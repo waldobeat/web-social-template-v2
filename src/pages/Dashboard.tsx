@@ -1,17 +1,30 @@
-
+import { useState } from 'react';
 import GamePanel from '../components/GamePanel';
 import ControlPanel from '../components/ControlPanel';
+import LoginScreen from '../components/LoginScreen';
 import { useGameSimulation } from '../hooks/useGameSimulation';
 
 export default function Dashboard() {
   const { gameState, isEngineReady, startGame, resetGame, botGuess } = useGameSimulation();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('sheddit_admin_auth') === 'true';
+  });
+
+  const handleLoginSuccess = () => {
+    sessionStorage.setItem('sheddit_admin_auth', 'true');
+    setIsAuthenticated(true);
+  };
+
+  if (!isAuthenticated) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
 
   return (
     <div className="relative min-h-screen bg-concrete">
       {!isEngineReady && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-neon-green/20 border-t-neon-green"></div>
-          <p className="mt-4 text-[10px] uppercase tracking-widest text-neon-green text-glow-green">Iniciando Motor Semantico...</p>
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-neon-pink/20 border-t-neon-pink"></div>
+          <p className="mt-4 text-[10px] uppercase tracking-widest text-neon-pink text-glow-pink">Iniciando Motor Semantico...</p>
         </div>
       )}
       <div className="flex flex-col md:flex-row min-h-screen">
@@ -26,7 +39,7 @@ export default function Dashboard() {
         <div className="w-full md:w-96 border-l border-iron bg-metal p-5 shadow-2xl overflow-y-auto">
           <div className="mb-6 border-b border-iron pb-4">
             <h1 className="text-xl font-bold tracking-wider text-gray-100">
-              SHEDDIT <span className="text-neon-green text-glow-green">ADMIN</span>
+              SHEDDIT <span className="text-neon-pink text-glow-pink">ADMIN</span>
             </h1>
             <p className="text-[10px] tracking-widest text-gray-400">
               Panel de Control Local

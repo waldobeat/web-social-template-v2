@@ -6,13 +6,15 @@
   --color-neon-yellow: #ffcc00;
   --color-neon-red: #ff003c;
   --color-neon-red-dim: #cc0030;
-  --color-steel: #1a1d21;
-  --color-steel-light: #2a2d31;
-  --color-concrete: #0d0f11;
-  --color-rust: #3d2817;
-  --color-bronze: #4a3f35;
-  --color-metal: #1f2328;
-  --color-iron: #2b2f36;
+  --color-neon-pink: #ff00ff;
+  --color-neon-pink-dim: #cc00cc;
+  --color-steel: #1f1122;
+  --color-steel-light: #331535;
+  --color-concrete: #0f0511;
+  --color-rust: #3d172a;
+  --color-bronze: #4a2135;
+  --color-metal: #18091a;
+  --color-iron: #2d1430;
 }
 
 @font-face {
@@ -98,4 +100,12 @@
 
 .border-glow-red {
   box-shadow: 0 0 6px rgba(255, 0, 60, 0.3), inset 0 0 6px rgba(255, 0, 60, 0.1);
+}
+
+.text-glow-pink {
+  text-shadow: 0 0 8px rgba(255, 0, 255, 0.6), 0 0 16px rgba(255, 0, 255, 0.3);
+}
+
+.border-glow-pink {
+  box-shadow: 0 0 6px rgba(255, 0, 255, 0.3), inset 0 0 6px rgba(255, 0, 255, 0.1);
 }

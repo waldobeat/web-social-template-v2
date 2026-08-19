@@ -26,14 +26,14 @@ export default function AttemptsList({ attempts }: AttemptsListProps) {
       {attempts.slice().reverse().map((attempt) => (
         <div
           key={attempt.id}
-          className={`flex items-center justify-between rounded-md border border-transparent px-2.5 py-1.5 transition-all duration-150 hover:scale-[1.01] ${getRankRing(attempt.rank)} ${getRankBgGlow(attempt.rank)} ${attempt.rank === 1 ? 'border-neon-green border-glow-green' : ''}`}
+          className={`flex items-center justify-between rounded-md border border-transparent px-2.5 py-1.5 transition-all duration-150 hover:scale-[1.01] ${getRankRing(attempt.rank)} ${getRankBgGlow(attempt.rank)} ${attempt.rank === 1 ? 'border-neon-pink border-glow-green' : ''}`}
         >
           <div className="flex items-center gap-2 min-w-0">
             <span className="truncate text-xs font-bold text-gray-200">
               {attempt.word}
             </span>
             {attempt.isMod && (
-              <span className="shrink-0 rounded-sm border border-neon-green/40 bg-neon-green/10 px-1 py-0.5 text-[8px] font-bold uppercase tracking-wider text-neon-green">
+              <span className="shrink-0 rounded-sm border border-neon-pink/40 bg-neon-pink/10 px-1 py-0.5 text-[8px] font-bold uppercase tracking-wider text-neon-pink">
                 MOD
               </span>
             )}
