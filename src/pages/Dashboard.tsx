@@ -1,14 +1,34 @@
+import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import GamePanel from '../components/GamePanel';
 import ControlPanel from '../components/ControlPanel';
 import { useGameSimulation } from '../hooks/useGameSimulation';
-import { getSessionRole } from '../utils/auth';
 
 export default function Dashboard() {
   const { gameState, isEngineReady, startGame, resetGame, botGuess } = useGameSimulation();
-  const role = getSessionRole();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
-  if (role !== 'admin') {
+  useEffect(() => {
+    import('firebase/auth').then(({ onAuthStateChanged }) => {
+      import('../lib/firebase').then(({ auth }) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          setIsAdmin(!!user);
+        });
+        return unsubscribe;
+      });
+    });
+  }, []);
+
+  if (isAdmin === null) {
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white"></div>
+        <p className="mt-4 font-mono text-xs tracking-widest text-gray-400">VERIFICANDO CREDENCIALES...</p>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
     return <Navigate to="/" replace />;
   }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginScreen from '../components/LoginScreen';
-import { getSessionRole, setSessionRole } from '../utils/auth';
+
 
 const GAMES = [
   {
@@ -36,11 +36,27 @@ export default function Marketplace() {
   const [role, setRole] = useState<'admin' | 'user' | null>(null);
 
   useEffect(() => {
-    setRole(getSessionRole());
+    import('firebase/auth').then(({ onAuthStateChanged }) => {
+      import('../lib/firebase').then(({ auth }) => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setRole('admin');
+          } else {
+            // Revert to null or user if no firebase user
+            // We can check sessionStorage if we want guest support
+            const storedRole = sessionStorage.getItem('sheddit_role');
+            setRole(storedRole as 'user' | null);
+          }
+        });
+      });
+    });
   }, []);
 
   const handleLoginSuccess = (newRole: 'admin' | 'user') => {
-    setRole(newRole);
+    if (newRole === 'user') {
+      sessionStorage.setItem('sheddit_role', 'user');
+      setRole('user');
+    }
     setShowLogin(false);
     if (newRole === 'admin') {
       navigate('/admin');
@@ -48,7 +64,12 @@ export default function Marketplace() {
   };
 
   const handleLogout = () => {
-    setSessionRole(null);
+    import('firebase/auth').then(({ signOut }) => {
+      import('../lib/firebase').then(({ auth }) => {
+        signOut(auth);
+      });
+    });
+    sessionStorage.removeItem('sheddit_role');
     setRole(null);
   };
 

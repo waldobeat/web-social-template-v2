@@ -14,7 +14,6 @@ export function useGameSimulation() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_STATE);
   const [isEngineReady, setIsEngineReady] = useState(false);
   const workerRef = useRef<Worker | null>(null);
-  const broadcastRef = useRef<BroadcastChannel | null>(null);
   
   // Cache of embeddings to avoid re-calculating for same words
   const embeddingsCache = useRef<Map<string, number[]>>(new Map());
@@ -47,18 +46,24 @@ export function useGameSimulation() {
 
     workerRef.current.postMessage({ type: 'init' });
 
-    broadcastRef.current = new BroadcastChannel('sheddit_state');
+    // Eliminar o comentar temporalmente BroadcastChannel si se quiere usar solo Firebase
+    // broadcastRef.current = new BroadcastChannel('sheddit_state');
 
     return () => {
       workerRef.current?.terminate();
-      broadcastRef.current?.close();
+      // broadcastRef.current?.close();
     };
   }, []);
 
-  // Sincronizar estado con el overlay cada vez que cambia
+  // Sincronizar estado con Firebase cada vez que cambia
   useEffect(() => {
-    if (broadcastRef.current) {
-      broadcastRef.current.postMessage({ type: 'STATE_UPDATE', payload: gameState });
+    // Mantener sincronizado en la base de datos de Firebase
+    if (gameState.status !== 'idle' || gameState.attempts.length > 0) {
+      import('firebase/database').then(({ ref, set }) => {
+        import('../lib/firebase').then(({ db }) => {
+          set(ref(db, 'sheddit/gameState'), gameState).catch(console.error);
+        });
+      });
     }
   }, [gameState]);
 

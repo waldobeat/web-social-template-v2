@@ -14,17 +14,30 @@ export default function Overlay() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_STATE);
 
   useEffect(() => {
-    // Listen to updates from Dashboard
-    const channel = new BroadcastChannel('sheddit_state');
+    // Listen to updates from Firebase Realtime Database
+    let unsubscribe = () => {};
     
-    channel.onmessage = (event) => {
-      if (event.data?.type === 'STATE_UPDATE') {
-        setGameState(event.data.payload);
-      }
-    };
+    import('firebase/database').then(({ ref, onValue }) => {
+      import('../lib/firebase').then(({ db }) => {
+        const stateRef = ref(db, 'sheddit/gameState');
+        unsubscribe = onValue(stateRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            // Ensure attempts and bestApproximations are arrays even if empty in Firebase
+            setGameState({
+              ...INITIAL_STATE,
+              ...data,
+              attempts: data.attempts || [],
+              bestApproximations: data.bestApproximations || [],
+              players: data.players || []
+            });
+          }
+        });
+      });
+    });
 
     return () => {
-      channel.close();
+      unsubscribe();
     };
   }, []);
 
