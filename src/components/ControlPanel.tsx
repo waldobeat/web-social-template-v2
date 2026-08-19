@@ -24,6 +24,9 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
   const [autoMode, setAutoMode] = useState(false);
   const [speed, setSpeed] = useState(1500);
 
+  const [tiktokUsername, setTiktokUsername] = useState('');
+  const [tiktokStatus, setTiktokStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'error'>('disconnected');
+
   useEffect(() => {
     if (!autoMode || !gameState || gameState.status !== 'playing') return;
 
@@ -54,9 +57,62 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
     onStartGame(secretWord);
   };
 
+  const handleConnectTikTok = async () => {
+    if (!tiktokUsername) return;
+    setTiktokStatus('connecting');
+    // Simulated connection for now, will implement actual logic soon
+    setTimeout(() => {
+      // Simulate success if username has length > 3
+      if (tiktokUsername.length > 3) {
+        setTiktokStatus('connected');
+      } else {
+        setTiktokStatus('error');
+      }
+    }, 1500);
+  };
+
   return (
     <div className="space-y-4">
+      {/* TIKTOK CONNECTION */}
       <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400">
+        TikTok Live Connector
+      </h3>
+      <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4">
+        <label className="text-xs font-medium text-gray-300">
+          @Usuario de TikTok
+        </label>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            placeholder="ej. waldobeatmaker"
+            value={tiktokUsername}
+            onChange={(e) => setTiktokUsername(e.target.value.replace('@', ''))}
+            className="flex-1 rounded-md border border-white/10 bg-black/50 px-3 py-2 text-sm text-white placeholder-gray-600 transition focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-white/30"
+          />
+          <button
+            onClick={handleConnectTikTok}
+            disabled={tiktokStatus === 'connecting' || !tiktokUsername}
+            className={`rounded-md px-4 py-2 text-xs font-semibold text-white transition-all 
+              ${tiktokStatus === 'connected' ? 'bg-neon-pink shadow-[0_0_10px_rgba(255,20,147,0.5)]' : 'bg-white/10 hover:bg-white/20'}`}
+          >
+            {tiktokStatus === 'connecting' ? 'Conectando...' : tiktokStatus === 'connected' ? 'Conectado' : 'Conectar'}
+          </button>
+        </div>
+        {tiktokStatus === 'connected' && (
+          <p className="mt-2 text-[10px] uppercase tracking-wider text-neon-pink animate-pulse flex items-center gap-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-neon-pink shadow-[0_0_5px_rgba(255,20,147,1)]"></span>
+            Escuchando stream en vivo
+          </p>
+        )}
+        {tiktokStatus === 'error' && (
+          <p className="mt-2 text-[10px] uppercase tracking-wider text-red-500 flex items-center gap-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+            Error de conexión (Offline o Privado)
+          </p>
+        )}
+      </div>
+
+      <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-6">
         Control de Simulación
       </h3>
 

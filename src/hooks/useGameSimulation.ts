@@ -146,7 +146,7 @@ export function useGameSimulation(userId?: string) {
         isMod,
       };
 
-      const newAttempts = [...prev.attempts, attempt].slice(-15); // KEEP LAST 15 MAX
+      const newAttempts = [...prev.attempts, attempt].slice(-10); // KEEP LAST 10 MAX
 
       if (rank === 1) {
         if (prev.status === 'playing') {
