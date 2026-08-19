@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { GameState, BotConfig } from '../types/game';
 import { getRandomSecretWord } from '../utils/semantic';
+import { useTikTokLive } from '../hooks/useTikTokLive';
 
 interface ControlPanelProps {
   onStartGame: (secretWord: string) => void;
@@ -25,7 +26,12 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
   const [speed, setSpeed] = useState(1500);
 
   const [tiktokUsername, setTiktokUsername] = useState('');
-  const [tiktokStatus, setTiktokStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'error'>('disconnected');
+
+  const { status: tiktokStatus, connect, disconnect } = useTikTokLive(tiktokUsername, {
+    onChat: (user, word) => {
+      onBotGuess(user, word);
+    }
+  });
 
   useEffect(() => {
     if (!autoMode || !gameState || gameState.status !== 'playing') return;
@@ -58,17 +64,11 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
   };
 
   const handleConnectTikTok = async () => {
-    if (!tiktokUsername) return;
-    setTiktokStatus('connecting');
-    // Simulated connection for now, will implement actual logic soon
-    setTimeout(() => {
-      // Simulate success if username has length > 3
-      if (tiktokUsername.length > 3) {
-        setTiktokStatus('connected');
-      } else {
-        setTiktokStatus('error');
-      }
-    }, 1500);
+    if (tiktokStatus === 'connected' || tiktokStatus === 'connecting') {
+      disconnect();
+    } else {
+      connect();
+    }
   };
 
   return (
