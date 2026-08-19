@@ -22,7 +22,7 @@ export default function AttemptsList({ attempts }: AttemptsListProps) {
   }
 
   return (
-    <div className="max-h-36 space-y-1 overflow-y-auto pr-1">
+    <div className="h-full space-y-1 overflow-y-auto pr-1">
       {attempts.slice().reverse().map((attempt) => (
         <div
           key={attempt.id}

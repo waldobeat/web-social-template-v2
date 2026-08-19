@@ -22,7 +22,7 @@ export default function BestApproximations({ approximations }: BestApproximation
   }
 
   return (
-    <div className="max-h-36 space-y-1 overflow-y-auto pr-1">
+    <div className="h-full space-y-1 overflow-y-auto pr-1">
       {approximations.map((approx) => (
         <div
           key={approx.position}

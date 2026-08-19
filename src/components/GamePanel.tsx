@@ -67,24 +67,28 @@ export default function GamePanel({ gameState }: GamePanelProps) {
           </div>
         </div>
 
-        <div className="mb-3 flex-1 rounded-xl border border-iron bg-metal/60 p-3 shadow-lg backdrop-blur-md">
-          <div className="mb-2 flex items-center justify-between">
+        <div className="mb-3 flex-1 min-h-0 flex flex-col rounded-xl border border-iron bg-metal/60 p-3 shadow-lg backdrop-blur-md">
+          <div className="mb-2 flex items-center justify-between shrink-0">
             <h2 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
               feed_chat.dat
             </h2>
             <span className="text-[9px] text-gray-600">{attempts.length} entradas</span>
           </div>
-          <AttemptsList attempts={attempts} />
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <AttemptsList attempts={attempts} />
+          </div>
         </div>
 
-        <div className="mb-3 flex-1 rounded-xl border border-iron bg-metal/60 p-3 shadow-lg backdrop-blur-md">
-          <div className="mb-2 flex items-center justify-between">
+        <div className="mb-3 flex-1 min-h-0 flex flex-col rounded-xl border border-iron bg-metal/60 p-3 shadow-lg backdrop-blur-md">
+          <div className="mb-2 flex items-center justify-between shrink-0">
             <h2 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
               top_aproximaciones.log
             </h2>
             <span className="text-[9px] text-gray-600">{bestApproximations.length} registros</span>
           </div>
-          <BestApproximations approximations={bestApproximations} />
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <BestApproximations approximations={bestApproximations} />
+          </div>
         </div>
 
         <div className="rounded-xl border border-iron bg-metal/60 p-3 shadow-lg backdrop-blur-md">
