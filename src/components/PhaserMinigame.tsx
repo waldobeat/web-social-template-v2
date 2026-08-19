@@ -25,6 +25,12 @@ export default function PhaserMinigame({ tieBreakerScores, winners }: PhaserMini
           gravity: { y: 0, x: 0 },
         },
       },
+      callbacks: {
+        postBoot: (game: Phaser.Game) => {
+          game.events.off('hidden');
+          game.events.off('blur');
+        }
+      },
       scene: {
         preload: preload,
         create: create,
