@@ -65,8 +65,8 @@ export function calculateSemanticRankFromSimilarity(similarity: number): number 
 }
 
 export function getRankColor(rank: number): string {
-  if (rank === 1) return 'text-neon-green border-neon-green bg-neon-green/10 border-glow-green';
-  if (rank <= 100) return 'text-neon-green border-neon-green/60 bg-neon-green/5';
+  if (rank === 1) return 'text-neon-pink border-neon-pink bg-neon-pink/10 border-glow-pink';
+  if (rank <= 100) return 'text-neon-pink border-neon-pink/60 bg-neon-pink/5';
   if (rank <= 300) return 'text-neon-yellow border-neon-yellow/60 bg-neon-yellow/5';
   return 'text-neon-red border-neon-red/60 bg-neon-red/5';
 }
@@ -79,15 +79,15 @@ export function getRankLabel(rank: number): string {
 }
 
 export function getRankRing(rank: number): string {
-  if (rank === 1) return 'border-l-2 border-neon-green border-glow-green';
-  if (rank <= 100) return 'border-l-2 border-neon-green/60';
+  if (rank === 1) return 'border-l-2 border-neon-pink border-glow-pink';
+  if (rank <= 100) return 'border-l-2 border-neon-pink/60';
   if (rank <= 300) return 'border-l-2 border-neon-yellow/60';
   return 'border-l-2 border-neon-red/60';
 }
 
 export function getRankBgGlow(rank: number): string {
-  if (rank === 1) return 'bg-neon-green/5';
-  if (rank <= 100) return 'bg-neon-green/5';
+  if (rank === 1) return 'bg-neon-pink/5';
+  if (rank <= 100) return 'bg-neon-pink/5';
   if (rank <= 300) return 'bg-neon-yellow/5';
   return 'bg-neon-red/5';
 }

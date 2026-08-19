@@ -19,7 +19,7 @@ export default function RulesPanel() {
             </p>
           )}
         </div>
-        <span className="text-neon-green text-xs transition-transform duration-200" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+        <span className="text-neon-pink text-xs transition-transform duration-200" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
           ▼
         </span>
       </button>
@@ -28,7 +28,7 @@ export default function RulesPanel() {
         <div className="border-t border-iron bg-concrete/80 px-3 pb-3 pt-2">
           <div className="space-y-2.5">
             <div>
-              <h3 className="text-[9px] font-bold uppercase tracking-widest text-neon-green">
+              <h3 className="text-[9px] font-bold uppercase tracking-widest text-neon-pink">
                 &gt; objetivo
               </h3>
               <p className="mt-1 text-[10px] text-gray-400 leading-relaxed">
@@ -37,17 +37,17 @@ export default function RulesPanel() {
             </div>
 
             <div>
-              <h3 className="text-[9px] font-bold uppercase tracking-widest text-neon-green">
+              <h3 className="text-[9px] font-bold uppercase tracking-widest text-neon-pink">
                 &gt; niveles_de_proximidad
               </h3>
               <ul className="mt-1.5 space-y-1 text-[10px]">
                 <li className="flex items-center gap-2">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-neon-green shadow-[0_0_6px_rgba(255,0,255,0.6)]"></span>
-                  <span className="text-gray-300"><strong className="text-neon-green">RANGO 1:</strong> ENCONTRADA</span>
+                  <span className="inline-flex h-2 w-2 rounded-full bg-neon-pink shadow-[0_0_6px_rgba(255,0,255,0.6)]"></span>
+                  <span className="text-gray-300"><strong className="text-neon-pink">RANGO 1:</strong> ENCONTRADA</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-neon-green shadow-[0_0_6px_rgba(255,0,255,0.4)]"></span>
-                  <span className="text-gray-300"><strong className="text-neon-green">RANGOS 1-100:</strong> CERCA</span>
+                  <span className="inline-flex h-2 w-2 rounded-full bg-neon-pink shadow-[0_0_6px_rgba(255,0,255,0.4)]"></span>
+                  <span className="text-gray-300"><strong className="text-neon-pink">RANGOS 1-100:</strong> CERCA</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="inline-flex h-2 w-2 rounded-full bg-neon-yellow shadow-[0_0_6px_rgba(255,204,0,0.4)]"></span>
@@ -61,7 +61,7 @@ export default function RulesPanel() {
             </div>
 
             <div>
-              <h3 className="text-[9px] font-bold uppercase tracking-widest text-neon-green">
+              <h3 className="text-[9px] font-bold uppercase tracking-widest text-neon-pink">
                 &gt; parametros_del_sistema
               </h3>
               <ul className="mt-1.5 space-y-0.5 text-[10px] text-gray-400">

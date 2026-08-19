@@ -57,7 +57,7 @@ export default function Dashboard() {
         <div className="mb-8 border-b border-white/10 pb-6">
           <div className="flex items-center justify-between mb-2">
             <h1 className="font-mono text-xl font-bold tracking-widest text-white">
-              SHEDDIT<span className="text-neon-green">.</span>
+              SHEDDIT<span className="text-neon-pink">.</span>
             </h1>
             <span className="rounded-md bg-white/5 border border-white/10 px-2 py-1 text-[10px] font-medium tracking-wide text-gray-400">
               Admin Panel
@@ -67,8 +67,8 @@ export default function Dashboard() {
             Control local de simulación y overlay
           </p>
 
-          <div className="rounded-xl border border-neon-green/20 bg-neon-green/5 p-4">
-            <div className="text-xs font-semibold text-neon-green mb-1">URL de Transmisión (OBS)</div>
+          <div className="rounded-xl border border-neon-pink/20 bg-neon-pink/5 p-4">
+            <div className="text-xs font-semibold text-neon-pink mb-1">URL de Transmisión (OBS)</div>
             <div className="flex items-center gap-2">
               <input
                 readOnly
@@ -77,7 +77,7 @@ export default function Dashboard() {
               />
               <button
                 onClick={() => navigator.clipboard.writeText(overlayUrl)}
-                className="rounded-md bg-neon-green/20 px-3 py-1 text-[10px] font-bold tracking-wider text-neon-green transition-colors hover:bg-neon-green/30"
+                className="rounded-md bg-neon-pink/20 px-3 py-1 text-[10px] font-bold tracking-wider text-neon-pink transition-colors hover:bg-neon-pink/30"
               >
                 COPIAR
               </button>

@@ -6,10 +6,10 @@ interface GameStatusProps {
 
 const STATUS_CONFIG: Record<GameStatusType, { label: string; color: string; icon: string; desc: string }> = {
   idle: { label: 'STANDBY', color: 'text-gray-500', icon: '⏸', desc: 'sistema en espera de inicio' },
-  playing: { label: 'ACTIVE', color: 'text-neon-green', icon: '▶', desc: 'procesando entradas del chat' },
+  playing: { label: 'ACTIVE', color: 'text-neon-pink', icon: '▶', desc: 'procesando entradas del chat' },
   won: {
     label: 'COMPLETADO',
-    color: 'text-neon-green',
+    color: 'text-neon-pink',
     icon: '⚡',
     desc: 'Búsqueda finalizada con éxito.',
   },
@@ -33,7 +33,7 @@ export default function GameStatus({ status }: GameStatusProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        <span className="text-lg text-neon-green">{config.icon}</span>
+        <span className="text-lg text-neon-pink">{config.icon}</span>
         <div>
           <div className={`text-sm font-bold uppercase tracking-wider ${config.color}`}>
             {config.label}
@@ -44,10 +44,10 @@ export default function GameStatus({ status }: GameStatusProps) {
         </div>
       </div>
       <div className="rounded-md border border-iron bg-concrete/60 p-2 text-[10px] text-gray-400">
-        <span className="text-neon-green">&gt;</span> {config.desc}
+        <span className="text-neon-pink">&gt;</span> {config.desc}
       </div>
       {status === 'playing' && (
-        <div className="rounded-md border border-neon-green/20 bg-neon-green/5 p-2 text-[9px] text-neon-green">
+        <div className="rounded-md border border-neon-pink/20 bg-neon-pink/5 p-2 text-[9px] text-neon-pink">
           <span className="font-bold">&gt; consejo:</span> usar sustantivos comunes. sin limite de intentos.
         </div>
       )}

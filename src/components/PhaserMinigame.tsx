@@ -58,7 +58,7 @@ export default function PhaserMinigame({ tieBreakerScores, winners }: PhaserMini
       
       const title = this.add.text(width / 2, height * 0.1, '¡GUERRA DE TAP TAP!', {
         fontSize: '32px',
-        color: '#39FF14', // neon green
+        color: '#ff1493', // deep pink
         fontStyle: 'bold',
       }).setOrigin(0.5);
 
@@ -114,7 +114,7 @@ export default function PhaserMinigame({ tieBreakerScores, winners }: PhaserMini
           const fillPercentage = Math.min(score / maxScore, 1);
           const currentFillHeight = glassHeight * fillPercentage;
           
-          fill.fillStyle(0x39FF14, 0.8);
+          fill.fillStyle(0xff1493, 0.8);
           
           const x = (this.cameras.main.width / (winners.length + 1)) * (index + 1);
           const y = this.cameras.main.height * 0.6;

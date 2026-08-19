@@ -29,7 +29,7 @@ export default function GamePanel({ gameState }: GamePanelProps) {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold tracking-wider text-gray-100">
-                <span className="text-neon-green text-glow-green">SHEDDIT</span>
+                <span className="text-neon-pink text-glow-pink">SHEDDIT</span>
               </h1>
               <p className="text-[10px] tracking-widest text-gray-400">
                 "Di lo que quieres decir y ya!"
@@ -58,7 +58,7 @@ export default function GamePanel({ gameState }: GamePanelProps) {
           <div className="text-center">
             <div className="text-2xl font-bold tracking-[0.3em] text-gray-100">
               {status === 'won' ? (
-                <span className="text-neon-green text-glow-green">{secretWord}</span>
+                <span className="text-neon-pink text-glow-pink">{secretWord}</span>
               ) : secretWord ? (
                 '•'.repeat(secretWord.length)
               ) : (
@@ -71,7 +71,7 @@ export default function GamePanel({ gameState }: GamePanelProps) {
               </p>
             )}
             {(status === 'won' || status === 'pending_win') && (
-              <p className="mt-1 text-[9px] uppercase tracking-wider text-neon-green animate-pulse">
+              <p className="mt-1 text-[9px] uppercase tracking-wider text-neon-pink animate-pulse">
                 objetivo detectado
               </p>
             )}
