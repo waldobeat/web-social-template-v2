@@ -26,7 +26,7 @@ export default function BestApproximations({ approximations }: BestApproximation
       {approximations.map((approx) => (
         <div
           key={approx.position}
-          className={`flex items-center justify-between rounded-md border border-transparent px-2.5 py-1.5 transition-all duration-150 hover:scale-[1.01] ${getRankBgGlow(approx.rank)} ${approx.rank === 1 ? 'border-neon-pink border-glow-green' : 'border-l-2 border-neon-pink/40'}`}
+          className={`flex items-center justify-between rounded-md border border-transparent px-2.5 py-1.5 transition-all duration-150 hover:scale-[1.01] ${getRankBgGlow(approx.rank)} ${approx.rank === 1 ? 'border-neon-green border-glow-green' : 'border-l-2 border-neon-green/40'}`}
         >
           <div className="flex items-center gap-2 min-w-0">
             <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm text-[9px] font-bold ${getRankColor(approx.rank)}`}>

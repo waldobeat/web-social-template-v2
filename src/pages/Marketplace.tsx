@@ -7,7 +7,7 @@ const GAMES = [
   {
     id: 'sheddit',
     title: 'SHEDDIT',
-    description: 'Juego de deducción semántica. Adivina palabras en el chat usando proximidad de inteligencia artificial.',
+    description: 'Juego de deducción semántica impulsado por IA. Tus espectadores adivinan conceptos usando proximidad de significado real.',
     status: 'ACTIVE',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
     tag: 'IA SEMÁNTICA'
@@ -15,7 +15,7 @@ const GAMES = [
   {
     id: 'wordwars',
     title: 'WORD WARS',
-    description: 'Batalla por equipos donde los usuarios lanzan palabras clave para destruir la base enemiga.',
+    description: 'Batalla en tiempo real donde tu audiencia lanza palabras clave para destruir defensas generadas proceduralmente.',
     status: 'BETA',
     image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
     tag: 'MULTIPLAYER'
@@ -23,7 +23,7 @@ const GAMES = [
   {
     id: 'pixeldrop',
     title: 'PIXEL DROP',
-    description: 'Los espectadores sueltan pixeles con regalos para revelar imágenes ocultas en tiempo real.',
+    description: 'Revelación colectiva. Los espectadores aportan pixeles a través de comandos para revelar obras maestras ocultas.',
     status: 'COMING SOON',
     image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop',
     tag: 'INTERACTIVO'
@@ -53,98 +53,107 @@ export default function Marketplace() {
   };
 
   return (
-    <div className="min-h-screen bg-concrete text-gray-200">
-      {/* Navbar */}
-      <nav className="border-b border-iron bg-metal/80 backdrop-blur-md px-6 py-4 sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-concrete text-gray-200 selection:bg-neon-pink/30">
+      {/* Navbar Minimalista */}
+      <nav className="sticky top-0 z-40 border-b border-iron bg-concrete/60 px-6 py-4 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between">
           <div className="flex items-center gap-3">
-            <h1 className="text-xl font-bold tracking-widest text-gray-100">
-              MARKET<span className="text-neon-pink text-glow-pink">PLACE</span>
+            <h1 className="font-mono text-xl font-bold tracking-widest text-gray-100">
+              SHEDDIT<span className="text-neon-pink">.</span>
             </h1>
-            <span className="rounded-sm border border-neon-pink/40 bg-neon-pink/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neon-pink hidden sm:block">
-              TIKTOK LIVE
+            <span className="hidden rounded-full border border-iron bg-metal px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-gray-400 sm:block">
+              Marketplace
             </span>
           </div>
 
           <div>
             {role ? (
               <div className="flex items-center gap-4">
-                <span className="text-xs uppercase tracking-widest text-gray-400">
+                <span className="font-mono text-xs text-gray-500">
                   [{role}]
                 </span>
                 {role === 'admin' && (
                   <button
                     onClick={() => navigate('/admin')}
-                    className="text-xs font-bold text-neon-pink hover:text-neon-pink-dim transition"
+                    className="text-xs font-semibold text-neon-pink hover:text-white transition-colors"
                   >
-                    PANEL DE CONTROL
+                    Control Panel
                   </button>
                 )}
                 <button
                   onClick={handleLogout}
-                  className="rounded-lg border border-iron bg-concrete/60 px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 transition hover:bg-iron hover:text-gray-200"
+                  className="rounded-md border border-iron bg-transparent px-3 py-1.5 text-[11px] font-medium text-gray-400 transition-colors hover:bg-white/5 hover:text-gray-200"
                 >
-                  SALIR
+                  Cerrar Sesión
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => setShowLogin(true)}
-                className="rounded-lg border border-neon-pink bg-neon-pink/10 px-6 py-2 text-[10px] font-bold uppercase tracking-widest text-neon-pink transition hover:bg-neon-pink/20"
+                className="rounded-md bg-white px-4 py-1.5 text-xs font-semibold text-black transition-all hover:bg-gray-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]"
               >
-                INGRESAR AL SISTEMA
+                Ingresar
               </button>
             )}
           </div>
         </div>
       </nav>
 
-      {/* Hero */}
-      <header className="py-20 px-6 text-center border-b border-iron/50 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neon-pink/10 via-concrete to-concrete">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-wider text-gray-100">
-            JUEGOS <span className="text-neon-pink text-glow-pink">INTERACTIVOS</span>
+      {/* Hero Section */}
+      <header className="relative px-6 py-32 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,0,255,0.03)_0%,_transparent_50%)]"></div>
+        <div className="relative mx-auto max-w-3xl space-y-6">
+          <div className="inline-flex items-center justify-center rounded-full border border-neon-pink/20 bg-neon-pink/5 px-3 py-1 mb-4">
+            <span className="flex h-2 w-2 rounded-full bg-neon-pink mr-2 shadow-[0_0_8px_rgba(255,0,255,0.8)]"></span>
+            <span className="text-[11px] font-medium tracking-wide text-neon-pink">V2.0 LIVE ENABLED</span>
+          </div>
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-sm">
+            Di lo que quieres <br className="hidden md:block"/>
+            <span className="bg-gradient-to-r from-neon-pink to-purple-500 bg-clip-text text-transparent">decir y ya.</span>
           </h2>
-          <p className="text-sm md:text-base text-gray-400 tracking-widest leading-relaxed">
-            Potencia tu stream en TikTok LIVE. Herramientas diseñadas para aumentar la interacción, 
-            monetización y retención de espectadores de forma automática.
+          <p className="mx-auto max-w-2xl text-base md:text-lg text-gray-400 font-light leading-relaxed">
+            Plataforma de experiencias interactivas para TikTok LIVE. Impulsa tu engagement con motores semánticos, físicas en tiempo real y dinámicas de chat masivas.
           </p>
         </div>
       </header>
 
       {/* Grid de Juegos */}
-      <main className="max-w-6xl mx-auto px-6 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <h3 className="text-lg font-bold uppercase tracking-widest text-gray-300">
-            CATÁLOGO_DISPONIBLE
+      <main className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="mb-10 flex items-center justify-between border-b border-iron pb-4">
+          <h3 className="text-sm font-medium text-gray-300">
+            Sistemas Disponibles
           </h3>
-          <span className="text-[10px] text-gray-500 uppercase tracking-widest">
-            {GAMES.length} sistemas en linea
+          <span className="font-mono text-xs text-gray-500">
+            {GAMES.length} MODULOS
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {GAMES.map((game) => (
-            <div key={game.id} className="group rounded-2xl border border-iron bg-metal overflow-hidden transition hover:border-neon-pink/50 hover:shadow-[0_0_30px_rgba(255,0,255,0.1)]">
-              <div className="h-48 overflow-hidden relative">
-                <div className="absolute inset-0 bg-black/40 z-10"></div>
-                <img src={game.image} alt={game.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
-                <div className="absolute top-4 left-4 z-20">
-                  <span className={`rounded border px-2 py-1 text-[9px] font-bold uppercase tracking-wider ${
-                    game.status === 'ACTIVE' ? 'border-neon-pink bg-neon-pink/20 text-neon-pink shadow-[0_0_10px_rgba(255,0,255,0.3)]' :
-                    game.status === 'BETA' ? 'border-neon-yellow bg-neon-yellow/20 text-neon-yellow' :
-                    'border-gray-500 bg-gray-500/20 text-gray-400'
+            <div key={game.id} className="group relative flex flex-col overflow-hidden rounded-xl border border-iron bg-metal transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-2xl hover:shadow-black/50">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+              
+              <div className="relative h-48 overflow-hidden border-b border-iron">
+                <div className="absolute inset-0 bg-black/20 z-10"></div>
+                <img src={game.image} alt={game.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute left-4 top-4 z-20">
+                  <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-medium tracking-wide backdrop-blur-md ${
+                    game.status === 'ACTIVE' ? 'border-neon-pink/30 bg-neon-pink/10 text-neon-pink' :
+                    game.status === 'BETA' ? 'border-neon-yellow/30 bg-neon-yellow/10 text-neon-yellow' :
+                    'border-gray-500/30 bg-gray-500/10 text-gray-400'
                   }`}>
+                    {game.status === 'ACTIVE' && <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-neon-pink shadow-[0_0_5px_rgba(255,0,255,0.6)]"></span>}
                     {game.status}
                   </span>
                 </div>
               </div>
-              <div className="p-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xl font-bold tracking-wider text-gray-100">{game.title}</h4>
-                  <span className="text-[9px] text-neon-pink uppercase tracking-widest">{game.tag}</span>
+
+              <div className="relative flex flex-1 flex-col p-6">
+                <div className="mb-2 flex items-center justify-between">
+                  <h4 className="text-lg font-semibold text-white">{game.title}</h4>
+                  <span className="font-mono text-[10px] text-gray-500">{game.tag}</span>
                 </div>
-                <p className="text-sm text-gray-400 leading-relaxed min-h-[60px]">
+                <p className="mb-6 flex-1 text-sm text-gray-400 font-light leading-relaxed">
                   {game.description}
                 </p>
                 
@@ -156,16 +165,16 @@ export default function Marketplace() {
                       navigate('/admin');
                     }
                   }}
-                  className={`w-full rounded-lg py-2.5 text-[10px] font-bold uppercase tracking-widest transition ${
+                  className={`w-full rounded-md py-2.5 text-xs font-semibold transition-all ${
                     game.status === 'ACTIVE' 
-                      ? 'border border-neon-pink bg-neon-pink/10 text-neon-pink hover:bg-neon-pink/20' 
-                      : 'border border-iron bg-concrete/60 text-gray-500 cursor-not-allowed'
+                      ? 'bg-white text-black hover:bg-gray-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]' 
+                      : 'bg-iron text-gray-500 cursor-not-allowed'
                   }`}
                   disabled={game.status !== 'ACTIVE'}
                 >
                   {game.status === 'ACTIVE' ? (
-                    role === 'admin' && game.id === 'sheddit' ? 'IR AL PANEL' : 'VER DEMO'
-                  ) : 'BLOQUEADO'}
+                    role === 'admin' && game.id === 'sheddit' ? 'Gestionar Instancia →' : 'Ver Demo'
+                  ) : 'En Desarrollo'}
                 </button>
               </div>
             </div>
@@ -174,8 +183,10 @@ export default function Marketplace() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-iron py-8 text-center text-[10px] uppercase tracking-widest text-gray-600">
-        © 2026 WALDOBEATMAKER ENTERTAINMENT
+      <footer className="border-t border-iron bg-metal px-6 py-12 text-center">
+        <p className="font-mono text-[11px] text-gray-600">
+          © 2026 WALDOBEATMAKER ENTERTAINMENT. DEPLOYED ON VERCEL.
+        </p>
       </footer>
 
       {showLogin && (

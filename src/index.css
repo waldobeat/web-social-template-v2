@@ -8,13 +8,13 @@
   --color-neon-red-dim: #cc0030;
   --color-neon-pink: #ff00ff;
   --color-neon-pink-dim: #cc00cc;
-  --color-steel: #1f1122;
-  --color-steel-light: #331535;
-  --color-concrete: #0f0511;
+  --color-steel: #111111;
+  --color-steel-light: #1a1a1a;
+  --color-concrete: #0a0a0a;
   --color-rust: #3d172a;
   --color-bronze: #4a2135;
-  --color-metal: #18091a;
-  --color-iron: #2d1430;
+  --color-metal: #141414;
+  --color-iron: rgba(255, 255, 255, 0.08);
 }
 
 @font-face {
@@ -26,15 +26,15 @@
 
 @layer base {
   :root {
-    font-family: 'Share Tech Mono', 'Hack', ui-monospace, 'Cascadia Code', monospace;
-    background-color: #0a0c0e;
-    color: #b8bfc4;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #0a0a0a;
+    color: #ededed;
   }
 
   body {
     margin: 0;
-    background-color: #0a0c0e;
-    color: #b8bfc4;
+    background-color: #0a0a0a;
+    color: #ededed;
   }
 
   #root {

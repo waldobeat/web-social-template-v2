@@ -56,48 +56,49 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
   };
 
   return (
-    <div className="space-y-3">
-      <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-        panel_de_control_local
+    <div className="space-y-4">
+      <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400">
+        Control de Simulación
       </h3>
 
-      <div className="space-y-2">
-        <label className="text-[9px] uppercase tracking-wider text-gray-500">
-          palabra_secreta (simulacion)
+      <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4">
+        <label className="text-xs font-medium text-gray-300">
+          Palabra Secreta (Objetivo)
         </label>
         <div className="flex gap-2">
           <input
             type="text"
             value={secretWord}
             onChange={(e) => setSecretWord(e.target.value)}
-            className="flex-1 rounded-lg border border-iron bg-concrete px-2.5 py-1.5 text-xs text-gray-200 focus:border-neon-pink focus:outline-none"
+            className="flex-1 rounded-md border border-white/10 bg-black/50 px-3 py-2 text-sm text-white placeholder-gray-600 transition focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-white/30"
           />
           <button
             onClick={handleStart}
             disabled={gameState?.status === 'playing'}
-            className="rounded-lg border border-neon-pink bg-neon-pink/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neon-pink transition hover:bg-neon-pink/20 disabled:opacity-30"
+            className="rounded-md bg-white px-4 py-2 text-xs font-semibold text-black transition-all hover:bg-gray-200 disabled:opacity-30 disabled:hover:bg-white"
           >
-            INICIAR
+            Iniciar
           </button>
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-lg border border-iron bg-concrete/60 p-2.5">
+      <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
         <div>
-          <div className="text-[10px] font-medium text-gray-300">modo_automatico</div>
-          <div className="text-[9px] text-gray-600">bots activos enviaran palabras</div>
+          <div className="text-sm font-medium text-gray-200">Modo Automático</div>
+          <div className="text-xs text-gray-500">Bots enviarán palabras al azar</div>
         </div>
         <button
           onClick={() => setAutoMode(!autoMode)}
-          className={`relative inline-flex h-5 w-9 items-center rounded-full transition ${autoMode ? 'bg-neon-pink/30 border border-neon-pink' : 'bg-iron border border-iron'}`}
+          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${autoMode ? 'bg-white' : 'bg-white/10'}`}
         >
-          <span className={`inline-block h-3 w-3 transform rounded-full bg-gray-400 transition ${autoMode ? 'translate-x-5 bg-neon-pink' : 'translate-x-1'}`} />
+          <span className={`inline-block h-4 w-4 transform rounded-full bg-black transition-transform ${autoMode ? 'translate-x-4' : 'translate-x-0.5 bg-gray-400'}`} />
         </button>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-[9px] uppercase tracking-wider text-gray-500">
-          velocidad (ms): {speed}
+      <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4">
+        <label className="flex items-center justify-between text-xs font-medium text-gray-300">
+          <span>Velocidad de Bots</span>
+          <span className="font-mono text-[10px] text-gray-500">{speed}ms</span>
         </label>
         <input
           type="range"
@@ -106,46 +107,46 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
           step="100"
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
-          className="w-full accent-neon-pink h-1 bg-iron rounded-lg appearance-none cursor-pointer"
+          className="w-full accent-white h-1 bg-white/10 rounded-lg appearance-none cursor-pointer"
         />
       </div>
 
-      <div className="space-y-1.5">
-        <div className="text-[9px] uppercase tracking-wider text-gray-500">bots_simulados</div>
+      <div className="space-y-2">
+        <div className="text-xs font-medium text-gray-300">Usuarios Simulados</div>
         {BOTS.map((bot) => (
-          <div key={bot.name} className="flex items-center justify-between rounded-lg border border-iron bg-concrete/60 px-2.5 py-2">
+          <div key={bot.name} className="flex items-center justify-between rounded-lg border border-white/5 bg-transparent px-3 py-2.5 transition-colors hover:bg-white/5">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-medium text-gray-300">{bot.name}</span>
+              <span className="text-sm font-medium text-gray-300">{bot.name}</span>
               {bot.isMod && (
-                <span className="rounded-sm border border-neon-pink/40 bg-neon-pink/10 px-1 py-0.5 text-[8px] font-bold uppercase tracking-wider text-neon-pink">
+                <span className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[9px] font-bold text-gray-300">
                   MOD
                 </span>
               )}
             </div>
             <button
               onClick={() => toggleBot(bot.name)}
-              className={`relative inline-flex h-4 w-8 items-center rounded-full transition ${activeBots.has(bot.name) ? 'bg-neon-pink/30 border border-neon-pink' : 'bg-iron border border-iron'}`}
+              className={`relative inline-flex h-4 w-8 items-center rounded-full transition-colors ${activeBots.has(bot.name) ? 'bg-white' : 'bg-white/10'}`}
             >
-              <span className={`inline-block h-2.5 w-2.5 transform rounded-full bg-gray-500 transition ${activeBots.has(bot.name) ? 'translate-x-4 bg-neon-pink' : 'translate-x-0.5'}`} />
+              <span className={`inline-block h-3 w-3 transform rounded-full bg-black transition-transform ${activeBots.has(bot.name) ? 'translate-x-4' : 'translate-x-0.5 bg-gray-400'}`} />
             </button>
           </div>
         ))}
       </div>
 
       {gameState?.status === 'playing' && (
-        <div className="rounded-lg border border-neon-yellow/20 bg-neon-yellow/5 p-2.5 text-[10px] text-neon-yellow">
-          <div className="font-bold">&gt; consejo_rapido:</div>
-          <div className="mt-0.5 text-gray-400">
-            activa bots y modo automatico para simular el chat.
+        <div className="rounded-xl border border-neon-yellow/20 bg-neon-yellow/5 p-4">
+          <div className="text-xs font-semibold text-neon-yellow">Nota del Sistema</div>
+          <div className="mt-1 text-xs text-gray-400">
+            Activa bots y el modo automático para simular tráfico de chat en la interfaz del juego.
           </div>
         </div>
       )}
 
       <button
         onClick={onResetGame}
-        className="w-full rounded-lg border border-iron bg-concrete/60 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 transition hover:bg-iron hover:text-gray-200"
+        className="w-full rounded-md border border-white/10 bg-transparent px-4 py-2.5 text-xs font-medium text-gray-400 transition hover:bg-white/5 hover:text-white"
       >
-        reiniciar_sistema
+        Reiniciar Sistema
       </button>
     </div>
   );
