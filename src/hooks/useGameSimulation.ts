@@ -146,7 +146,7 @@ export function useGameSimulation(userId?: string) {
         isMod,
       };
 
-      const newAttempts = [...prev.attempts, attempt].slice(-10); // KEEP LAST 10 MAX
+      const newAttempts = [...prev.attempts, attempt].slice(-7); // KEEP LAST 7 MAX
 
       if (rank === 1) {
         if (prev.status === 'playing') {
@@ -182,7 +182,7 @@ export function useGameSimulation(userId?: string) {
 
       const sorted = Array.from(bestMap.values())
         .sort((a, b) => a.rank - b.rank)
-        .slice(0, 10)
+        .slice(0, 3)
         .map((b, i) => ({ ...b, position: i + 1 }));
 
       return {

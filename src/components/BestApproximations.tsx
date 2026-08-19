@@ -26,19 +26,19 @@ export default function BestApproximations({ approximations }: BestApproximation
       {approximations.map((approx) => (
         <div
           key={approx.position}
-          className={`flex items-center justify-between rounded-md border border-transparent px-2.5 py-1.5 transition-all duration-150 hover:scale-[1.01] ${getRankBgGlow(approx.rank)} ${approx.rank === 1 ? 'border-neon-pink border-glow-pink' : 'border-l-2 border-neon-pink/40'}`}
+          className={`flex items-center justify-between rounded-md border border-transparent px-1.5 py-1 transition-all duration-150 hover:scale-[1.01] ${getRankBgGlow(approx.rank)} ${approx.rank === 1 ? 'border-neon-pink border-glow-pink' : 'border-l-2 border-neon-pink/40'}`}
         >
           <div className="flex items-center gap-2 min-w-0">
-            <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm text-[9px] font-bold ${getRankColor(approx.rank)}`}>
+            <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-sm text-[8px] font-bold ${getRankColor(approx.rank)}`}>
               {approx.position}
             </span>
-            <span className="truncate text-xs font-bold text-gray-200">{approx.word}</span>
+            <span className="truncate text-[10px] font-bold text-gray-200">{approx.word}</span>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className="text-[9px] uppercase tracking-wider text-gray-500">
+            <span className="text-[8px] uppercase tracking-wider text-gray-500">
               {approx.rank === 1 ? 'ENCONTRADA' : `RANGO ${approx.rank}`}
             </span>
-            <span className={`rounded-sm border px-1.5 py-0.5 text-[10px] font-bold ${getRankColor(approx.rank)}`}>
+            <span className={`rounded-sm border px-1 py-0.5 text-[9px] font-bold ${getRankColor(approx.rank)}`}>
               {approx.rank === 1 ? 'OK' : 'N/A'}
             </span>
           </div>

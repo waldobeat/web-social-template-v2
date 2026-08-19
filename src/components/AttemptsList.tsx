@@ -26,10 +26,10 @@ export default function AttemptsList({ attempts }: AttemptsListProps) {
       {attempts.slice().reverse().map((attempt) => (
         <div
           key={attempt.id}
-          className={`flex items-center justify-between rounded-md border border-transparent px-2.5 py-1.5 transition-all duration-150 hover:scale-[1.01] ${getRankRing(attempt.rank)} ${getRankBgGlow(attempt.rank)} ${attempt.rank === 1 ? 'border-neon-pink border-glow-pink' : ''}`}
+          className={`flex items-center justify-between rounded-md border border-transparent px-1.5 py-1 transition-all duration-150 hover:scale-[1.01] ${getRankRing(attempt.rank)} ${getRankBgGlow(attempt.rank)} ${attempt.rank === 1 ? 'border-neon-pink border-glow-pink' : ''}`}
         >
           <div className="flex items-center gap-2 min-w-0">
-            <span className="truncate text-xs font-bold text-gray-200">
+            <span className="truncate text-[10px] font-bold text-gray-200">
               {attempt.word}
             </span>
             {attempt.isMod && (
@@ -39,10 +39,10 @@ export default function AttemptsList({ attempts }: AttemptsListProps) {
             )}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className="text-[9px] uppercase tracking-wider text-gray-500">
+            <span className="text-[8px] uppercase tracking-wider text-gray-500">
               {getRankLabel(attempt.rank)}
             </span>
-            <span className={`rounded-sm border px-1.5 py-0.5 text-[10px] font-bold ${getRankColor(attempt.rank)}`}>
+            <span className={`rounded-sm border px-1 py-0.5 text-[9px] font-bold ${getRankColor(attempt.rank)}`}>
               #{attempt.rank}
             </span>
           </div>

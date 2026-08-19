@@ -2,7 +2,6 @@ import type { GameState } from '../types/game';
 import AttemptsList from './AttemptsList';
 import BestApproximations from './BestApproximations';
 import GameStatus from './GameStatus';
-import RulesPanel from './RulesPanel';
 import PhaserMinigame from './PhaserMinigame';
 import WinnerModal from './WinnerModal';
 
@@ -43,10 +42,6 @@ export default function GamePanel({ gameState }: GamePanelProps) {
             </div>
           </div>
         </header>
-
-        <div className="mb-3">
-          <RulesPanel />
-        </div>
 
         <div className="mb-3 rounded-xl border border-iron bg-metal/60 p-3 shadow-lg backdrop-blur-md">
           <div className="mb-1 flex items-center justify-between">
