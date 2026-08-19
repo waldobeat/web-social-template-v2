@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Marketplace />} />
         <Route path="/admin" element={<Dashboard />} />
-        <Route path="/overlay" element={<Overlay />} />
+        <Route path="/overlay/:userId" element={<Overlay />} />
       </Routes>
     </BrowserRouter>
   );

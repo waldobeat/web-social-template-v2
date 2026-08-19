@@ -12,7 +12,7 @@ export default function GamePanel({ gameState }: GamePanelProps) {
   const { status, attempts, bestApproximations, secretWord } = gameState;
 
   return (
-    <div className="vertical-overlay bg-concrete">
+    <div className="flex h-full w-full flex-col overflow-hidden">
       <div className="relative z-10 flex h-full flex-col p-3">
         <header className="mb-3 rounded-xl border border-iron bg-metal/80 p-3 shadow-lg backdrop-blur-md">
           <div className="flex items-center justify-between">

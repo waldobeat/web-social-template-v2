@@ -5,14 +5,16 @@ import ControlPanel from '../components/ControlPanel';
 import { useGameSimulation } from '../hooks/useGameSimulation';
 
 export default function Dashboard() {
-  const { gameState, isEngineReady, startGame, resetGame, botGuess } = useGameSimulation();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const { gameState, isEngineReady, startGame, resetGame, botGuess } = useGameSimulation(userId);
 
   useEffect(() => {
     import('firebase/auth').then(({ onAuthStateChanged }) => {
       import('../lib/firebase').then(({ auth }) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           setIsAdmin(!!user);
+          setUserId(user?.uid);
         });
         return unsubscribe;
       });
@@ -31,6 +33,8 @@ export default function Dashboard() {
   if (!isAdmin) {
     return <Navigate to="/" replace />;
   }
+
+  const overlayUrl = `${window.location.origin}/overlay/${userId}`;
 
   return (
     <div className="relative flex min-h-screen flex-col md:flex-row bg-[#0a0a0a]">
@@ -59,9 +63,26 @@ export default function Dashboard() {
               Admin Panel
             </span>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 mb-4">
             Control local de simulación y overlay
           </p>
+
+          <div className="rounded-xl border border-neon-green/20 bg-neon-green/5 p-4">
+            <div className="text-xs font-semibold text-neon-green mb-1">URL de Transmisión (OBS)</div>
+            <div className="flex items-center gap-2">
+              <input
+                readOnly
+                value={overlayUrl}
+                className="w-full truncate rounded-md bg-black/50 px-2 py-1 text-[10px] font-mono text-gray-400 outline-none"
+              />
+              <button
+                onClick={() => navigator.clipboard.writeText(overlayUrl)}
+                className="rounded-md bg-neon-green/20 px-3 py-1 text-[10px] font-bold tracking-wider text-neon-green transition-colors hover:bg-neon-green/30"
+              >
+                COPIAR
+              </button>
+            </div>
+          </div>
         </div>
         <ControlPanel
           gameState={gameState}
@@ -73,3 +94,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+

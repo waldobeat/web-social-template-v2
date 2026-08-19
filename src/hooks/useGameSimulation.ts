@@ -10,7 +10,7 @@ const INITIAL_STATE: GameState = {
   players: [],
 };
 
-export function useGameSimulation() {
+export function useGameSimulation(userId?: string) {
   const [gameState, setGameState] = useState<GameState>(INITIAL_STATE);
   const [isEngineReady, setIsEngineReady] = useState(false);
   const workerRef = useRef<Worker | null>(null);
@@ -46,26 +46,22 @@ export function useGameSimulation() {
 
     workerRef.current.postMessage({ type: 'init' });
 
-    // Eliminar o comentar temporalmente BroadcastChannel si se quiere usar solo Firebase
-    // broadcastRef.current = new BroadcastChannel('sheddit_state');
-
     return () => {
       workerRef.current?.terminate();
-      // broadcastRef.current?.close();
     };
   }, []);
 
   // Sincronizar estado con Firebase cada vez que cambia
   useEffect(() => {
     // Mantener sincronizado en la base de datos de Firebase
-    if (gameState.status !== 'idle' || gameState.attempts.length > 0) {
+    if (userId && (gameState.status !== 'idle' || gameState.attempts.length > 0)) {
       import('firebase/database').then(({ ref, set }) => {
         import('../lib/firebase').then(({ db }) => {
-          set(ref(db, 'sheddit/gameState'), gameState).catch(console.error);
+          set(ref(db, `users/${userId}/gameState`), gameState).catch(console.error);
         });
       });
     }
-  }, [gameState]);
+  }, [gameState, userId]);
 
   const getEmbedding = useCallback((word: string): Promise<number[]> => {
     return new Promise((resolve) => {
