@@ -9,7 +9,7 @@ interface LoginScreenProps {
 export default function LoginScreen({ onLoginSuccess, onClose }: LoginScreenProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | false>(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -18,22 +18,28 @@ export default function LoginScreen({ onLoginSuccess, onClose }: LoginScreenProp
     setIsLoading(true);
 
     try {
-      if (username === MASTER_USER) {
-        const hash = await hashPassword(password);
+      const cleanUser = username.trim();
+      const cleanPass = password.trim();
+
+      if (cleanUser === MASTER_USER) {
+        if (!window.crypto || !window.crypto.subtle) {
+          throw new Error('Criptografía no soportada en este navegador o entorno no seguro (HTTP sin localhost).');
+        }
+        const hash = await hashPassword(cleanPass);
         if (hash === MASTER_HASH) {
           setSessionRole('admin');
           onLoginSuccess('admin');
         } else {
-          setError(true);
+          setError('Contraseña incorrecta para Admin');
         }
       } else {
         // Generic user login simulation
         setSessionRole('user');
         onLoginSuccess('user');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError(true);
+      setError(err.message || 'Error al validar credenciales');
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +92,7 @@ export default function LoginScreen({ onLoginSuccess, onClose }: LoginScreenProp
 
           {error && (
             <div className="rounded border border-neon-red/30 bg-neon-red/10 p-2 text-center text-[10px] uppercase tracking-wider text-neon-red">
-              Credenciales invalidas para Admin
+              {error === true ? 'Credenciales invalidas' : error}
             </div>
           )}
 
