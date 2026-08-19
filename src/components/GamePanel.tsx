@@ -3,16 +3,27 @@ import AttemptsList from './AttemptsList';
 import BestApproximations from './BestApproximations';
 import GameStatus from './GameStatus';
 import RulesPanel from './RulesPanel';
+import PhaserMinigame from './PhaserMinigame';
+import WinnerModal from './WinnerModal';
 
 interface GamePanelProps {
   gameState: GameState;
 }
 
 export default function GamePanel({ gameState }: GamePanelProps) {
-  const { status, attempts, bestApproximations, secretWord } = gameState;
+  const { status, attempts, bestApproximations, secretWord, winners, tieBreakerScores } = gameState;
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden">
+    <div className="flex h-full w-full flex-col overflow-hidden relative">
+      {status === 'tie_breaker' && winners && tieBreakerScores && (
+        <PhaserMinigame winners={winners} tieBreakerScores={tieBreakerScores} />
+      )}
+      
+      {status === 'won' && winners && winners.length > 0 && (
+        <WinnerModal winner={winners[0]} />
+      )}
+
+      {/* Main Game UI */}
       <div className="relative z-10 flex h-full flex-col p-3">
         <header className="mb-3 rounded-xl border border-iron bg-metal/80 p-3 shadow-lg backdrop-blur-md">
           <div className="flex items-center justify-between">
@@ -27,7 +38,7 @@ export default function GamePanel({ gameState }: GamePanelProps) {
             <div className="text-right">
               <div className="text-[9px] uppercase tracking-wider text-gray-500">estado</div>
               <div className="text-sm font-bold text-gray-200">
-                {status === 'idle' ? 'STANDBY' : status === 'playing' ? 'ACTIVE' : 'TERMINADO'}
+                {status === 'idle' ? 'STANDBY' : status === 'playing' ? 'ACTIVE' : status === 'pending_win' ? 'CHECKING...' : status === 'tie_breaker' ? 'TIE BREAKER!' : 'TERMINADO'}
               </div>
             </div>
           </div>
@@ -59,9 +70,9 @@ export default function GamePanel({ gameState }: GamePanelProps) {
                 esperando inicio del sistema...
               </p>
             )}
-            {status === 'won' && (
-              <p className="mt-1 text-[9px] uppercase tracking-wider text-neon-green">
-                objetivo desbloqueado
+            {(status === 'won' || status === 'pending_win') && (
+              <p className="mt-1 text-[9px] uppercase tracking-wider text-neon-green animate-pulse">
+                objetivo detectado
               </p>
             )}
           </div>

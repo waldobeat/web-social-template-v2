@@ -1,4 +1,4 @@
-export type GameStatus = 'idle' | 'playing' | 'won';
+export type GameStatus = 'idle' | 'playing' | 'pending_win' | 'tie_breaker' | 'won';
 
 export interface Attempt {
   id: string;
@@ -22,6 +22,9 @@ export interface GameState {
   attempts: Attempt[];
   bestApproximations: BestApproximation[];
   players: Player[];
+  winners?: string[];
+  tieBreakerScores?: Record<string, number>;
+  winTime?: number;
 }
 
 export interface Player {

@@ -7,7 +7,24 @@ interface GameStatusProps {
 const STATUS_CONFIG: Record<GameStatusType, { label: string; color: string; icon: string; desc: string }> = {
   idle: { label: 'STANDBY', color: 'text-gray-500', icon: '⏸', desc: 'sistema en espera de inicio' },
   playing: { label: 'ACTIVE', color: 'text-neon-green', icon: '▶', desc: 'procesando entradas del chat' },
-  won: { label: 'TERMINADO', color: 'text-neon-green', icon: '✓', desc: 'objetivo alcanzado' },
+  won: {
+    label: 'COMPLETADO',
+    color: 'text-neon-green',
+    icon: '⚡',
+    desc: 'Búsqueda finalizada con éxito.',
+  },
+  pending_win: {
+    label: 'VERIFICANDO...',
+    color: 'text-neon-yellow',
+    icon: '⏱',
+    desc: 'Esperando posibles empates...',
+  },
+  tie_breaker: {
+    label: 'DESEMPATE',
+    color: 'text-neon-red',
+    icon: '⚔',
+    desc: 'Guerra de Tap Tap activa.',
+  },
 };
 
 export default function GameStatus({ status }: GameStatusProps) {

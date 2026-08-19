@@ -51,7 +51,6 @@ export default function ControlPanel({ onStartGame, onBotGuess, onResetGame, gam
   };
 
   const handleStart = () => {
-    setSecretWord(getRandomSecretWord());
     onStartGame(secretWord);
   };
 

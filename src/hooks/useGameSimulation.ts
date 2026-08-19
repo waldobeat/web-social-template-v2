@@ -8,6 +8,8 @@ const INITIAL_STATE: GameState = {
   attempts: [],
   bestApproximations: [],
   players: [],
+  winners: [],
+  tieBreakerScores: {},
 };
 
 export function useGameSimulation(userId?: string) {
@@ -93,7 +95,34 @@ export function useGameSimulation(userId?: string) {
 
   const addAttempt = useCallback(async (word: string, user: string, isMod: boolean) => {
     const w = word.toLowerCase().trim();
-    if (!w || gameState.status !== 'playing') return;
+    if (!w) return;
+
+    if (gameState.status === 'tie_breaker') {
+      // In tie breaker mode, any message from tied players gives them points
+      setGameState((prev) => {
+        if (prev.status !== 'tie_breaker' || !prev.winners?.includes(user)) return prev;
+        const tieBreakerScores = { ...prev.tieBreakerScores };
+        tieBreakerScores[user] = (tieBreakerScores[user] || 0) + 1;
+        
+        // Let's say 20 points wins
+        if (tieBreakerScores[user] >= 20) {
+          return {
+            ...prev,
+            status: 'won',
+            winners: [user], // Sole winner now
+            tieBreakerScores,
+          };
+        }
+        
+        return {
+          ...prev,
+          tieBreakerScores,
+        };
+      });
+      return;
+    }
+
+    if (gameState.status !== 'playing' && gameState.status !== 'pending_win') return;
 
     // Si todavía no tenemos el embedding de la palabra secreta, esperar
     if (!secretEmbedding.current) return;
@@ -117,24 +146,30 @@ export function useGameSimulation(userId?: string) {
         isMod,
       };
 
-      const newAttempts = [...prev.attempts, attempt];
+      const newAttempts = [...prev.attempts, attempt].slice(-15); // KEEP LAST 15 MAX
 
       if (rank === 1) {
-        const bestMap = new Map<string, BestApproximation>();
-        prev.bestApproximations.forEach((b) => bestMap.set(b.word, b));
-        bestMap.set(word, { word, rank, user, position: 1 });
-
-        const sorted = Array.from(bestMap.values())
-          .sort((a, b) => a.rank - b.rank)
-          .slice(0, 10)
-          .map((b, i) => ({ ...b, position: i + 1 }));
-
-        return {
-          ...prev,
-          attempts: newAttempts,
-          bestApproximations: sorted,
-          status: 'won',
-        };
+        if (prev.status === 'playing') {
+          return {
+            ...prev,
+            attempts: newAttempts,
+            status: 'pending_win',
+            winTime: Date.now(),
+            winners: [user],
+          };
+        } else if (prev.status === 'pending_win') {
+          if (!prev.winners?.includes(user)) {
+            return {
+              ...prev,
+              attempts: newAttempts,
+              winners: [...(prev.winners || []), user],
+            };
+          }
+          return {
+            ...prev,
+            attempts: newAttempts,
+          };
+        }
       }
 
       const bestMap = new Map<string, BestApproximation>();
@@ -157,6 +192,45 @@ export function useGameSimulation(userId?: string) {
       };
     });
   }, [gameState.status, gameState.secretWord, getEmbedding]);
+
+  // Handle 5-second pending_win window
+  useEffect(() => {
+    if (gameState.status === 'pending_win' && gameState.winTime) {
+      const elapsed = Date.now() - gameState.winTime;
+      const remaining = 5000 - elapsed;
+
+      if (remaining <= 0) {
+        setGameState((prev) => {
+          if (prev.status !== 'pending_win') return prev;
+          const isTie = (prev.winners?.length || 0) > 1;
+          
+          if (isTie) {
+            const initialScores: Record<string, number> = {};
+            prev.winners?.forEach(w => { initialScores[w] = 0; });
+            return { ...prev, status: 'tie_breaker', tieBreakerScores: initialScores };
+          } else {
+            return { ...prev, status: 'won' };
+          }
+        });
+      } else {
+        const timeout = setTimeout(() => {
+          setGameState((prev) => {
+            if (prev.status !== 'pending_win') return prev;
+            const isTie = (prev.winners?.length || 0) > 1;
+            
+            if (isTie) {
+              const initialScores: Record<string, number> = {};
+              prev.winners?.forEach(w => { initialScores[w] = 0; });
+              return { ...prev, status: 'tie_breaker', tieBreakerScores: initialScores };
+            } else {
+              return { ...prev, status: 'won' };
+            }
+          });
+        }, remaining);
+        return () => clearTimeout(timeout);
+      }
+    }
+  }, [gameState.status, gameState.winTime, gameState.winners]);
 
   const resetGame = useCallback(() => {
     setGameState(INITIAL_STATE);
