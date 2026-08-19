@@ -1,22 +1,15 @@
-import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import GamePanel from '../components/GamePanel';
 import ControlPanel from '../components/ControlPanel';
-import LoginScreen from '../components/LoginScreen';
 import { useGameSimulation } from '../hooks/useGameSimulation';
+import { getSessionRole } from '../utils/auth';
 
 export default function Dashboard() {
   const { gameState, isEngineReady, startGame, resetGame, botGuess } = useGameSimulation();
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem('sheddit_admin_auth') === 'true';
-  });
+  const role = getSessionRole();
 
-  const handleLoginSuccess = () => {
-    sessionStorage.setItem('sheddit_admin_auth', 'true');
-    setIsAuthenticated(true);
-  };
-
-  if (!isAuthenticated) {
-    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  if (role !== 'admin') {
+    return <Navigate to="/" replace />;
   }
 
   return (

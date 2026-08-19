@@ -6,6 +6,17 @@ export async function hashPassword(password: string): Promise<string> {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
 }
 
-// SHA-256 de "192027Mega$$" es "459DE61CB83D41EA925D79986EE044AAB37B235055F4CE844799C834FC564685"
 export const MASTER_HASH = "459DE61CB83D41EA925D79986EE044AAB37B235055F4CE844799C834FC564685";
 export const MASTER_USER = "waldobeatmaker";
+
+export function getSessionRole(): 'admin' | 'user' | null {
+  return sessionStorage.getItem('sheddit_role') as 'admin' | 'user' | null;
+}
+
+export function setSessionRole(role: 'admin' | 'user' | null) {
+  if (role) {
+    sessionStorage.setItem('sheddit_role', role);
+  } else {
+    sessionStorage.removeItem('sheddit_role');
+  }
+}
