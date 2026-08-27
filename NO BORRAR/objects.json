@@ -1,0 +1,14 @@
+[
+  {"country": "Alicate", "image": "Alicate.png", "isObject": true},
+  {"country": "Bob Esponja", "image": "Bob Esponja.png", "isObject": true},
+  {"country": "Goku", "image": "Goku.png", "isObject": true},
+  {"country": "Homero Simpson", "image": "Homero Simpson.png", "isObject": true},
+  {"country": "Luffy", "image": "Luffy.png", "isObject": true},
+  {"country": "Naruto", "image": "Naruto.png", "isObject": true},
+  {"country": "Pikachu", "image": "Pikachu.png", "isObject": true},
+  {"country": "Saitama", "image": "Saitama.png", "isObject": true},
+  {"country": "Sasuke", "image": "Sasuke.png", "isObject": true},
+  {"country": "Shrek", "image": "Shrek.png", "isObject": true},
+  {"country": "Vegeta", "image": "Vegeta.png", "isObject": true},
+  {"country": "Zoro", "image": "Zoro.png", "isObject": true}
+]

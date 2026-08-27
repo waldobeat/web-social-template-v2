@@ -1,0 +1,381 @@
+[
+  {
+    "question": "¿Cuál es la capital de España?",
+    "answers": [
+      "Madrid"
+    ]
+  },
+  {
+    "question": "¿Cuántas comunidades autónomas componen el territorio español?",
+    "answers": [
+      "17",
+      "17 comunidades",
+      "17 comunidades autónomas",
+      "19"
+    ]
+  },
+  {
+    "question": "¿Cuál es el río más largo que discurre íntegramente por territorio español?",
+    "answers": [
+      "Tajo",
+      "el tajo",
+      "río tajo"
+    ]
+  },
+  {
+    "question": "¿Cuál es el pico más alto de todo el territorio español?",
+    "answers": [
+      "El Teide",
+      "teide"
+    ]
+  },
+  {
+    "question": "¿Qué dos ciudades autónomas tiene España situadas en el norte de África?",
+    "answers": [
+      "Ceuta y Melilla",
+      "melilla y ceuta"
+    ]
+  },
+  {
+    "question": "¿Cómo se llaman los dos archipiélagos principales de España?",
+    "answers": [
+      "Baleares y Canarias",
+      "Canarias y Baleares",
+      "Islas Baleares y Canarias",
+      "Las Islas Baleares y las Islas Canarias"
+    ]
+  },
+  {
+    "question": "¿Qué mar baña las costas del este y sureste de la península ibérica?",
+    "answers": [
+      "Mediterráneo",
+      "el mediterráneo",
+      "mar mediterráneo"
+    ]
+  },
+  {
+    "question": "¿Qué cordillera montañosa separa de forma natural la península ibérica del resto de Europa?",
+    "answers": [
+      "Los Pirineos",
+      "pirineos"
+    ]
+  },
+  {
+    "question": "¿Cuál es la montaña más alta de la península ibérica?",
+    "answers": [
+      "El Mulhacén",
+      "mulhacen",
+      "mulhacén"
+    ]
+  },
+  {
+    "question": "¿Qué estrecho separa el sur de España (y Europa) del continente africano?",
+    "answers": [
+      "Gibraltar",
+      "estrecho de gibraltar",
+      "el estrecho de gibraltar"
+    ]
+  },
+  {
+    "question": "¿Cuáles son los tres ingredientes básicos de la tradicional tortilla de patata?",
+    "answers": [
+      "Patata, huevo y aceite",
+      "patata huevo y aceite",
+      "patata huevo aceite",
+      "patatas huevos aceite",
+      "patata huevo y cebolla"
+    ]
+  },
+  {
+    "question": "¿Qué nombre reciben los pequeños platos de comida que se sirven gratis o de acompañamiento con una bebida en muchos bares?",
+    "answers": [
+      "Tapas",
+      "las tapas"
+    ]
+  },
+  {
+    "question": "¿Cómo se llama el prestigioso jamón curado español procedente de cerdos criados en dehesas?",
+    "answers": [
+      "Jamón ibérico",
+      "el jamón ibérico",
+      "iberico"
+    ]
+  },
+  {
+    "question": "¿De qué región española es originaria la auténtica paella?",
+    "answers": [
+      "Comunidad Valenciana",
+      "Valencia",
+      "de valencia"
+    ]
+  },
+  {
+    "question": "¿Qué sopa fría de tomate, pepino, pimiento y ajo es el plato estrella del verano en Andalucía?",
+    "answers": [
+      "Gazpacho",
+      "el gazpacho"
+    ]
+  },
+  {
+    "question": "¿Qué dulce navideño tradicional está elaborado principalmente con almendra, miel y clara de huevo?",
+    "answers": [
+      "Turrón",
+      "el turrón"
+    ]
+  },
+  {
+    "question": "¿Cómo se llaman las barritas de masa frita que se suelen desayunar mojadas en chocolate caliente?",
+    "answers": [
+      "Churros",
+      "los churros"
+    ]
+  },
+  {
+    "question": "¿Qué vino espumoso catalán es el principal competidor nacional del champán francés?",
+    "answers": [
+      "Cava",
+      "el cava"
+    ]
+  },
+  {
+    "question": "¿Qué pescado es la base de platos tradicionales vascos como el al pil-pil o a la vizcaína?",
+    "answers": [
+      "Bacalao",
+      "el bacalao"
+    ]
+  },
+  {
+    "question": "¿Qué fruta se come tradicionalmente en España marcando las campanadas de la medianoche en Nochevieja?",
+    "answers": [
+      "Uvas",
+      "las uvas",
+      "12 uvas",
+      "las 12 uvas",
+      "uvas de la suerte"
+    ]
+  },
+  {
+    "question": "¿En qué ciudad se celebran los famosos encierros de toros durante las fiestas de San Fermín?",
+    "answers": [
+      "Pamplona"
+    ]
+  },
+  {
+    "question": "¿Qué famosa fiesta de la Comunidad Valenciana culmina con la quema de grandes monumentos artísticos (ninots)?",
+    "answers": [
+      "Las Fallas",
+      "Fallas"
+    ]
+  },
+  {
+    "question": "¿Qué feria andaluza se celebra en Sevilla con casetas, trajes de flamenca, caballos y albero?",
+    "answers": [
+      "Feria de Abril",
+      "la feria de abril"
+    ]
+  },
+  {
+    "question": "¿En qué pueblo valenciano se celebra la conocida batalla campal de tomates llamada La Tomatina?",
+    "answers": [
+      "Buñol"
+    ]
+  },
+  {
+    "question": "¿Cómo se llama el arte folclórico tradicional andaluz basado en el cante, el toque de guitarra y el baile?",
+    "answers": [
+      "Flamenco",
+      "el flamenco"
+    ]
+  },
+  {
+    "question": "¿Qué día del mes de enero se celebra la llegada de los Reyes Magos con cabalgatas en todo el país?",
+    "answers": [
+      "6 de enero",
+      "seis de enero",
+      "el 6 de enero"
+    ]
+  },
+  {
+    "question": "¿Qué fiesta de primavera en Córdoba es mundialmente conocida por sus concursos de patios floridos?",
+    "answers": [
+      "Los Patios de Córdoba",
+      "patios de cordoba",
+      "los patios"
+    ]
+  },
+  {
+    "question": "¿Qué tradición se celebra la noche del 23 de junio encendiendo grandes hogueras junto al mar?",
+    "answers": [
+      "Hogueras de San Juan",
+      "san juan",
+      "noche de san juan",
+      "las hogueras de san juan"
+    ]
+  },
+  {
+    "question": "¿Qué festividad religiosa destaca en ciudades como Málaga y Sevilla con la salida de imponentes tronos procesionales?",
+    "answers": [
+      "Semana Santa",
+      "la semana santa"
+    ]
+  },
+  {
+    "question": "¿Cuál es el baile típico de la Comunidad de Madrid que se baila con chotis y vestimenta castiza?",
+    "answers": [
+      "Chotis",
+      "el chotis"
+    ]
+  },
+  {
+    "question": "¿Cómo se llama la emblemática basílica de Barcelona diseñada por Antoni Gaudí que lleva más de un siglo construyéndose?",
+    "answers": [
+      "Sagrada Familia",
+      "la sagrada familia"
+    ]
+  },
+  {
+    "question": "¿Qué gran museo madrileño alberga obras maestras de Velázquez, Goya o El Bosco?",
+    "answers": [
+      "Museo del Prado",
+      "el prado",
+      "el museo del prado"
+    ]
+  },
+  {
+    "question": "¿Quién es el autor de la célebre novela universal Don Quijote de la Mancha?",
+    "answers": [
+      "Miguel de Cervantes",
+      "cervantes"
+    ]
+  },
+  {
+    "question": "¿Qué arquitecto modernista es el genio detrás del Parque Güell y la Casa Batlló?",
+    "answers": [
+      "Antoni Gaudí",
+      "gaudí",
+      "gaudi"
+    ]
+  },
+  {
+    "question": "¿Qué imponente complejo palaciego y fortaleza nazarí se encuentra en Granada?",
+    "answers": [
+      "La Alhambra",
+      "alhambra"
+    ]
+  },
+  {
+    "question": "¿Qué pintor surrealista catalán es famoso por sus relojes blandos y su característico bigote?",
+    "answers": [
+      "Salvador Dalí",
+      "dalí",
+      "dali"
+    ]
+  },
+  {
+    "question": "¿Qué revolucionario movimiento artístico del siglo XX cofundó Pablo Picasso?",
+    "answers": [
+      "Cubismo",
+      "el cubismo"
+    ]
+  },
+  {
+    "question": "¿Qué gran monumento romano construido con grandes sillares de granito destaca en Segovia?",
+    "answers": [
+      "Acueducto de Segovia",
+      "el acueducto de segovia",
+      "acueducto"
+    ]
+  },
+  {
+    "question": "¿Qué célebre poeta y dramaturgo granadino de la Generación del 27 escribió Bodas de sangre?",
+    "answers": [
+      "Federico García Lorca",
+      "garcía lorca",
+      "garcia lorca",
+      "lorca"
+    ]
+  },
+  {
+    "question": "¿En qué ciudad vasca se encuentra el vanguardista Museo Guggenheim diseñado por Frank Gehry?",
+    "answers": [
+      "Bilbao"
+    ]
+  },
+  {
+    "question": "¿Cómo se conoce popularmente a la selección española de fútbol?",
+    "answers": [
+      "La Roja"
+    ]
+  },
+  {
+    "question": "¿Qué tenista español ostenta el récord de múltiples títulos de Roland Garros y es leyenda del deporte mundial?",
+    "answers": [
+      "Rafael Nadal",
+      "rafa nadal",
+      "nadal"
+    ]
+  },
+  {
+    "question": "¿Cuál es el nombre de la cadena de televisión pública estatal de ámbito nacional en España?",
+    "answers": [
+      "RTVE",
+      "TVE",
+      "radio televisión española"
+    ]
+  },
+  {
+    "question": "¿Qué célebre director de cine español cuenta con varios premios Óscar por películas como Todo sobre mi madre?",
+    "answers": [
+      "Pedro Almodóvar",
+      "almodóvar",
+      "almodovar"
+    ]
+  },
+  {
+    "question": "¿Cómo se llama la gran carrera ciclista por etapas que se celebra anualmente en España?",
+    "answers": [
+      "La Vuelta a España",
+      "la vuelta",
+      "vuelta a españa"
+    ]
+  },
+  {
+    "question": "¿Qué popular concurso musical de televisión lanzado en los 2000 revolucionó el panorama de la música pop en España?",
+    "answers": [
+      "Operación Triunfo",
+      "OT",
+      "operacion triunfo"
+    ]
+  },
+  {
+    "question": "¿Cómo se llama el famoso sorteo extraordinario de lotería que se celebra cada 22 de diciembre marcando el inicio de la Navidad?",
+    "answers": [
+      "El Gordo de Navidad",
+      "el gordo",
+      "lotería de navidad",
+      "loteria de navidad"
+    ]
+  },
+  {
+    "question": "¿Qué piloto asturiano de Fórmula 1 conquistó dos campeonatos del mundo para España?",
+    "answers": [
+      "Fernando Alonso",
+      "alonso"
+    ]
+  },
+  {
+    "question": "¿En qué céntrica plaza de Madrid se reúne la gente cada Nochevieja para comer las uvas al ritmo de las campanadas?",
+    "answers": [
+      "Puerta del Sol",
+      "la puerta del sol"
+    ]
+  },
+  {
+    "question": "¿Qué gran parque urbano madrileño alberga el estanque artificial, el Palacio de Cristal y el monumento a Alfonso XII?",
+    "answers": [
+      "Parque del Retiro",
+      "el retiro",
+      "retiro"
+    ]
+  }
+]

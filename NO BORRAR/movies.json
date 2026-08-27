@@ -1,0 +1,212 @@
+[
+  {
+    "emoji": "⚡👓🪄",
+    "answer": "harry potter",
+    "answers": ["harry potter", "harrypotter"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🦁👑🦁",
+    "answer": "el rey león",
+    "answers": ["el rey leon", "rey leon", "el rey león", "rey león"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🕸️🕷️🦸‍♂️",
+    "answer": "spider-man",
+    "answers": ["spiderman", "spider-man", "spider man", "el hombre araña", "hombre araña"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🦖🌴🦕",
+    "answer": "jurassic park",
+    "answers": ["jurassic park", "parque jurásico", "parque jurasico"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🚢❄️💔",
+    "answer": "titanic",
+    "answers": ["titanic", "el titanic"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🪐⚔️🚀",
+    "answer": "star wars",
+    "answers": ["star wars", "guerra de las galaxias", "la guerra de las galaxias"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🚗💨🏁",
+    "answer": "rápidos y furiosos",
+    "answers": ["rapido y furioso", "rapidos y furiosos", "rápidos y furiosos", "rápido y furioso", "fast and furious"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🤡🎈🧒",
+    "answer": "it",
+    "answers": ["it", "eso", "el payaso eso"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🍫🏭🎩",
+    "answer": "charlie y la fábrica de chocolate",
+    "answers": ["charlie y la fabrica de chocolate", "charlie y la fábrica de chocolate", "la fabrica de chocolate", "la fábrica de chocolate"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🧸🤠🚀",
+    "answer": "toy story",
+    "answers": ["toy story", "toy stori"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🦈🌊🏊‍♂️",
+    "answer": "tiburón",
+    "answers": ["tiburon", "tiburón", "jaws"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🦇🤵🌃",
+    "answer": "batman",
+    "answers": ["batman", "el caballero de la noche", "caballero de la noche"],
+    "isMovie": true
+  },
+  {
+    "emoji": "💍🌋🧝‍♂️",
+    "answer": "el señor de los anillos",
+    "answers": ["el señor de los anillos", "señor de los anillos", "lord of the rings"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🕵️‍♂️🔎🇬🇧",
+    "answer": "sherlock holmes",
+    "answers": ["sherlock holmes", "serlock holmes"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🏹🍎👧",
+    "answer": "los juegos del hambre",
+    "answers": ["los juegos del hambre", "juegos del hambre", "hunger games"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🧅👹💚",
+    "answer": "shrek",
+    "answers": ["shrek", "shreck"],
+    "isMovie": true
+  },
+  {
+    "emoji": "👠🎃🏰",
+    "answer": "cenicienta",
+    "answers": ["cenicienta", "la cenicienta", "cinderella"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🐠🔎🌊",
+    "answer": "buscando a nemo",
+    "answers": ["buscando a nemo", "nemo", "finding nemo"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🐼🥋🍜",
+    "answer": "kung fu panda",
+    "answers": ["kung fu panda", "kun fu panda"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🔴🔵💊🕶️",
+    "answer": "matrix",
+    "answers": ["matrix", "the matrix", "la matrix"],
+    "isMovie": true
+  },
+  {
+    "emoji": "👻🚫🎒",
+    "answer": "cazafantasmas",
+    "answers": ["cazafantasmas", "los cazafantasmas", "ghostbusters"],
+    "isMovie": true
+  },
+  {
+    "emoji": "⏰🔙🚗⚡",
+    "answer": "volver al futuro",
+    "answers": ["volver al futuro", "regreso al futuro", "back to the future"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🧊🏰👸❄️",
+    "answer": "frozen",
+    "answers": ["frozen", "frozen una aventura congelada", "frosen"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🎈🏠👴🎈",
+    "answer": "up",
+    "answers": ["up", "up una aventura de altura"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🕶️👽🌌",
+    "answer": "hombres de negro",
+    "answers": ["hombres de negro", "hombre de negro", "mib", "men in black"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🧟‍♂️🔫🌾",
+    "answer": "the walking dead",
+    "answers": ["the walking dead", "walking dead", "los muertos vivientes"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🦁🐘🦒🎪",
+    "answer": "zootopia",
+    "answers": ["zootopia", "zootopía"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🤖🚗🌍",
+    "answer": "transformers",
+    "answers": ["transformers", "transformer"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🍕🐢🥷",
+    "answer": "tortugas ninja",
+    "answers": ["tortugas ninja", "las tortugas ninja", "teenage mutant ninja turtles", "tmnt"],
+    "isMovie": true
+  },
+  {
+    "emoji": "👸🌹🕰️",
+    "answer": "la bella y la bestia",
+    "answers": ["la bella y la bestia", "bella y la bestia", "beauty and the beast"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🐉🥢🌸",
+    "answer": "mulan",
+    "answers": ["mulan"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🧜‍♀️🌊🦀",
+    "answer": "la sirenita",
+    "answers": ["la sirenita", "la sirenita disney", "the little mermaid"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🦊🐓🌽",
+    "answer": "el libro de la selva",
+    "answers": ["el libro de la selva", "libro de la selva", "the jungle book"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🕷️🏙️🎭",
+    "answer": "el hombre araña",
+    "answers": ["el hombre araña", "hombre araña", "spiderman"],
+    "isMovie": true
+  },
+  {
+    "emoji": "🏔️⛏️💎",
+    "answer": "blancanieves",
+    "answers": ["blancanieves", "blanca nieves", "snow white"],
+    "isMovie": true
+  }
+]

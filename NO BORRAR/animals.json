@@ -1,0 +1,1297 @@
+[
+  {
+    "country": "león",
+    "emoji": "🦁",
+    "isAnimal": true
+  },
+  {
+    "country": "tigre",
+    "emoji": "🐯",
+    "isAnimal": true
+  },
+  {
+    "country": "elefante",
+    "emoji": "🐘",
+    "isAnimal": true
+  },
+  {
+    "country": "jirafa",
+    "emoji": "🦒",
+    "isAnimal": true
+  },
+  {
+    "country": "oso",
+    "emoji": "🐻",
+    "isAnimal": true
+  },
+  {
+    "country": "oso panda",
+    "emoji": "🐼",
+    "isAnimal": true
+  },
+  {
+    "country": "mono",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "gato",
+    "emoji": "🐱",
+    "isAnimal": true
+  },
+  {
+    "country": "perro",
+    "emoji": "🐶",
+    "isAnimal": true
+  },
+  {
+    "country": "delfín",
+    "emoji": "🐬",
+    "isAnimal": true
+  },
+  {
+    "country": "tiburón",
+    "emoji": "🦈",
+    "isAnimal": true
+  },
+  {
+    "country": "ballena",
+    "emoji": "🐋",
+    "isAnimal": true
+  },
+  {
+    "country": "pingüino",
+    "emoji": "🐧",
+    "isAnimal": true
+  },
+  {
+    "country": "águila",
+    "emoji": "🦅",
+    "isAnimal": true
+  },
+  {
+    "country": "serpiente",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "tortuga",
+    "emoji": "🐢",
+    "isAnimal": true
+  },
+  {
+    "country": "rana",
+    "emoji": "🐸",
+    "isAnimal": true
+  },
+  {
+    "country": "conejo",
+    "emoji": "🐰",
+    "isAnimal": true
+  },
+  {
+    "country": "caballo",
+    "emoji": "🐴",
+    "isAnimal": true
+  },
+  {
+    "country": "vaca",
+    "emoji": "🐮",
+    "isAnimal": true
+  },
+  {
+    "country": "cerdo",
+    "emoji": "🐷",
+    "isAnimal": true
+  },
+  {
+    "country": "oveja",
+    "emoji": "🐑",
+    "isAnimal": true
+  },
+  {
+    "country": "gallina",
+    "emoji": "🐔",
+    "isAnimal": true
+  },
+  {
+    "country": "pato",
+    "emoji": "🦆",
+    "isAnimal": true
+  },
+  {
+    "country": "mariposa",
+    "emoji": "🦋",
+    "isAnimal": true
+  },
+  {
+    "country": "abeja",
+    "emoji": "🐝",
+    "isAnimal": true
+  },
+  {
+    "country": "lobo",
+    "emoji": "🐺",
+    "isAnimal": true
+  },
+  {
+    "country": "zorro",
+    "emoji": "🦊",
+    "isAnimal": true
+  },
+  {
+    "country": "león marino",
+    "emoji": "🦭",
+    "isAnimal": true
+  },
+  {
+    "country": "koala",
+    "emoji": "🐨",
+    "isAnimal": true
+  },
+  {
+    "country": "canguro",
+    "emoji": "🦘",
+    "isAnimal": true
+  },
+  {
+    "country": "gorila",
+    "emoji": "🦍",
+    "isAnimal": true
+  },
+  {
+    "country": "hipopótamo",
+    "emoji": "🦛",
+    "isAnimal": true
+  },
+  {
+    "country": "leopardo",
+    "emoji": "🐆",
+    "isAnimal": true
+  },
+  {
+    "country": "cebra",
+    "emoji": "🦓",
+    "isAnimal": true
+  },
+  {
+    "country": "ciervo",
+    "emoji": "🦌",
+    "isAnimal": true
+  },
+  {
+    "country": "murciélago",
+    "emoji": "🦇",
+    "isAnimal": true
+  },
+  {
+    "country": "búho",
+    "emoji": "🦉",
+    "isAnimal": true
+  },
+  {
+    "country": "flamenco",
+    "emoji": "🦩",
+    "isAnimal": true
+  },
+  {
+    "country": "loro",
+    "emoji": "🦜",
+    "isAnimal": true
+  },
+  {
+    "country": "dinosaurio",
+    "emoji": "🦖",
+    "isAnimal": true
+  },
+  {
+    "country": "pulpo",
+    "emoji": "🐙",
+    "isAnimal": true
+  },
+  {
+    "country": "cangrejo",
+    "emoji": "🦀",
+    "isAnimal": true
+  },
+  {
+    "country": "langosta",
+    "emoji": "🦞",
+    "isAnimal": true
+  },
+  {
+    "country": "caracol",
+    "emoji": "🐌",
+    "isAnimal": true
+  },
+  {
+    "country": "araña",
+    "emoji": "🕷️",
+    "isAnimal": true
+  },
+  {
+    "country": "hormiga",
+    "emoji": "🐜",
+    "isAnimal": true
+  },
+  {
+    "country": "ratón",
+    "emoji": "🐭",
+    "isAnimal": true
+  },
+  {
+    "country": "camello",
+    "emoji": "🐫",
+    "isAnimal": true
+  },
+  {
+    "country": "pavo real",
+    "emoji": "🦚",
+    "isAnimal": true
+  },
+  {
+    "country": "erizo",
+    "emoji": "🦔",
+    "isAnimal": true
+  },
+  {
+    "country": "guepardo",
+    "emoji": "🐆",
+    "isAnimal": true
+  },
+  {
+    "country": "puma",
+    "emoji": "🐆",
+    "isAnimal": true
+  },
+  {
+    "country": "jaguar",
+    "emoji": "🐆",
+    "isAnimal": true
+  },
+  {
+    "country": "pantera",
+    "emoji": "🐆",
+    "isAnimal": true
+  },
+  {
+    "country": "lince",
+    "emoji": "🐱",
+    "isAnimal": true
+  },
+  {
+    "country": "hiena",
+    "emoji": "🐺",
+    "isAnimal": true
+  },
+  {
+    "country": "chacal",
+    "emoji": "🐺",
+    "isAnimal": true
+  },
+  {
+    "country": "coyote",
+    "emoji": "🐺",
+    "isAnimal": true
+  },
+  {
+    "country": "perro salvaje",
+    "emoji": "🐶",
+    "isAnimal": true
+  },
+  {
+    "country": "dingo",
+    "emoji": "🐶",
+    "isAnimal": true
+  },
+  {
+    "country": "zorro rojo",
+    "emoji": "🦊",
+    "isAnimal": true
+  },
+  {
+    "country": "zorro ártico",
+    "emoji": "🦊",
+    "isAnimal": true
+  },
+  {
+    "country": "mapache",
+    "emoji": "🦝",
+    "isAnimal": true
+  },
+  {
+    "country": "tejón",
+    "emoji": "🦡",
+    "isAnimal": true
+  },
+  {
+    "country": "comadreja",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "hurón",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "visón",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "marmota",
+    "emoji": "🐿️",
+    "isAnimal": true
+  },
+  {
+    "country": "castor",
+    "emoji": "🦫",
+    "isAnimal": true
+  },
+  {
+    "country": "nutria",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "ornitorrinco",
+    "emoji": "🦆",
+    "isAnimal": true
+  },
+  {
+    "country": "equidna",
+    "emoji": "🦔",
+    "isAnimal": true
+  },
+  {
+    "country": "zarigüeya",
+    "emoji": "🐀",
+    "isAnimal": true
+  },
+  {
+    "country": "wombat",
+    "emoji": "🐨",
+    "isAnimal": true
+  },
+  {
+    "country": "demonio de tasmania",
+    "emoji": "🐻",
+    "isAnimal": true
+  },
+  {
+    "country": "canguro rojo",
+    "emoji": "🦘",
+    "isAnimal": true
+  },
+  {
+    "country": "wallaby",
+    "emoji": "🦘",
+    "isAnimal": true
+  },
+  {
+    "country": "perezoso",
+    "emoji": "🦥",
+    "isAnimal": true
+  },
+  {
+    "country": "armadillo",
+    "emoji": "🦔",
+    "isAnimal": true
+  },
+  {
+    "country": "oso hormiguero",
+    "emoji": "🐜",
+    "isAnimal": true
+  },
+  {
+    "country": "pangolín",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "tapir",
+    "emoji": "🐖",
+    "isAnimal": true
+  },
+  {
+    "country": "rinoceronte",
+    "emoji": "🦏",
+    "isAnimal": true
+  },
+  {
+    "country": "jabalí",
+    "emoji": "🐗",
+    "isAnimal": true
+  },
+  {
+    "country": "facóquero",
+    "emoji": "🐗",
+    "isAnimal": true
+  },
+  {
+    "country": "alce",
+    "emoji": "🫎",
+    "isAnimal": true
+  },
+  {
+    "country": "reno",
+    "emoji": "🦌",
+    "isAnimal": true
+  },
+  {
+    "country": "caribú",
+    "emoji": "🦌",
+    "isAnimal": true
+  },
+  {
+    "country": "ciervo rojo",
+    "emoji": "🦌",
+    "isAnimal": true
+  },
+  {
+    "country": "gacela",
+    "emoji": "🦌",
+    "isAnimal": true
+  },
+  {
+    "country": "antílope",
+    "emoji": "🦌",
+    "isAnimal": true
+  },
+  {
+    "country": "ñu",
+    "emoji": "🐃",
+    "isAnimal": true
+  },
+  {
+    "country": "búfalo",
+    "emoji": "🐃",
+    "isAnimal": true
+  },
+  {
+    "country": "bisonte",
+    "emoji": "🦬",
+    "isAnimal": true
+  },
+  {
+    "country": "yak",
+    "emoji": "🐂",
+    "isAnimal": true
+  },
+  {
+    "country": "toro",
+    "emoji": "🐂",
+    "isAnimal": true
+  },
+  {
+    "country": "cabra",
+    "emoji": "🐐",
+    "isAnimal": true
+  },
+  {
+    "country": "íbice",
+    "emoji": "🐐",
+    "isAnimal": true
+  },
+  {
+    "country": "muflón",
+    "emoji": "🐏",
+    "isAnimal": true
+  },
+  {
+    "country": "alpaca",
+    "emoji": "🦙",
+    "isAnimal": true
+  },
+  {
+    "country": "llama",
+    "emoji": "🦙",
+    "isAnimal": true
+  },
+  {
+    "country": "vicuña",
+    "emoji": "🦙",
+    "isAnimal": true
+  },
+  {
+    "country": "guanaco",
+    "emoji": "🦙",
+    "isAnimal": true
+  },
+  {
+    "country": "burro",
+    "emoji": "🐴",
+    "isAnimal": true
+  },
+  {
+    "country": "asno",
+    "emoji": "🐴",
+    "isAnimal": true
+  },
+  {
+    "country": "mula",
+    "emoji": "🐴",
+    "isAnimal": true
+  },
+  {
+    "country": "caballo salvaje",
+    "emoji": "🐎",
+    "isAnimal": true
+  },
+  {
+    "country": "chimpancé",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "orangután",
+    "emoji": "🦧",
+    "isAnimal": true
+  },
+  {
+    "country": "babuino",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "mandril",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "macaco",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "tití",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "lémur",
+    "emoji": "🐒",
+    "isAnimal": true
+  },
+  {
+    "country": "suricata",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "mangosta",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "ardilla",
+    "emoji": "🐿️",
+    "isAnimal": true
+  },
+  {
+    "country": "ardilla voladora",
+    "emoji": "🐿️",
+    "isAnimal": true
+  },
+  {
+    "country": "hámster",
+    "emoji": "🐹",
+    "isAnimal": true
+  },
+  {
+    "country": "cobaya",
+    "emoji": "🐹",
+    "isAnimal": true
+  },
+  {
+    "country": "conejillo de indias",
+    "emoji": "🐹",
+    "isAnimal": true
+  },
+  {
+    "country": "chinchilla",
+    "emoji": "🐭",
+    "isAnimal": true
+  },
+  {
+    "country": "capibara",
+    "emoji": "🦦",
+    "isAnimal": true
+  },
+  {
+    "country": "puercoespín",
+    "emoji": "🦔",
+    "isAnimal": true
+  },
+  {
+    "country": "liebre",
+    "emoji": "🐇",
+    "isAnimal": true
+  },
+  {
+    "country": "musaraña",
+    "emoji": "🐁",
+    "isAnimal": true
+  },
+  {
+    "country": "topo",
+    "emoji": "🦯",
+    "isAnimal": true
+  },
+  {
+    "country": "foca",
+    "emoji": "🦭",
+    "isAnimal": true
+  },
+  {
+    "country": "morsa",
+    "emoji": "🦭",
+    "isAnimal": true
+  },
+  {
+    "country": "manatí",
+    "emoji": "🐋",
+    "isAnimal": true
+  },
+  {
+    "country": "dugongo",
+    "emoji": "🐋",
+    "isAnimal": true
+  },
+  {
+    "country": "narval",
+    "emoji": "🐳",
+    "isAnimal": true
+  },
+  {
+    "country": "beluga",
+    "emoji": "🐳",
+    "isAnimal": true
+  },
+  {
+    "country": "orca",
+    "emoji": "🐋",
+    "isAnimal": true
+  },
+  {
+    "country": "cachalote",
+    "emoji": "🐋",
+    "isAnimal": true
+  },
+  {
+    "country": "marsopa",
+    "emoji": "🐬",
+    "isAnimal": true
+  },
+  {
+    "country": "tiburón blanco",
+    "emoji": "🦈",
+    "isAnimal": true
+  },
+  {
+    "country": "tiburón martillo",
+    "emoji": "🦈",
+    "isAnimal": true
+  },
+  {
+    "country": "tiburón ballena",
+    "emoji": "🦈",
+    "isAnimal": true
+  },
+  {
+    "country": "manta raya",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "mantarraya",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "pez espada",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "pez payaso",
+    "emoji": "🐠",
+    "isAnimal": true
+  },
+  {
+    "country": "pez globo",
+    "emoji": "🐡",
+    "isAnimal": true
+  },
+  {
+    "country": "caballito de mar",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "anguila",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "morena",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "raya",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "esturión",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "salmón",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "trucha",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "atún",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "bacalao",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "piraña",
+    "emoji": "🐟",
+    "isAnimal": true
+  },
+  {
+    "country": "medusa",
+    "emoji": "🪼",
+    "isAnimal": true
+  },
+  {
+    "country": "calamar",
+    "emoji": "🦑",
+    "isAnimal": true
+  },
+  {
+    "country": "sepia",
+    "emoji": "🦑",
+    "isAnimal": true
+  },
+  {
+    "country": "ostra",
+    "emoji": "🦪",
+    "isAnimal": true
+  },
+  {
+    "country": "almeja",
+    "emoji": "🦪",
+    "isAnimal": true
+  },
+  {
+    "country": "mejillón",
+    "emoji": "🦪",
+    "isAnimal": true
+  },
+  {
+    "country": "estrella de mar",
+    "emoji": "⭐",
+    "isAnimal": true
+  },
+  {
+    "country": "erizo de mar",
+    "emoji": "🦔",
+    "isAnimal": true
+  },
+  {
+    "country": "pepino de mar",
+    "emoji": "🥒",
+    "isAnimal": true
+  },
+  {
+    "country": "anémona",
+    "emoji": "🪸",
+    "isAnimal": true
+  },
+  {
+    "country": "coral",
+    "emoji": "🪸",
+    "isAnimal": true
+  },
+  {
+    "country": "esponja",
+    "emoji": "🧽",
+    "isAnimal": true
+  },
+  {
+    "country": "cóndor",
+    "emoji": "🦅",
+    "isAnimal": true
+  },
+  {
+    "country": "halcón",
+    "emoji": "🦅",
+    "isAnimal": true
+  },
+  {
+    "country": "gavilán",
+    "emoji": "🦅",
+    "isAnimal": true
+  },
+  {
+    "country": "buitre",
+    "emoji": "🦅",
+    "isAnimal": true
+  },
+  {
+    "country": "águila calva",
+    "emoji": "🦅",
+    "isAnimal": true
+  },
+  {
+    "country": "lechuza",
+    "emoji": "🦉",
+    "isAnimal": true
+  },
+  {
+    "country": "cuervo",
+    "emoji": "🐦‍⬛",
+    "isAnimal": true
+  },
+  {
+    "country": "urraca",
+    "emoji": "🐦‍⬛",
+    "isAnimal": true
+  },
+  {
+    "country": "grajo",
+    "emoji": "🐦‍⬛",
+    "isAnimal": true
+  },
+  {
+    "country": "gaviota",
+    "emoji": "🕊️",
+    "isAnimal": true
+  },
+  {
+    "country": "albatros",
+    "emoji": "🕊️",
+    "isAnimal": true
+  },
+  {
+    "country": "pelícano",
+    "emoji": "🦢",
+    "isAnimal": true
+  },
+  {
+    "country": "cormorán",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "frailecillo",
+    "emoji": "🐧",
+    "isAnimal": true
+  },
+  {
+    "country": "garza",
+    "emoji": "🦩",
+    "isAnimal": true
+  },
+  {
+    "country": "grulla",
+    "emoji": "🦩",
+    "isAnimal": true
+  },
+  {
+    "country": "cigüeña",
+    "emoji": "🦩",
+    "isAnimal": true
+  },
+  {
+    "country": "ibis",
+    "emoji": "🦩",
+    "isAnimal": true
+  },
+  {
+    "country": "avestruz",
+    "emoji": "🦤",
+    "isAnimal": true
+  },
+  {
+    "country": "emú",
+    "emoji": "🦤",
+    "isAnimal": true
+  },
+  {
+    "country": "casuario",
+    "emoji": "🦤",
+    "isAnimal": true
+  },
+  {
+    "country": "ñandú",
+    "emoji": "🦤",
+    "isAnimal": true
+  },
+  {
+    "country": "kiwi",
+    "emoji": "🥝",
+    "isAnimal": true
+  },
+  {
+    "country": "cisne",
+    "emoji": "🦢",
+    "isAnimal": true
+  },
+  {
+    "country": "ganso",
+    "emoji": "🪿",
+    "isAnimal": true
+  },
+  {
+    "country": "oca",
+    "emoji": "🪿",
+    "isAnimal": true
+  },
+  {
+    "country": "faisán",
+    "emoji": "🦚",
+    "isAnimal": true
+  },
+  {
+    "country": "pavo",
+    "emoji": "🦃",
+    "isAnimal": true
+  },
+  {
+    "country": "codorniz",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "perdiz",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "paloma",
+    "emoji": "🕊️",
+    "isAnimal": true
+  },
+  {
+    "country": "tórtola",
+    "emoji": "🕊️",
+    "isAnimal": true
+  },
+  {
+    "country": "cotorra",
+    "emoji": "🦜",
+    "isAnimal": true
+  },
+  {
+    "country": "guacamayo",
+    "emoji": "🦜",
+    "isAnimal": true
+  },
+  {
+    "country": "cacatúa",
+    "emoji": "🦜",
+    "isAnimal": true
+  },
+  {
+    "country": "tucán",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "pájaro carpintero",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "colibrí",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "martín pescador",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "golondrina",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "gorrión",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "canario",
+    "emoji": "🐤",
+    "isAnimal": true
+  },
+  {
+    "country": "jilguero",
+    "emoji": "🐤",
+    "isAnimal": true
+  },
+  {
+    "country": "ruiseñor",
+    "emoji": "🐦",
+    "isAnimal": true
+  },
+  {
+    "country": "mirlo",
+    "emoji": "🐦‍⬛",
+    "isAnimal": true
+  },
+  {
+    "country": "iguana",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "camaleón",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "gecko",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "lagarto",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "lagartija",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "dragón de komodo",
+    "emoji": "🐉",
+    "isAnimal": true
+  },
+  {
+    "country": "cocodrilo",
+    "emoji": "🐊",
+    "isAnimal": true
+  },
+  {
+    "country": "caimán",
+    "emoji": "🐊",
+    "isAnimal": true
+  },
+  {
+    "country": "gavial",
+    "emoji": "🐊",
+    "isAnimal": true
+  },
+  {
+    "country": "pitón",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "boa",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "anaconda",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "cobra",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "víbora",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "cascabel",
+    "emoji": "🐍",
+    "isAnimal": true
+  },
+  {
+    "country": "sapo",
+    "emoji": "🐸",
+    "isAnimal": true
+  },
+  {
+    "country": "salamandra",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "tritón",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "ajolote",
+    "emoji": "🦎",
+    "isAnimal": true
+  },
+  {
+    "country": "escarabajo",
+    "emoji": "🪲",
+    "isAnimal": true
+  },
+  {
+    "country": "mariquita",
+    "emoji": "🐞",
+    "isAnimal": true
+  },
+  {
+    "country": "luciérnaga",
+    "emoji": "🪲",
+    "isAnimal": true
+  },
+  {
+    "country": "saltamontes",
+    "emoji": "🦗",
+    "isAnimal": true
+  },
+  {
+    "country": "grillo",
+    "emoji": "🦗",
+    "isAnimal": true
+  },
+  {
+    "country": "mantis religiosa",
+    "emoji": "🦗",
+    "isAnimal": true
+  },
+  {
+    "country": "cucaracha",
+    "emoji": "🪳",
+    "isAnimal": true
+  },
+  {
+    "country": "termita",
+    "emoji": "🐜",
+    "isAnimal": true
+  },
+  {
+    "country": "avispa",
+    "emoji": "🐝",
+    "isAnimal": true
+  },
+  {
+    "country": "mosca",
+    "emoji": "🪰",
+    "isAnimal": true
+  },
+  {
+    "country": "mosquito",
+    "emoji": "🦟",
+    "isAnimal": true
+  },
+  {
+    "country": "tábano",
+    "emoji": "🪰",
+    "isAnimal": true
+  },
+  {
+    "country": "libélula",
+    "emoji": "🪰",
+    "isAnimal": true
+  },
+  {
+    "country": "polilla",
+    "emoji": "🦋",
+    "isAnimal": true
+  },
+  {
+    "country": "oruga",
+    "emoji": "🐛",
+    "isAnimal": true
+  },
+  {
+    "country": "gusano",
+    "emoji": "🪱",
+    "isAnimal": true
+  },
+  {
+    "country": "lombriz",
+    "emoji": "🪱",
+    "isAnimal": true
+  },
+  {
+    "country": "sanguijuela",
+    "emoji": "🪱",
+    "isAnimal": true
+  },
+  {
+    "country": "ciempiés",
+    "emoji": "🐛",
+    "isAnimal": true
+  },
+  {
+    "country": "milpiés",
+    "emoji": "🐛",
+    "isAnimal": true
+  },
+  {
+    "country": "tarántula",
+    "emoji": "🕷️",
+    "isAnimal": true
+  },
+  {
+    "country": "escorpión",
+    "emoji": "🦂",
+    "isAnimal": true
+  },
+  {
+    "country": "alacrán",
+    "emoji": "🦂",
+    "isAnimal": true
+  },
+  {
+    "country": "garrapata",
+    "emoji": "🪲",
+    "isAnimal": true
+  },
+  {
+    "country": "ácaro",
+    "emoji": "🪲",
+    "isAnimal": true
+  },
+  {
+    "country": "pulga",
+    "emoji": "🪲",
+    "isAnimal": true
+  },
+  {
+    "country": "piojo",
+    "emoji": "🪲",
+    "isAnimal": true
+  },
+  {
+    "country": "chinche",
+    "emoji": "🪲",
+    "isAnimal": true
+  }
+]
