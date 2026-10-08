@@ -36,7 +36,7 @@ const CATEGORIES = [
   { id: 'experiencias', label: 'Experiencias', icon: '⭐', color: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' },
 ];
 
-const AVATARS = ['🦁', '🐯', '🦊', '🐺', '🦅', '🐬', '🦋', '🌵', '🔥', '⚡'];
+
 
 function getCategoryData(categoryId: string) {
   return CATEGORIES.find((c) => c.id === categoryId) || CATEGORIES[0];

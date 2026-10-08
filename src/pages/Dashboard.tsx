@@ -9,7 +9,7 @@ import type { Post } from '../types';
 import CreatePost from '../components/CreatePost';
 import {
   LayoutDashboard, Edit3, Save, X, BarChart2,
-  Globe, Lock, PenSquare, Users, TrendingUp, Trash2
+  Globe, Lock, PenSquare, Users, TrendingUp
 } from 'lucide-react';
 
 const AVATARS = ['🦁', '🐯', '🦊', '🐺', '🦅', '🐬', '🦋', '🌵', '🔥', '⚡', '🎭', '🧠', '🌊', '🦄', '🐉', '⚔️', '🎯', '🚀', '💎', '🌙'];
