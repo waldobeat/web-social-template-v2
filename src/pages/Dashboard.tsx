@@ -2,27 +2,26 @@ import { useState, useEffect } from 'react';
 import { ref, onValue, set } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import PostCard from '../components/PostCard';
 import type { Post } from '../types';
-import CreatePost from '../components/CreatePost';
 import {
-  LayoutDashboard, Edit3, Save, X, BarChart2,
-  Globe, Lock, PenSquare, Users, TrendingUp
+  Edit3, Save, X,
+  Globe, Lock, PenSquare, Users
 } from 'lucide-react';
 
 const AVATARS = ['🦁', '🐯', '🦊', '🐺', '🦅', '🐬', '🦋', '🌵', '🔥', '⚡', '🎭', '🧠', '🌊', '🦄', '🐉', '⚔️', '🎯', '🚀', '💎', '🌙'];
 
-type DashTab = 'overview' | 'posts' | 'blog' | 'settings';
+type DashTab = 'posts' | 'settings';
 
 export default function Dashboard() {
   const { user, updateProfile, loading: authLoading } = useAuthContext();
   const navigate = useNavigate();
-  const [tab, setTab] = useState<DashTab>('overview');
+  const [tab, setTab] = useState<DashTab>('posts');
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [refresh, setRefresh] = useState(0);
+  const [refresh] = useState(0);
 
   // Edit profile state
   const [editing, setEditing] = useState(false);
@@ -111,13 +110,9 @@ export default function Dashboard() {
 
   const publicPosts = posts.filter((p) => p.visibility === 'public');
   const privatePosts = posts.filter((p) => p.visibility === 'followers');
-  const totalLikes = posts.reduce((acc, p) => acc + (p.likesCount || 0), 0);
-  const totalComments = posts.reduce((acc, p) => acc + (p.commentsCount || 0), 0);
 
   const tabs: { id: DashTab; label: string; icon: React.FC<any> }[] = [
-    { id: 'overview', label: 'Resumen', icon: LayoutDashboard },
     { id: 'posts', label: 'Mis Posts', icon: PenSquare },
-    { id: 'blog', label: 'Nuevo Post', icon: Edit3 },
     { id: 'settings', label: 'Mi Perfil', icon: Users },
   ];
 
@@ -136,7 +131,7 @@ export default function Dashboard() {
         </div>
 
         {/* Tabs */}
-        <div className="mb-6 flex gap-1 border-b border-white/5 pb-1 flex-wrap">
+        <div className="mb-6 flex gap-1 border-b border-white/5 pb-1">
           {tabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
@@ -153,79 +148,27 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* === OVERVIEW === */}
-        {tab === 'overview' && (
-          <div className="space-y-6">
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { label: 'Posts totales', value: posts.length, icon: PenSquare, color: 'text-neon-pink', bg: 'bg-neon-pink/10' },
-                { label: 'Me gustas', value: totalLikes, icon: TrendingUp, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-                { label: 'Comentarios', value: totalComments, icon: BarChart2, color: 'text-violet-400', bg: 'bg-violet-500/10' },
-                { label: 'Seguidores', value: user.followersCount, icon: Users, color: 'text-amber-400', bg: 'bg-amber-500/10' },
-              ].map(({ label, value, icon: Icon, color, bg }) => (
-                <div key={label} className="rounded-2xl border border-white/5 bg-white/[0.03] p-5">
-                  <div className={`mb-3 inline-flex h-9 w-9 items-center justify-center rounded-xl ${bg}`}>
-                    <Icon className={`h-4 w-4 ${color}`} />
-                  </div>
-                  <p className="text-2xl font-black text-white">{value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Visibility breakdown */}
-            <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-5">
-              <h3 className="mb-4 text-sm font-bold text-white">Privacidad de posts</h3>
-              <div className="flex gap-4">
-                <div className="flex items-center gap-2 text-sm">
-                  <Globe className="h-4 w-4 text-emerald-400" />
-                  <span className="text-gray-300">{publicPosts.length} públicos</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Lock className="h-4 w-4 text-violet-400" />
-                  <span className="text-gray-300">{privatePosts.length} solo seguidores</span>
-                </div>
-              </div>
-              <div className="mt-3 h-2 rounded-full bg-white/5 overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-emerald-500 to-violet-500 rounded-full transition-all"
-                  style={{ width: posts.length ? `${(publicPosts.length / posts.length) * 100}%` : '0%' }}
-                />
-              </div>
-            </div>
-
-            {/* Recent posts preview */}
-            <div>
-              <h3 className="mb-3 text-sm font-bold text-gray-400 uppercase tracking-wider">Últimas publicaciones</h3>
-              {posts.slice(0, 3).map((post) => (
-                <PostCard
-                  key={post.id}
-                  post={post}
-                  showDeleteOption
-                  onDelete={handleDeletePost}
-                />
-              ))}
-              {posts.length > 3 && (
-                <button
-                  onClick={() => setTab('posts')}
-                  className="mt-3 w-full rounded-xl border border-white/8 py-2.5 text-xs font-semibold text-gray-500 hover:text-gray-300 hover:bg-white/4 transition-all"
-                >
-                  Ver todos mis posts ({posts.length})
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* === ALL POSTS === */}
+        {/* === MIS POSTS === */}
         {tab === 'posts' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider">
-                Todas mis publicaciones ({posts.length})
+                Mis publicaciones ({posts.length})
               </h2>
+              {posts.length > 0 && (
+                <div className="flex items-center gap-3 text-xs text-gray-600">
+                  <span className="flex items-center gap-1">
+                    <Globe className="h-3 w-3 text-emerald-400" />
+                    {publicPosts.length} públicos
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Lock className="h-3 w-3 text-violet-400" />
+                    {privatePosts.length} privados
+                  </span>
+                </div>
+              )}
             </div>
+
             {loading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => <div key={i} className="h-32 rounded-2xl border border-white/5 bg-white/[0.02] animate-pulse" />)}
@@ -234,12 +177,12 @@ export default function Dashboard() {
               <div className="flex flex-col items-center py-16 text-center">
                 <div className="mb-3 text-4xl">📝</div>
                 <p className="text-gray-500 text-sm">Aún no has publicado nada.</p>
-                <button
-                  onClick={() => setTab('blog')}
-                  className="mt-4 rounded-xl bg-neon-pink px-5 py-2 text-xs font-bold text-white"
+                <Link
+                  to="/feed"
+                  className="mt-4 rounded-xl bg-neon-pink px-5 py-2 text-xs font-bold text-white hover:bg-neon-pink/80 transition-all"
                 >
-                  Crear mi primer post
-                </button>
+                  Ir al Feed a publicar
+                </Link>
               </div>
             ) : (
               posts.map((post) => (
@@ -254,38 +197,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* === NEW POST / BLOG === */}
-        {tab === 'blog' && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-lg font-black text-white mb-1">Nueva publicación</h2>
-              <p className="text-sm text-gray-500">
-                Comparte tu experiencia, consejo o pregunta sobre préstamos y finanzas en Venezuela.
-              </p>
-            </div>
-            <CreatePost onCreated={() => { setRefresh((r) => r + 1); setTab('posts'); }} />
-
-            {/* Tips */}
-            <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5">
-              <h3 className="mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Consejos para tu post</h3>
-              <ul className="space-y-2">
-                {[
-                  'Sé claro y directo sobre tu experiencia real',
-                  'Menciona la plataforma (Cashea, Krece, Credix) para que otros te encuentren',
-                  'Usa "Solo seguidores" para posts más personales',
-                  'Los posts públicos llegan a toda la comunidad SHEDDIT',
-                ].map((tip) => (
-                  <li key={tip} className="flex items-start gap-2 text-xs text-gray-500">
-                    <span className="text-neon-pink mt-0.5">✦</span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {/* === SETTINGS / PROFILE EDIT === */}
+        {/* === MI PERFIL === */}
         {tab === 'settings' && (
           <div className="space-y-6 max-w-xl">
             <div className="flex items-center justify-between">
@@ -395,7 +307,7 @@ export default function Dashboard() {
               )}
             </div>
 
-            {/* Private Fields section */}
+            {/* Private Fields */}
             <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 space-y-5">
               <div className="flex items-center gap-2 mb-1">
                 <Lock className="h-4 w-4 text-amber-500" />
@@ -471,17 +383,6 @@ export default function Dashboard() {
                 ) : (
                   <p className="text-sm text-gray-400">{user.birthDate || 'No especificado'}</p>
                 )}
-              </div>
-            </div>
-
-            {/* Account info */}
-            <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5">
-              <h3 className="mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Info de cuenta</h3>
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs">
-                  <span className="text-gray-500">Tipo de cuenta</span>
-                  <span className="text-gray-300">Cuenta Registrada</span>
-                </div>
               </div>
             </div>
           </div>
