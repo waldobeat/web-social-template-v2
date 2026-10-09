@@ -6,7 +6,6 @@ import Feed from './pages/Feed';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import Prestamos from './pages/Prestamos';
-import Foro from './pages/Foro';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
           <Route path="/perfil/:userId" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/prestamos" element={<Prestamos />} />
-          <Route path="/foro" element={<Foro />} />
           {/* Redirect old routes */}
           <Route path="/home" element={<Navigate to="/feed" replace />} />
           <Route path="/hall-of-fame" element={<Navigate to="/feed" replace />} />

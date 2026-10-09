@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuthContext } from '../lib/AuthContext';
 import {
-  Home, MessageSquare, BookOpen, LogOut,
+  Home, BookOpen, LogOut,
   Menu, X, User, LayoutDashboard, Bell, Search
 } from 'lucide-react';
 
@@ -20,7 +20,6 @@ export default function Navbar() {
   const links = [
     { to: '/feed', label: 'Feed', icon: Home },
     { to: '/prestamos', label: 'Préstamos', icon: BookOpen },
-    { to: '/foro', label: 'Comunidad', icon: MessageSquare },
   ];
 
   const isActive = (to: string) => location.pathname === to || location.pathname.startsWith(to + '/');
