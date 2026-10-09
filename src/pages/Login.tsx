@@ -1,47 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithRedirect, getRedirectResult } from 'firebase/auth';
+import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { user, registerWithEmailPassword, loginWithEmailPassword } = useAuthContext();
+  const { user, loading, registerWithEmailPassword, loginWithEmailPassword } = useAuthContext();
   const [error, setError] = useState<string | false>(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Email/Password states
   const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
 
-  // Simple Math Captcha states
   const [captchaQ, setCaptchaQ] = useState({ a: 0, b: 0 });
   const [captchaA, setCaptchaA] = useState('');
 
-  // Redirect if already logged in
+  // Only redirect when auth is done loading
   useEffect(() => {
-    if (user) navigate('/feed');
-  }, [user, navigate]);
-
-  // Handle Google redirect result (for signInWithRedirect)
-  useEffect(() => {
-    setIsLoading(true);
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          navigate('/feed');
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        if (err.code !== 'auth/no-current-user') {
-          setError(err.message || 'Error al iniciar sesión con Google');
-        }
-      })
-      .finally(() => setIsLoading(false));
-  }, [navigate]);
+    if (!loading && user) navigate('/feed');
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     generateCaptcha();
@@ -58,10 +38,14 @@ export default function Login() {
     setError(false);
     setIsLoading(true);
     try {
-      await signInWithRedirect(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
+      navigate('/feed');
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Error al iniciar sesión con Google');
+      if (err.code !== 'auth/popup-closed-by-user') {
+        setError(err.message || 'Error al iniciar sesión con Google');
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -72,7 +56,6 @@ export default function Login() {
     setIsLoading(true);
 
     if (isRegistering) {
-      // Validate captcha
       if (parseInt(captchaA) !== captchaQ.a + captchaQ.b) {
         setError('Captcha incorrecto. Intenta de nuevo.');
         setIsLoading(false);
@@ -88,17 +71,14 @@ export default function Login() {
 
     try {
       if (isRegistering) {
-        // Use registerWithEmailPassword which also creates the DB profile
         await registerWithEmailPassword(email, password, displayName, 'captcha-ok');
-        navigate('/feed');
       } else {
         await loginWithEmailPassword(email, password);
-        navigate('/feed');
       }
+      navigate('/feed');
     } catch (err: any) {
       console.error(err);
       let msg = err.message || 'Error de autenticación';
-      // Translate common Firebase error messages
       if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
         msg = 'Correo o contraseña incorrectos.';
       } else if (err.code === 'auth/email-already-in-use') {
@@ -115,9 +95,17 @@ export default function Login() {
     }
   };
 
+  // Show nothing while auth is loading (avoids flash)
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#050505] flex items-center justify-center">
+        <div className="h-8 w-8 rounded-full border-2 border-neon-pink border-t-transparent animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200 selection:bg-neon-pink/30 flex flex-col font-mono relative overflow-hidden items-center justify-center py-12">
-      {/* Background Effects */}
       <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-pink-600/20 rounded-full blur-[120px] mix-blend-screen animate-pulse"></div>
         <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen animate-pulse" style={{ animationDelay: '2s' }}></div>
@@ -154,11 +142,10 @@ export default function Login() {
               </button>
             </div>
 
-            {/* Email Form */}
             <form onSubmit={handleEmailAuth} className="space-y-4">
               {isRegistering && (
                 <div>
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 block">Nombre de usuario</label>
+                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 block">Nombre</label>
                   <input
                     type="text"
                     value={displayName}
@@ -196,7 +183,7 @@ export default function Login() {
               {isRegistering && (
                 <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">
-                    Resuelve el captcha para continuar
+                    Captcha: ¿Cuánto es?
                   </label>
                   <div className="flex items-center gap-3">
                     <span className="text-lg font-bold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/10">
@@ -230,7 +217,7 @@ export default function Login() {
               onClick={handleGoogleLogin}
               disabled={isLoading}
               type="button"
-              className="flex w-full items-center justify-center gap-3 rounded-lg bg-white py-3 text-sm font-bold text-black transition-all hover:bg-gray-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-95 disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-3 rounded-lg bg-white py-3 text-sm font-bold text-black transition-all hover:bg-gray-200 active:scale-95 disabled:opacity-50"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />

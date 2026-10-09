@@ -10,6 +10,30 @@ interface CreatePostProps {
   defaultCategory?: string;
 }
 
+// Compress image with canvas to max width and quality, returns base64 data URL
+function compressImage(file: File, maxWidth = 1200, quality = 0.8): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const canvas = document.createElement('canvas');
+      let w = img.width;
+      let h = img.height;
+      if (w > maxWidth) {
+        h = Math.round((h * maxWidth) / w);
+        w = maxWidth;
+      }
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
 
 export default function CreatePost({ onCreated, defaultCategory = 'general' }: CreatePostProps) {
   const { user } = useAuthContext();
@@ -30,8 +54,8 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 25 * 1024 * 1024) {
-      alert('La imagen no puede superar 25 MB.');
+    if (file.size > 10 * 1024 * 1024) {
+      alert('La imagen no puede superar 10 MB.');
       return;
     }
     setImageFile(file);
@@ -54,31 +78,8 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
 
       if (imageFile) {
         setUploadingImage(true);
-        // Convert to base64 and upload to ImgBB (free, no CORS issues)
-        const base64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const result = reader.result as string;
-            // Remove the data:image/...;base64, prefix
-            resolve(result.split(',')[1]);
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(imageFile);
-        });
-
-        const form = new FormData();
-        form.append('key', 'a5a417fbdc39c9c3bf6e2f8f8a81f4e8');
-        form.append('image', base64);
-
-        const res = await fetch('https://api.imgbb.com/1/upload', {
-          method: 'POST',
-          body: form,
-        });
-
-        if (!res.ok) throw new Error('Error al subir la imagen');
-        const data = await res.json();
-        if (!data.success) throw new Error('ImgBB: ' + (data.error?.message || 'Error desconocido'));
-        imageUrl = data.data.url;
+        // Compress with canvas → store base64 directly in Firebase (no external service)
+        imageUrl = await compressImage(imageFile, 1200, 0.8);
         setUploadingImage(false);
       }
 
@@ -209,6 +210,7 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={submitting}
+          title="Agregar imagen (máx 10MB)"
           className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-gray-300 hover:border-neon-pink/30 hover:text-neon-pink transition-all disabled:opacity-40"
         >
           <ImagePlus className="h-3.5 w-3.5" />
@@ -235,7 +237,7 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
             {submitting ? (
               <>
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                {uploadingImage ? 'Subiendo imagen...' : 'Publicando...'}
+                {uploadingImage ? 'Procesando...' : 'Publicando...'}
               </>
             ) : (
               <>
