@@ -7,6 +7,10 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import Prestamos from './pages/Prestamos';
 import SinglePost from './pages/SinglePost';
+import JobsPortal from './pages/JobsPortal';
+import JobCVBuilder from './pages/JobCVBuilder';
+import CompanyPortal from './pages/CompanyPortal';
+import CandidateApplications from './pages/CandidateApplications';
 
 function App() {
   return (
@@ -20,6 +24,11 @@ function App() {
           <Route path="/perfil/:userId" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/prestamos" element={<Prestamos />} />
+          {/* Jobs Portal Routes */}
+          <Route path="/empleos" element={<JobsPortal />} />
+          <Route path="/empleos/cv" element={<JobCVBuilder />} />
+          <Route path="/empleos/empresa" element={<CompanyPortal />} />
+          <Route path="/empleos/mis-postulaciones" element={<CandidateApplications />} />
           {/* Redirect old routes */}
           <Route path="/home" element={<Navigate to="/feed" replace />} />
           <Route path="/hall-of-fame" element={<Navigate to="/feed" replace />} />

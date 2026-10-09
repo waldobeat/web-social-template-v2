@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuthContext } from '../lib/AuthContext';
 import {
   Home, BookOpen, LogOut,
-  Menu, X, User, LayoutDashboard, Bell, Search
+  Menu, X, User, LayoutDashboard, Bell, Search, Briefcase
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -19,6 +19,7 @@ export default function Navbar() {
 
   const links = [
     { to: '/feed', label: 'Feed', icon: Home },
+    { to: '/empleos', label: 'Empleos', icon: Briefcase },
     { to: '/prestamos', label: 'Préstamos', icon: BookOpen },
   ];
 
