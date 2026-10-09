@@ -31,6 +31,18 @@ function timeAgo(ts: number) {
   return new Date(ts).toLocaleDateString('es-VE', { day: '2-digit', month: 'short' });
 }
 
+function fullDate(ts: number) {
+  if (!ts) return '';
+  return new Date(ts).toLocaleString('es-VE', { 
+    hour: 'numeric', 
+    minute: '2-digit', 
+    hour12: true, 
+    day: 'numeric', 
+    month: 'short', 
+    year: 'numeric' 
+  });
+}
+
 function getCat(id: string) {
   return CATEGORIES.find((c) => c.id === id) || CATEGORIES[0];
 }
@@ -39,9 +51,10 @@ interface PostCardProps {
   post: Post;
   onDelete?: (id: string) => void;
   showDeleteOption?: boolean;
+  isSingleView?: boolean;
 }
 
-export default function PostCard({ post, onDelete, showDeleteOption = false }: PostCardProps) {
+export default function PostCard({ post, onDelete, showDeleteOption = false, isSingleView = false }: PostCardProps) {
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [liked, setLiked] = useState(post.likedByMe || false);
@@ -265,6 +278,13 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
               className="w-full max-h-[400px] object-cover hover:opacity-95 transition-opacity"
               loading="lazy"
             />
+          </div>
+        )}
+
+        {/* Full Date for Single View */}
+        {isSingleView && (
+          <div className="mb-3 text-[13px] text-gray-500 font-medium">
+            {fullDate(post.timestamp)}
           </div>
         )}
 

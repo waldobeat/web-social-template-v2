@@ -61,7 +61,7 @@ export default function SinglePost() {
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-neon-pink border-t-transparent" />
           </div>
         ) : post ? (
-          <PostCard post={post} onDelete={handleDelete} showDeleteOption={true} />
+          <PostCard post={post} onDelete={handleDelete} showDeleteOption={true} isSingleView={true} />
         ) : (
           <div className="text-center py-12 text-gray-500">
             Este post no existe o fue eliminado.
