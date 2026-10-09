@@ -30,7 +30,7 @@ export default function SinglePost() {
 
   useEffect(() => {
     // Show register prompt after 60 seconds if user is not logged in
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     if (!loading && !user) {
       timer = setTimeout(() => {
         setShowRegisterModal(true);
