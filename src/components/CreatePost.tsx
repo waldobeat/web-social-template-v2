@@ -3,6 +3,8 @@ import { ref, push, set, serverTimestamp, increment } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
 import { CATEGORIES } from './PostCard';
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../lib/firebase';
 import { Send, Globe, Lock, ChevronDown, ImagePlus, X, Loader2 } from 'lucide-react';
 
 interface CreatePostProps {
@@ -10,24 +12,6 @@ interface CreatePostProps {
   defaultCategory?: string;
 }
 
-const CATBOX_USERHASH = '15b5a72bb2ef9386d592fa473';
-
-async function uploadToCatbox(file: File): Promise<string> {
-  const form = new FormData();
-  form.append('reqtype', 'fileupload');
-  form.append('userhash', CATBOX_USERHASH);
-  form.append('fileToUpload', file);
-
-  const res = await fetch('https://catbox.moe/user/api.php', {
-    method: 'POST',
-    body: form,
-  });
-
-  if (!res.ok) throw new Error('Error al subir la imagen');
-  const url = await res.text();
-  if (!url.startsWith('https://')) throw new Error('Respuesta inválida de Catbox');
-  return url.trim();
-}
 
 export default function CreatePost({ onCreated, defaultCategory = 'general' }: CreatePostProps) {
   const { user } = useAuthContext();
@@ -72,7 +56,12 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
 
       if (imageFile) {
         setUploadingImage(true);
-        imageUrl = await uploadToCatbox(imageFile);
+        // Upload to Firebase Storage
+        const ext = imageFile.name.split('.').pop();
+        const path = `posts/${user.uid}/${Date.now()}.${ext}`;
+        const sRef = storageRef(storage, path);
+        const snapshot = await uploadBytes(sRef, imageFile);
+        imageUrl = await getDownloadURL(snapshot.ref);
         setUploadingImage(false);
       }
 
