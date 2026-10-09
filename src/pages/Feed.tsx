@@ -22,6 +22,14 @@ export default function Feed() {
       const data = snap.val();
       if (!data) { setPosts([]); setLoading(false); return; }
 
+      let following: Record<string, boolean> = {};
+      if (user && !user.isGuest) {
+        const followingSnap = await get(ref(db, `following/${user.uid}`));
+        if (followingSnap.exists()) {
+          following = followingSnap.val();
+        }
+      }
+
       const allPosts: Post[] = await Promise.all(
         Object.entries(data).map(async ([id, val]: [string, any]) => {
           // Check if current user liked this post
@@ -39,8 +47,13 @@ export default function Feed() {
         })
       );
 
-      // Filter: only public posts OR posts from followed users
-      const visible = allPosts.filter((p) => p.visibility === 'public' || p.authorId === user?.uid);
+      // Filter: only public posts OR posts from followed users OR own posts
+      const visible = allPosts.filter((p) => {
+        if (p.authorId === user?.uid) return true;
+        if (p.visibility === 'public') return true;
+        if (p.visibility === 'followers' && following[p.authorId]) return true;
+        return false;
+      });
 
       visible.sort((a, b) =>
         tab === 'trending'
