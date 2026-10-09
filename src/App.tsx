@@ -11,6 +11,7 @@ import JobsPortal from './pages/JobsPortal';
 import JobCVBuilder from './pages/JobCVBuilder';
 import CompanyPortal from './pages/CompanyPortal';
 import CandidateApplications from './pages/CandidateApplications';
+import AdminCompanyPortal from './pages/AdminCompanyPortal';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/empleos/cv" element={<JobCVBuilder />} />
           <Route path="/empleos/empresa" element={<CompanyPortal />} />
           <Route path="/empleos/mis-postulaciones" element={<CandidateApplications />} />
+          <Route path="/empleos/admin" element={<AdminCompanyPortal />} />
           {/* Redirect old routes */}
           <Route path="/home" element={<Navigate to="/feed" replace />} />
           <Route path="/hall-of-fame" element={<Navigate to="/feed" replace />} />

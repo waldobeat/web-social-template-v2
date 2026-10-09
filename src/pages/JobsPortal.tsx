@@ -358,6 +358,16 @@ export default function JobsPortal() {
                   Mis Postulaciones
                 </Link>
               )}
+
+              {user?.username?.toLowerCase() === 'sheddit' && (
+                <Link
+                  to="/empleos/admin"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-purple-600/20 border border-purple-500/30 px-4 py-3 text-xs font-bold text-purple-300 hover:bg-purple-600/40 transition-all text-center"
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  Admin
+                </Link>
+              )}
             </div>
           </div>
         </div>
