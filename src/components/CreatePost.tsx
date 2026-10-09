@@ -136,12 +136,16 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
       {/* Textarea */}
       <textarea
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={(e) => {
+          setContent(e.target.value);
+          e.target.style.height = 'auto';
+          e.target.style.height = `${e.target.scrollHeight}px`;
+        }}
         onKeyDown={(e) => { if (e.key === 'Enter' && e.ctrlKey) handleSubmit(); }}
         placeholder="¿Qué quieres compartir sobre préstamos o finanzas?"
         rows={3}
         maxLength={2000}
-        className="w-full resize-none rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-neon-pink/40 focus:bg-white/6 transition-all"
+        className="w-full resize-none rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-neon-pink/40 focus:bg-white/6 transition-colors overflow-hidden"
       />
 
       {/* Image preview */}
