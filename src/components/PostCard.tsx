@@ -71,6 +71,7 @@ export default function PostCard({ post, onDelete, showDeleteOption = false, isS
   const [imgModalOpen, setImgModalOpen] = useState(false);
 
   const cat = getCat(post.category);
+  const [shareCopied, setShareCopied] = useState(false);
 
   useEffect(() => {
     const postRef = ref(db, `posts/${post.id}`);
@@ -150,7 +151,8 @@ export default function PostCard({ post, onDelete, showDeleteOption = false, isS
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.origin + '/post/' + post.id);
-      alert('¡Enlace copiado al portapapeles!');
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2500);
     } catch {
       // ignore
     }
@@ -315,11 +317,16 @@ export default function PostCard({ post, onDelete, showDeleteOption = false, isS
 
           <button
             onClick={handleShare}
-            className="group flex items-center gap-1.5 text-xs font-medium hover:text-emerald-400 transition-colors ml-auto"
+            className={`group flex items-center gap-1.5 text-xs font-medium transition-colors ml-auto ${
+              shareCopied ? 'text-emerald-400' : 'hover:text-emerald-400'
+            }`}
           >
-            <div className="rounded-full p-1.5 group-hover:bg-emerald-400/10 transition-colors">
+            <div className={`rounded-full p-1.5 transition-colors ${
+              shareCopied ? 'bg-emerald-400/10' : 'group-hover:bg-emerald-400/10'
+            }`}>
               <Share2 className="h-4 w-4" />
             </div>
+            {shareCopied && <span className="text-[10px] font-bold">¡Enlace copiado!</span>}
           </button>
         </div>
 

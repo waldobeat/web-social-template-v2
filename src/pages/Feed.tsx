@@ -121,7 +121,12 @@ export default function Feed() {
             ) : (
               <div className="space-y-3">
                 {filtered.map((post) => (
-                  <PostCard key={post.id} post={post} />
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    showDeleteOption={!!user}
+                    onDelete={(id) => setPosts((prev) => prev.filter((p) => p.id !== id))}
+                  />
                 ))}
               </div>
             )}
@@ -203,6 +208,22 @@ export default function Feed() {
                   </div>
                 ))}
               </div>
+            </div>
+            {/* Jobs Portal Promo Card */}
+            <div className="rounded-2xl border border-neon-pink/25 bg-gradient-to-br from-neon-pink/10 to-[#0d0d0d] p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-base">💼</span>
+                <p className="text-xs font-bold text-white">Portal de Empleos</p>
+              </div>
+              <p className="text-[11px] text-gray-400 mb-3 leading-relaxed">
+                Encuentra vacantes en Venezuela y trabajo remoto internacional. ¡Crea tu CV confidencial gratis!
+              </p>
+              <a
+                href="/empleos"
+                className="block w-full rounded-lg bg-neon-pink py-2 text-center text-xs font-bold text-white hover:bg-neon-pink/80 transition-all"
+              >
+                Ver Empleos
+              </a>
             </div>
           </aside>
         </div>

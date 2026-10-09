@@ -49,7 +49,7 @@ export default function SinglePost() {
 
       <main className={`mx-auto max-w-2xl p-4 ${!user ? 'pt-8' : ''}`}>
         <button
-          onClick={() => navigate('/feed')}
+          onClick={() => window.history.length > 2 ? window.history.back() : navigate('/feed')}
           className="mb-4 flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors w-fit"
         >
           <ArrowLeft className="h-4 w-4" />

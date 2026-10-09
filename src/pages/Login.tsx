@@ -117,7 +117,7 @@ export default function Login() {
             SHEDDIT<span className="text-neon-pink">.</span>
           </h1>
           <p className="text-gray-400 text-sm tracking-wide">
-            Hablemos de préstamos y finanzas.
+            Comunidad venezolana · Finanzas, préstamos y empleos
           </p>
         </div>
 
@@ -237,7 +237,7 @@ export default function Login() {
         </div>
 
         <p className="mt-6 text-center text-[11px] text-gray-600">
-          La comunidad venezolana de préstamos y finanzas personales
+          La comunidad venezolana de finanzas, préstamos y empleos
         </p>
       </div>
     </div>

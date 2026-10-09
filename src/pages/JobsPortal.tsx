@@ -599,7 +599,11 @@ export default function JobsPortal() {
                               ? 'Medio Tiempo'
                               : job.jobType === 'freelance'
                               ? 'Freelance'
-                              : 'Pasantía'}
+                              : job.jobType === 'pasantia'
+                              ? 'Pasantía'
+                              : job.jobType === 'temporal'
+                              ? 'Temporal'
+                              : 'Tiempo Completo'}
                           </span>
 
                           {job.salary && (
@@ -687,7 +691,17 @@ export default function JobsPortal() {
                 )}
                 <span>•</span>
                 <span className="text-gray-300">
-                  {selectedJob.jobType === 'full-time' ? 'Tiempo Completo' : 'Medio Tiempo'}
+                  {selectedJob.jobType === 'full-time'
+                    ? 'Tiempo Completo'
+                    : selectedJob.jobType === 'part-time'
+                    ? 'Medio Tiempo'
+                    : selectedJob.jobType === 'freelance'
+                    ? 'Freelance'
+                    : selectedJob.jobType === 'pasantia'
+                    ? 'Pasantía'
+                    : selectedJob.jobType === 'temporal'
+                    ? 'Temporal'
+                    : 'Tiempo Completo'}
                 </span>
                 <span>•</span>
                 <span className="font-bold text-emerald-400">{selectedJob.salary}</span>

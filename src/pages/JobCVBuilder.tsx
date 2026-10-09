@@ -25,6 +25,7 @@ export default function JobCVBuilder() {
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   // Form State
   const [firstName, setFirstName] = useState('');
@@ -181,18 +182,19 @@ export default function JobCVBuilder() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     if (!user) {
-      alert('Debes iniciar sesión para guardar tu currículum.');
+      setFormError('Debes iniciar sesión para guardar tu currículum.');
       return;
     }
 
     if (!firstName.trim() || !lastName.trim()) {
-      alert('Por favor ingresa tu nombre y apellido.');
+      setFormError('Por favor ingresa tu nombre y apellido.');
       return;
     }
 
     if (!phone.trim()) {
-      alert('Por favor ingresa tu número de teléfono para que las empresas puedan contactarte.');
+      setFormError('Por favor ingresa tu número de teléfono para que las empresas puedan contactarte.');
       return;
     }
 
@@ -850,6 +852,11 @@ export default function JobCVBuilder() {
               {savedSuccess && (
                 <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
                   <CheckCircle2 className="h-4 w-4" /> ¡Currículum guardado con éxito!
+                </span>
+              )}
+              {formError && (
+                <span className="flex items-center gap-1.5 text-xs font-bold text-red-400">
+                  ⚠ {formError}
                 </span>
               )}
             </div>
