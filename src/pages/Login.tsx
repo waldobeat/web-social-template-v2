@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithRedirect, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { auth, googleProvider } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const { user, registerWithEmailPassword, loginWithEmailPassword } = useAuthContext();
   const [error, setError] = useState<string | false>(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,14 +14,34 @@ export default function Login() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   // Simple Math Captcha states
   const [captchaQ, setCaptchaQ] = useState({ a: 0, b: 0 });
   const [captchaA, setCaptchaA] = useState('');
 
+  // Redirect if already logged in
   useEffect(() => {
     if (user) navigate('/feed');
   }, [user, navigate]);
+
+  // Handle Google redirect result (for signInWithRedirect)
+  useEffect(() => {
+    setIsLoading(true);
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          navigate('/feed');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.code !== 'auth/no-current-user') {
+          setError(err.message || 'Error al iniciar sesión con Google');
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }, [navigate]);
 
   useEffect(() => {
     generateCaptcha();
@@ -39,7 +59,6 @@ export default function Login() {
     setIsLoading(true);
     try {
       await signInWithRedirect(auth, googleProvider);
-      // Redirige automáticamente y el useEffect manejará el login
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Error al iniciar sesión con Google');
@@ -53,33 +72,48 @@ export default function Login() {
     setIsLoading(true);
 
     if (isRegistering) {
-      // Check captcha
+      // Validate captcha
       if (parseInt(captchaA) !== captchaQ.a + captchaQ.b) {
         setError('Captcha incorrecto. Intenta de nuevo.');
         setIsLoading(false);
         generateCaptcha();
         return;
       }
+      if (!displayName.trim()) {
+        setError('Por favor ingresa tu nombre.');
+        setIsLoading(false);
+        return;
+      }
     }
 
     try {
       if (isRegistering) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        // Use registerWithEmailPassword which also creates the DB profile
+        await registerWithEmailPassword(email, password, displayName, 'captcha-ok');
+        navigate('/feed');
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        await loginWithEmailPassword(email, password);
+        navigate('/feed');
       }
-      sessionStorage.setItem('sheddit_role', 'admin');
-      navigate('/feed');
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Error de autenticación');
+      let msg = err.message || 'Error de autenticación';
+      // Translate common Firebase error messages
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        msg = 'Correo o contraseña incorrectos.';
+      } else if (err.code === 'auth/email-already-in-use') {
+        msg = 'Ese correo ya está registrado. Inicia sesión.';
+      } else if (err.code === 'auth/weak-password') {
+        msg = 'La contraseña debe tener al menos 6 caracteres.';
+      } else if (err.code === 'auth/invalid-email') {
+        msg = 'El formato del correo no es válido.';
+      }
+      setError(msg);
       if (isRegistering) generateCaptcha();
     } finally {
       setIsLoading(false);
     }
   };
-
-
 
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200 selection:bg-neon-pink/30 flex flex-col font-mono relative overflow-hidden items-center justify-center py-12">
@@ -100,17 +134,49 @@ export default function Login() {
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl">
-          <div className="space-y-6">
-            
+          <div className="space-y-5">
+
+            {/* Mode toggle */}
+            <div className="flex rounded-xl border border-white/10 bg-black/30 p-1 gap-1">
+              <button
+                type="button"
+                onClick={() => { setIsRegistering(false); setError(false); }}
+                className={`flex-1 rounded-lg py-2 text-xs font-bold transition-all ${!isRegistering ? 'bg-neon-pink text-white shadow' : 'text-gray-500 hover:text-white'}`}
+              >
+                Iniciar Sesión
+              </button>
+              <button
+                type="button"
+                onClick={() => { setIsRegistering(true); setError(false); }}
+                className={`flex-1 rounded-lg py-2 text-xs font-bold transition-all ${isRegistering ? 'bg-neon-pink text-white shadow' : 'text-gray-500 hover:text-white'}`}
+              >
+                Registrarse
+              </button>
+            </div>
+
             {/* Email Form */}
             <form onSubmit={handleEmailAuth} className="space-y-4">
+              {isRegistering && (
+                <div>
+                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 block">Nombre de usuario</label>
+                  <input
+                    type="text"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="¿Cómo te llamamos?"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-neon-pink/40 transition-all placeholder-gray-600"
+                    required
+                  />
+                </div>
+              )}
               <div>
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 block">Correo</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-neon-pink/40 transition-all"
+                  placeholder="tu@correo.com"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-neon-pink/40 transition-all placeholder-gray-600"
                   required
                 />
               </div>
@@ -120,12 +186,13 @@ export default function Login() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-neon-pink/40 transition-all"
+                  placeholder="Mínimo 6 caracteres"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-neon-pink/40 transition-all placeholder-gray-600"
                   required
                   minLength={6}
                 />
               </div>
-              
+
               {isRegistering && (
                 <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">
@@ -151,19 +218,9 @@ export default function Login() {
                 disabled={isLoading}
                 className="w-full rounded-lg bg-neon-pink py-3 text-sm font-bold text-white shadow-lg shadow-neon-pink/20 transition-all hover:bg-neon-pink/80 active:scale-95 disabled:opacity-50"
               >
-                {isLoading ? 'Cargando...' : (isRegistering ? 'Registrarse' : 'Iniciar Sesión')}
+                {isLoading ? 'Cargando...' : (isRegistering ? 'Crear cuenta' : 'Iniciar Sesión')}
               </button>
             </form>
-
-            <div className="text-center text-xs text-gray-400">
-              {isRegistering ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?'}
-              <button
-                onClick={() => { setIsRegistering(!isRegistering); setError(false); }}
-                className="ml-2 text-neon-pink font-bold hover:underline"
-              >
-                {isRegistering ? 'Inicia sesión' : 'Regístrate'}
-              </button>
-            </div>
 
             <div className="flex items-center gap-3 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
               <span className="text-xs text-gray-500 uppercase font-bold">O</span>
@@ -181,10 +238,8 @@ export default function Login() {
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
-              Google
+              Continuar con Google
             </button>
-
-
 
             {error && (
               <div className="rounded-lg border border-red-500/30 bg-red-500/20 p-3 text-center text-xs font-medium text-red-300">
