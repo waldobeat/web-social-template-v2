@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithRedirect, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, googleProvider } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
 
@@ -38,13 +38,11 @@ export default function Login() {
     setError(false);
     setIsLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
-      sessionStorage.setItem('sheddit_role', 'admin');
-      navigate('/feed');
+      await signInWithRedirect(auth, googleProvider);
+      // Redirige automáticamente y el useEffect manejará el login
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Error al iniciar sesión con Google');
-    } finally {
       setIsLoading(false);
     }
   };
