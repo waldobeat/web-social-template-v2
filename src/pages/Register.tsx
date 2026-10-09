@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../lib/AuthContext';
 import { RECAPTCHA_SITE_KEY } from '../lib/firebase';
@@ -14,8 +14,6 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
-  const recaptchaWidgetId = useRef<number | null>(null);
 
   useEffect(() => {
     // Load reCAPTCHA script
@@ -23,9 +21,9 @@ export default function Register() {
     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
     script.async = true;
     script.defer = true;
-    script.onload = () => setRecaptchaLoaded(true);
+    script.onload = () => {};
     document.head.appendChild(script);
-    return () => document.head.removeChild(script);
+    return () => { document.head.removeChild(script); };
   }, []);
 
   const executeRecaptcha = async () => {

@@ -103,7 +103,7 @@ export function useAuth() {
   };
 
   const updateProfile = async (
-    updates: Partial<Pick<ShedditUser, 'displayName' | 'bio' | 'avatar' | 'username'>>
+    updates: Partial<Pick<ShedditUser, 'displayName' | 'bio' | 'avatar' | 'username' | 'firstName' | 'lastName' | 'phone' | 'email' | 'birthDate'>>
   ) => {
     if (!user) return;
     const updated = { ...user, ...updates };
