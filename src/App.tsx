@@ -6,6 +6,7 @@ import Feed from './pages/Feed';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import Prestamos from './pages/Prestamos';
+import SinglePost from './pages/SinglePost';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/post/:id" element={<SinglePost />} />
           <Route path="/perfil/:userId" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/prestamos" element={<Prestamos />} />

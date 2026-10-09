@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { ref, push, set, get, increment, onValue } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
-import { Link } from 'react-router-dom';
-import { ThumbsUp, MessageSquare, Share2, Globe, Lock, MoreHorizontal, Send, Trash2, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ThumbsUp, MessageSquare, Share2, Globe, Lock, Send, Trash2, X } from 'lucide-react';
 import type { Post, Comment } from '../types';
 
 export type { Post };
@@ -43,10 +43,10 @@ interface PostCardProps {
 
 export default function PostCard({ post, onDelete, showDeleteOption = false }: PostCardProps) {
   const { user } = useAuthContext();
+  const navigate = useNavigate();
   const [liked, setLiked] = useState(post.likedByMe || false);
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
   const [commentsCount, setCommentsCount] = useState(post.commentsCount || 0);
-  const [menuOpen, setMenuOpen] = useState(false);
   
   // Comments state
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -59,7 +59,6 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
 
   const cat = getCat(post.category);
 
-  // Listen for likes changes in real-time (optional, but good for UI)
   useEffect(() => {
     const postRef = ref(db, `posts/${post.id}`);
     const unsub = onValue(postRef, (snap) => {
@@ -134,16 +133,17 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
   };
 
   const handleDelete = async () => {
-    if (!onDelete) return;
-    await set(ref(db, `posts/${post.id}`), null);
-    onDelete(post.id);
-    setMenuOpen(false);
+    if (window.confirm('¿Seguro que quieres eliminar este post?')) {
+      if (!onDelete) return;
+      await set(ref(db, `posts/${post.id}`), null);
+      onDelete(post.id);
+    }
   };
 
-  const openImageModal = () => {
+  const openImageModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
     loadComments();
     setImgModalOpen(true);
-    // Prevent scrolling on body when modal is open
     document.body.style.overflow = 'hidden';
   };
 
@@ -184,7 +184,7 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
           </div>
         </div>
       ) : (
-        <p className="text-center text-xs text-gray-500 pt-2">Inicia sesión para comentar</p>
+        <p className="text-center text-xs text-gray-500 pt-2">Inicia sesión para interactuar</p>
       )}
     </div>
   );
@@ -193,53 +193,46 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
     <>
       <article className="group relative rounded-2xl border border-white/5 bg-white/[0.025] p-4 sm:p-5 transition-all hover:border-white/10 hover:bg-white/[0.04]">
         {/* Header */}
-        <div className="mb-3 flex items-start justify-between">
+        <div className="mb-2 flex items-start justify-between">
           <Link
             to={`/perfil/${post.authorId}`}
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
           >
             <span className="text-2xl sm:text-3xl leading-none">{post.authorAvatar}</span>
             <div>
-              <p className="text-sm font-bold text-white leading-tight">{post.authorName}</p>
+              <p className="text-sm font-bold text-white leading-tight hover:underline">{post.authorName}</p>
               <div className="flex items-center gap-1.5 text-[11px] text-gray-500">
-                <span>{timeAgo(post.timestamp)}</span>
+                <Link to={`/post/${post.id}`} className="hover:underline">{timeAgo(post.timestamp)}</Link>
                 <span>·</span>
                 {post.visibility === 'public' ? <Globe className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
               </div>
             </div>
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span className={`text-[10px] sm:text-xs font-semibold ${cat.color} bg-white/5 px-2 py-1 rounded-full flex items-center gap-1`}>
               <span>{cat.icon}</span> <span className="hidden sm:inline">{cat.label}</span>
             </span>
 
             {showDeleteOption && user?.uid === post.authorId && (
-              <div className="relative">
-                <button
-                  onClick={() => setMenuOpen(!menuOpen)}
-                  className="rounded-lg p-1.5 text-gray-500 hover:text-white hover:bg-white/10 transition-all"
-                >
-                  <MoreHorizontal className="h-4 w-4" />
-                </button>
-                {menuOpen && (
-                  <div className="absolute right-0 top-full mt-1 w-36 rounded-xl border border-white/10 bg-[#111] shadow-2xl z-10">
-                    <button
-                      onClick={handleDelete}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 text-xs text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                      Eliminar post
-                    </button>
-                  </div>
-                )}
-              </div>
+              <button
+                onClick={handleDelete}
+                title="Eliminar post"
+                className="text-gray-500 hover:text-red-400 hover:bg-red-500/10 p-1.5 rounded-lg transition-all"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
             )}
           </div>
         </div>
 
-        {/* Content */}
-        <p className="mb-3 text-sm text-gray-200 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+        {/* Content Link */}
+        <div 
+          onClick={() => navigate(`/post/${post.id}`)}
+          className="cursor-pointer"
+        >
+          <p className="mb-3 text-sm text-gray-200 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+        </div>
 
         {/* Image */}
         {post.image && (
@@ -256,71 +249,52 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
           </div>
         )}
 
-        {/* Stats Row (Facebook style) */}
-        <div className="flex items-center justify-between text-gray-400 text-xs py-2 px-1">
-          <div className="flex items-center gap-1.5">
-            {likesCount > 0 && (
-              <>
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-neon-pink text-white">
-                  <ThumbsUp className="h-3 w-3 fill-current" />
-                </div>
-                <span>{likesCount}</span>
-              </>
-            )}
-          </div>
-          <div className="flex items-center gap-3">
-            {commentsCount > 0 && (
-              <button onClick={handleToggleComments} className="hover:underline">
-                {commentsCount} comentarios
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="border-t border-white/10 my-1" />
-
-        {/* Action Buttons (Facebook style) */}
-        <div className="flex items-center justify-between gap-1">
+        {/* X/Twitter Style Actions Row */}
+        <div className="mt-2 flex items-center gap-6 text-gray-500">
           <button
-            onClick={handleLike}
-            disabled={!user}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
-              liked ? 'text-neon-pink' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
-            } ${!user ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={handleToggleComments}
+            className="group flex items-center gap-1.5 text-xs font-medium hover:text-white transition-colors"
           >
-            <ThumbsUp className={`h-4 w-4 sm:h-5 sm:w-5 ${liked ? 'fill-current' : ''}`} />
-            Me gusta
+            <div className="rounded-full p-1.5 group-hover:bg-white/10 transition-colors">
+              <MessageSquare className="h-4 w-4" />
+            </div>
+            <span>{commentsCount > 0 ? commentsCount : ''}</span>
           </button>
 
           <button
-            onClick={handleToggleComments}
-            className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs sm:text-sm font-semibold text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all"
+            onClick={handleLike}
+            disabled={!user}
+            className={`group flex items-center gap-1.5 text-xs font-medium transition-colors ${
+              liked ? 'text-neon-pink' : 'hover:text-neon-pink'
+            } ${!user ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5" />
-            Comentar
+            <div className={`rounded-full p-1.5 transition-colors ${liked ? 'bg-neon-pink/10' : 'group-hover:bg-neon-pink/10'}`}>
+              <ThumbsUp className={`h-4 w-4 ${liked ? 'fill-current text-neon-pink' : ''}`} />
+            </div>
+            <span>{likesCount > 0 ? likesCount : ''}</span>
           </button>
 
           <button
             onClick={handleShare}
-            className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs sm:text-sm font-semibold text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all"
+            className="group flex items-center gap-1.5 text-xs font-medium hover:text-emerald-400 transition-colors ml-auto"
           >
-            <Share2 className="h-4 w-4 sm:h-5 sm:w-5" />
-            Compartir
+            <div className="rounded-full p-1.5 group-hover:bg-emerald-400/10 transition-colors">
+              <Share2 className="h-4 w-4" />
+            </div>
           </button>
         </div>
 
         {/* Inline Comments */}
         {commentsOpen && (
-          <div className="mt-2 border-t border-white/5 pt-2">
+          <div className="mt-3 border-t border-white/5 pt-2">
             {renderCommentsList()}
           </div>
         )}
       </article>
 
-      {/* Image Modal (Facebook style) */}
+      {/* Image Modal */}
       {imgModalOpen && post.image && (
         <div className="fixed inset-0 z-50 flex flex-col md:flex-row bg-black/95 backdrop-blur-sm">
-          {/* Close button (Mobile: top right, Desktop: top left) */}
           <button 
             onClick={closeImageModal}
             className="absolute top-4 left-4 md:right-4 md:left-auto z-50 rounded-full bg-black/50 p-2 text-white hover:bg-white/20 transition-all"
@@ -328,7 +302,6 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
             <X className="h-6 w-6" />
           </button>
           
-          {/* Left side: Image Viewer */}
           <div className="flex-1 flex items-center justify-center p-0 md:p-8 h-[50vh] md:h-full relative mt-14 md:mt-0">
             <img 
               src={post.image} 
@@ -337,9 +310,7 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
             />
           </div>
           
-          {/* Right side: Post details & Comments */}
           <div className="w-full md:w-[400px] bg-[#0a0a0a] border-l border-white/10 flex flex-col h-[50vh] md:h-full">
-            {/* Header info */}
             <div className="p-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <span className="text-3xl">{post.authorAvatar}</span>
@@ -350,16 +321,18 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
               </div>
               <p className="mt-4 text-sm text-gray-200">{post.content}</p>
               
-              <div className="flex items-center gap-3 mt-4 text-xs text-gray-400">
+              <div className="flex items-center gap-4 mt-4 text-xs text-gray-400">
                 <span className="flex items-center gap-1.5">
-                  <ThumbsUp className="h-3.5 w-3.5 text-neon-pink fill-neon-pink" />
-                  {likesCount}
+                  <ThumbsUp className="h-4 w-4 text-neon-pink fill-neon-pink" />
+                  {likesCount} me gusta
                 </span>
-                <span>{commentsCount} comentarios</span>
+                <span className="flex items-center gap-1.5">
+                  <MessageSquare className="h-4 w-4 text-gray-300" />
+                  {commentsCount} comentarios
+                </span>
               </div>
             </div>
 
-            {/* Comments list */}
             <div className="flex-1 overflow-y-auto p-4">
               {renderCommentsList()}
             </div>
