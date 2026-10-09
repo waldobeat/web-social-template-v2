@@ -3,8 +3,6 @@ import { ref, push, set, serverTimestamp, increment } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
 import { CATEGORIES } from './PostCard';
-import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../lib/firebase';
 import { Send, Globe, Lock, ChevronDown, ImagePlus, X, Loader2 } from 'lucide-react';
 
 interface CreatePostProps {
@@ -56,12 +54,31 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
 
       if (imageFile) {
         setUploadingImage(true);
-        // Upload to Firebase Storage
-        const ext = imageFile.name.split('.').pop();
-        const path = `posts/${user.uid}/${Date.now()}.${ext}`;
-        const sRef = storageRef(storage, path);
-        const snapshot = await uploadBytes(sRef, imageFile);
-        imageUrl = await getDownloadURL(snapshot.ref);
+        // Convert to base64 and upload to ImgBB (free, no CORS issues)
+        const base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            // Remove the data:image/...;base64, prefix
+            resolve(result.split(',')[1]);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(imageFile);
+        });
+
+        const form = new FormData();
+        form.append('key', 'a5a417fbdc39c9c3bf6e2f8f8a81f4e8');
+        form.append('image', base64);
+
+        const res = await fetch('https://api.imgbb.com/1/upload', {
+          method: 'POST',
+          body: form,
+        });
+
+        if (!res.ok) throw new Error('Error al subir la imagen');
+        const data = await res.json();
+        if (!data.success) throw new Error('ImgBB: ' + (data.error?.message || 'Error desconocido'));
+        imageUrl = data.data.url;
         setUploadingImage(false);
       }
 
