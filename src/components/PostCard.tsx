@@ -71,6 +71,17 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
     return () => unsub();
   }, [post.id]);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      if (imgModalOpen) {
+        setImgModalOpen(false);
+        document.body.style.overflow = 'auto';
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [imgModalOpen]);
+
   const loadComments = async () => {
     if (!loaded) {
       const snap = await get(ref(db, `comments/${post.id}`));
@@ -145,11 +156,19 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
     loadComments();
     setImgModalOpen(true);
     document.body.style.overflow = 'hidden';
+    // Update URL without refreshing the page
+    if (window.location.pathname !== `/post/${post.id}`) {
+      window.history.pushState({ modalOpen: true }, '', `/post/${post.id}`);
+    }
   };
 
   const closeImageModal = () => {
     setImgModalOpen(false);
     document.body.style.overflow = 'auto';
+    // Revert URL if we pushed state
+    if (window.history.state?.modalOpen) {
+      window.history.back();
+    }
   };
 
   const renderCommentsList = () => (
