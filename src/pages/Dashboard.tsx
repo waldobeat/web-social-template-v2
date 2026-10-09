@@ -29,9 +29,6 @@ export default function Dashboard() {
   const [editBio, setEditBio] = useState('');
   const [editUsername, setEditUsername] = useState('');
   const [editAvatar, setEditAvatar] = useState('');
-  const [editFirstName, setEditFirstName] = useState('');
-  const [editLastName, setEditLastName] = useState('');
-  const [editPhone, setEditPhone] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const [editBirthDate, setEditBirthDate] = useState('');
   const [saving, setSaving] = useState(false);
@@ -43,9 +40,6 @@ export default function Dashboard() {
     setEditBio(user.bio || '');
     setEditUsername(user.username);
     setEditAvatar(user.avatar);
-    setEditFirstName(user.firstName || '');
-    setEditLastName(user.lastName || '');
-    setEditPhone(user.phone || '');
     setEditEmail(user.email || '');
     setEditBirthDate(user.birthDate || '');
   }, [user, navigate, authLoading]);
@@ -91,9 +85,6 @@ export default function Dashboard() {
       bio: editBio.trim(),
       username: editUsername.trim() || user?.username,
       avatar: editAvatar,
-      firstName: editFirstName.trim(),
-      lastName: editLastName.trim(),
-      phone: editPhone.trim(),
       email: editEmail.trim(),
       birthDate: editBirthDate,
     });
@@ -308,67 +299,25 @@ export default function Dashboard() {
             </div>
 
             {/* Private Fields */}
-            <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 space-y-5">
-              <div className="flex items-center gap-2 mb-1">
+            <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 space-y-4">
+              <div className="flex items-center gap-2">
                 <Lock className="h-4 w-4 text-amber-500" />
                 <h3 className="text-xs font-bold text-amber-500 uppercase tracking-wider">Datos Privados</h3>
               </div>
-              <p className="text-[11px] text-gray-500 mb-4">Estos datos no serán visibles para otros usuarios.</p>
+              <p className="text-[11px] text-gray-500">Estos datos no serán visibles para otros usuarios.</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-xs font-bold text-gray-400 uppercase tracking-wider">Nombre(s) Real(es)</label>
-                  {editing ? (
-                    <input
-                      value={editFirstName}
-                      onChange={(e) => setEditFirstName(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-amber-500/40 transition-all"
-                    />
-                  ) : (
-                    <p className="text-sm text-gray-400">{user.firstName || 'No especificado'}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="mb-2 block text-xs font-bold text-gray-400 uppercase tracking-wider">Apellidos</label>
-                  {editing ? (
-                    <input
-                      value={editLastName}
-                      onChange={(e) => setEditLastName(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-amber-500/40 transition-all"
-                    />
-                  ) : (
-                    <p className="text-sm text-gray-400">{user.lastName || 'No especificado'}</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-xs font-bold text-gray-400 uppercase tracking-wider">Teléfono</label>
-                  {editing ? (
-                    <input
-                      type="tel"
-                      value={editPhone}
-                      onChange={(e) => setEditPhone(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-amber-500/40 transition-all"
-                    />
-                  ) : (
-                    <p className="text-sm text-gray-400">{user.phone || 'No especificado'}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="mb-2 block text-xs font-bold text-gray-400 uppercase tracking-wider">Correo</label>
-                  {editing ? (
-                    <input
-                      type="email"
-                      value={editEmail}
-                      onChange={(e) => setEditEmail(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-amber-500/40 transition-all"
-                    />
-                  ) : (
-                    <p className="text-sm text-gray-400">{user.email || 'No especificado'}</p>
-                  )}
-                </div>
+              <div>
+                <label className="mb-2 block text-xs font-bold text-gray-400 uppercase tracking-wider">Correo</label>
+                {editing ? (
+                  <input
+                    type="email"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none focus:border-amber-500/40 transition-all"
+                  />
+                ) : (
+                  <p className="text-sm text-gray-400">{user.email || 'No especificado'}</p>
+                )}
               </div>
 
               <div>
