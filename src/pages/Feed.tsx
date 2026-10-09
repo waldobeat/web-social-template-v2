@@ -23,7 +23,7 @@ export default function Feed() {
       if (!data) { setPosts([]); setLoading(false); return; }
 
       let following: Record<string, boolean> = {};
-      if (user && !user.isGuest) {
+      if (user) {
         const followingSnap = await get(ref(db, `following/${user.uid}`));
         if (followingSnap.exists()) {
           following = followingSnap.val();
@@ -34,7 +34,7 @@ export default function Feed() {
         Object.entries(data).map(async ([id, val]: [string, any]) => {
           // Check if current user liked this post
           let likedByMe = false;
-          if (user && !user.isGuest) {
+          if (user) {
             const likeSnap = await get(ref(db, `likes/${id}/${user.uid}`));
             likedByMe = likeSnap.exists();
           }
@@ -79,7 +79,7 @@ export default function Feed() {
           {/* Main column */}
           <div className="space-y-4">
             {/* Create post */}
-            {user && !user.isGuest && (
+            {user && (
               <CreatePost onCreated={() => setRefresh((r) => r + 1)} />
             )}
 

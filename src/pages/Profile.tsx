@@ -6,7 +6,7 @@ import { useAuthContext } from '../lib/AuthContext';
 import Navbar from '../components/Navbar';
 import PostCard from '../components/PostCard';
 import type { Post } from '../types';
-import { UserPlus, UserMinus, Link2, Calendar, MessageSquare } from 'lucide-react';
+import { UserPlus, UserMinus, Calendar, MessageSquare } from 'lucide-react';
 
 interface ProfileUser {
   uid: string;
@@ -18,7 +18,6 @@ interface ProfileUser {
   followingCount: number;
   postsCount: number;
   createdAt: number;
-  isGuest?: boolean;
 }
 
 export default function Profile() {
@@ -35,17 +34,7 @@ export default function Profile() {
   useEffect(() => {
     if (!userId) return;
 
-    // Handle guest profile (no firebase data)
-    if (userId.startsWith('guest_')) {
-      const guestData = sessionStorage.getItem('sheddit_guest');
-      if (guestData) {
-        try {
-          setProfileUser(JSON.parse(guestData));
-        } catch { /* empty */ }
-      }
-      setLoading(false);
-      return;
-    }
+
 
     // Load profile from Firebase
     const userRef = ref(db, `users/${userId}`);
@@ -56,7 +45,7 @@ export default function Profile() {
     });
 
     // Check if current user follows this profile
-    if (currentUser && !currentUser.isGuest) {
+    if (currentUser) {
       get(ref(db, `following/${currentUser.uid}/${userId}`)).then((snap) => {
         setIsFollowing(snap.exists());
       });
@@ -87,7 +76,7 @@ export default function Profile() {
   }, [userId, currentUser, isOwn, isFollowing]);
 
   const handleFollow = async () => {
-    if (!currentUser || currentUser.isGuest || !userId || followLoading) return;
+    if (!currentUser || !userId || followLoading) return;
     setFollowLoading(true);
     const newFollowing = !isFollowing;
     setIsFollowing(newFollowing);
@@ -165,7 +154,7 @@ export default function Profile() {
                     </button>
                     <button
                       onClick={handleFollow}
-                      disabled={followLoading || currentUser?.isGuest}
+                      disabled={followLoading || !currentUser}
                       className={`flex items-center gap-2 rounded-xl px-5 py-2 text-xs font-bold transition-all ${
                         isFollowing
                           ? 'border border-white/15 bg-white/5 text-white hover:border-red-500/30 hover:text-red-400'
@@ -196,12 +185,7 @@ export default function Profile() {
                   Se unió en {joinDate}
                 </span>
               )}
-              {profileUser?.isGuest && (
-                <span className="flex items-center gap-1.5">
-                  <Link2 className="h-3.5 w-3.5" />
-                  Sesión de invitado
-                </span>
-              )}
+
             </div>
 
             {/* Stats */}

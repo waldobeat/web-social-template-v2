@@ -5,7 +5,7 @@ import { RECAPTCHA_SITE_KEY } from '../lib/firebase';
 
 export default function Register() {
   const navigate = useNavigate();
-  const { registerWithEmailPassword, createGuestUser } = useAuthContext();
+  const { registerWithEmailPassword } = useAuthContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -210,24 +210,6 @@ export default function Register() {
                 className="text-neon-pink hover:underline font-medium"
               >
                 Inicia sesión
-              </button>
-            </p>
-            <p className="mt-3 text-sm text-gray-500">
-              <button
-                onClick={() => navigate('/')}
-                className="text-neon-pink hover:underline font-medium"
-              >
-                Entrar con Google
-              </button>{' '}
-              o{' '}
-              <button
-                onClick={() => {
-                  createGuestUser();
-                  navigate('/feed');
-                }}
-                className="text-neon-pink hover:underline font-medium"
-              >
-                Entrar como Invitado
               </button>
             </p>
           </div>

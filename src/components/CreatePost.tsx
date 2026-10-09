@@ -48,7 +48,7 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
       });
 
       // Increment user post count
-      if (!user.isGuest) {
+      if (user) {
         await set(ref(db, `users/${user.uid}/postsCount`), increment(1));
       }
 

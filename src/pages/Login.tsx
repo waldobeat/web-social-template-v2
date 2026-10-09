@@ -6,7 +6,7 @@ import { useAuthContext } from '../lib/AuthContext';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { user, createGuestUser } = useAuthContext();
+  const { user } = useAuthContext();
   const [error, setError] = useState<string | false>(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,11 +81,7 @@ export default function Login() {
     }
   };
 
-  const handleGuestLogin = () => {
-    sessionStorage.setItem('sheddit_role', 'user');
-    createGuestUser();
-    navigate('/feed');
-  };
+
 
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200 selection:bg-neon-pink/30 flex flex-col font-mono relative overflow-hidden items-center justify-center py-12">
@@ -190,14 +186,7 @@ export default function Login() {
               Google
             </button>
 
-            <button
-              onClick={handleGuestLogin}
-              disabled={isLoading}
-              type="button"
-              className="w-full rounded-lg border border-white/20 bg-black/40 py-3 text-sm font-bold text-gray-300 transition-all hover:bg-white/10 hover:text-white active:scale-95 disabled:opacity-50"
-            >
-              Entrar como Invitado (Solo lectura)
-            </button>
+
 
             {error && (
               <div className="rounded-lg border border-red-500/30 bg-red-500/20 p-3 text-center text-xs font-medium text-red-300">

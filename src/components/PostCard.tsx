@@ -97,7 +97,7 @@ function CommentsSection({ postId }: { postId: string }) {
               </div>
             </div>
           ))}
-          {!user?.isGuest ? (
+          {user ? (
             <div className="flex gap-2 items-center pt-1">
               <span className="text-base flex-shrink-0">{user?.avatar}</span>
               <div className="flex flex-1 gap-2">
@@ -142,7 +142,7 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
   const cat = getCat(post.category);
 
   const handleLike = async () => {
-    if (!user || user.isGuest) return;
+    if (!user) return;
     const newLiked = !liked;
     setLiked(newLiked);
     setLikesCount((p) => p + (newLiked ? 1 : -1));
@@ -224,10 +224,10 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
       <div className="flex items-center gap-5">
         <button
           onClick={handleLike}
-          disabled={user?.isGuest}
+          disabled={!user}
           className={`flex items-center gap-1.5 text-xs font-medium transition-all ${
             liked ? 'text-neon-pink' : 'text-gray-500 hover:text-neon-pink'
-          } ${user?.isGuest ? 'opacity-50 cursor-not-allowed' : ''}`}
+          } ${!user ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <ThumbsUp className={`h-3.5 w-3.5 ${liked ? 'fill-current' : ''}`} />
           <span>{likesCount > 0 ? likesCount : ''} {liked ? 'Te gusta' : 'Me gusta'}</span>

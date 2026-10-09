@@ -8,7 +8,7 @@ export interface ShedditUser {
   bio: string;
   avatar: string;
   photoURL?: string;
-  isGuest: boolean;
+
   followersCount: number;
   followingCount: number;
   postsCount: number;

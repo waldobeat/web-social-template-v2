@@ -5,7 +5,7 @@ import type { ShedditUser } from '../types';
 interface AuthContextType {
   user: ShedditUser | null;
   loading: boolean;
-  createGuestUser: () => ShedditUser;
+
   logout: () => Promise<void>;
   updateProfile: (updates: Partial<Pick<ShedditUser, 'displayName' | 'bio' | 'avatar' | 'username' | 'firstName' | 'lastName' | 'phone' | 'email' | 'birthDate'>>) => Promise<void>;
   registerWithEmailPassword: (email: string, password: string, displayName: string, recaptchaToken: string) => Promise<ShedditUser>;

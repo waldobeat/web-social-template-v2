@@ -131,13 +131,13 @@ export default function Dashboard() {
           <span className="text-4xl">{user.avatar}</span>
           <div>
             <h1 className="text-2xl font-black text-white">Mi Panel</h1>
-            <p className="text-sm text-gray-500">@{user.username} · {user.isGuest ? 'Invitado' : 'Cuenta Registrada'}</p>
+            <p className="text-sm text-gray-500">@{user.username}</p>
           </div>
         </div>
 
         {/* Tabs */}
         <div className="mb-6 flex gap-1 border-b border-white/5 pb-1 flex-wrap">
-          {tabs.filter(t => !user.isGuest || t.id !== 'blog').map(({ id, label, icon: Icon }) => (
+          {tabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setTab(id)}
@@ -480,13 +480,8 @@ export default function Dashboard() {
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-500">Tipo de cuenta</span>
-                  <span className="text-gray-300">{user.isGuest ? 'Invitado' : 'Cuenta Registrada'}</span>
+                  <span className="text-gray-300">Cuenta Registrada</span>
                 </div>
-                {user.isGuest && (
-                  <p className="text-xs text-amber-400/80 mt-2">
-                    ⚠️ Como invitado, tus datos se pierden al cerrar sesión. Regístrate para guardar tu perfil.
-                  </p>
-                )}
               </div>
             </div>
           </div>

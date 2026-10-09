@@ -70,48 +70,63 @@ export default function Navbar() {
 
             {/* Right: user area */}
             <div className="hidden md:flex items-center gap-2 flex-shrink-0">
-              <button className="relative rounded-lg p-2 text-gray-500 hover:text-white hover:bg-white/5 transition-all">
-                <Bell className="h-4 w-4" />
-              </button>
+              {user ? (
+                <>
+                  <button className="relative rounded-lg p-2 text-gray-500 hover:text-white hover:bg-white/5 transition-all">
+                    <Bell className="h-4 w-4" />
+                  </button>
 
-              {/* Dashboard link */}
-              <Link
-                to="/dashboard"
-                className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-all ${
-                  isActive('/dashboard')
-                    ? 'bg-neon-pink/15 text-neon-pink'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                <LayoutDashboard className="h-4 w-4" />
-                Mi Panel
-              </Link>
+                  <Link
+                    to="/dashboard"
+                    className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-all ${
+                      isActive('/dashboard')
+                        ? 'bg-neon-pink/15 text-neon-pink'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    }`}
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Mi Panel
+                  </Link>
 
-              {/* Avatar / profile */}
-              <Link
-                to={`/perfil/${user?.uid}`}
-                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/4 px-3 py-1.5 transition-all hover:border-white/20 hover:bg-white/8"
-              >
-                <span className="text-base leading-none">{user?.avatar || '👤'}</span>
-                <span className="text-xs font-semibold text-gray-300 max-w-[80px] truncate">
-                  {user?.displayName || 'Perfil'}
-                </span>
-              </Link>
+                  <Link
+                    to={`/perfil/${user.uid}`}
+                    className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/4 px-3 py-1.5 transition-all hover:border-white/20 hover:bg-white/8"
+                  >
+                    <span className="text-base leading-none">{user.avatar || '👤'}</span>
+                    <span className="text-xs font-semibold text-gray-300 max-w-[80px] truncate">
+                      {user.displayName || 'Perfil'}
+                    </span>
+                  </Link>
 
-              <button
-                onClick={handleLogout}
-                className="rounded-lg p-2 text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition-all"
-                title="Cerrar sesión"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
+                  <button
+                    onClick={handleLogout}
+                    className="rounded-lg p-2 text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                    title="Cerrar sesión"
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/"
+                  className="rounded-lg bg-neon-pink px-4 py-2 text-xs font-bold text-white transition-all hover:bg-neon-pink/80"
+                >
+                  Iniciar Sesión
+                </Link>
+              )}
             </div>
 
             {/* Mobile: avatar + menu */}
             <div className="md:hidden flex items-center gap-2">
-              <Link to={`/perfil/${user?.uid}`} className="text-xl leading-none">
-                {user?.avatar || '👤'}
-              </Link>
+              {user ? (
+                <Link to={`/perfil/${user.uid}`} className="text-xl leading-none">
+                  {user.avatar || '👤'}
+                </Link>
+              ) : (
+                <Link to="/" className="text-xs font-bold text-neon-pink">
+                  Entrar
+                </Link>
+              )}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="rounded-lg border border-white/10 p-1.5 text-gray-400"
@@ -140,31 +155,43 @@ export default function Navbar() {
                 {label}
               </Link>
             ))}
-            <Link
-              to="/dashboard"
-              onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all ${
-                isActive('/dashboard') ? 'bg-neon-pink/15 text-neon-pink' : 'text-gray-400 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              <LayoutDashboard className="h-4 w-4" />
-              Mi Panel
-            </Link>
-            <Link
-              to={`/perfil/${user?.uid}`}
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white transition-all"
-            >
-              <User className="h-4 w-4" />
-              Mi Perfil
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-400 hover:bg-red-500/10"
-            >
-              <LogOut className="h-4 w-4" />
-              Cerrar sesión
-            </button>
+            {user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all ${
+                    isActive('/dashboard') ? 'bg-neon-pink/15 text-neon-pink' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  <LayoutDashboard className="h-4 w-4" />
+                  Mi Panel
+                </Link>
+                <Link
+                  to={`/perfil/${user.uid}`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white transition-all"
+                >
+                  <User className="h-4 w-4" />
+                  Mi Perfil
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-400 hover:bg-red-500/10"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/"
+                onClick={() => setMobileOpen(false)}
+                className="flex w-full items-center justify-center gap-3 rounded-xl bg-neon-pink px-4 py-3 text-sm font-bold text-white"
+              >
+                Iniciar Sesión
+              </Link>
+            )}
           </div>
         )}
       </nav>

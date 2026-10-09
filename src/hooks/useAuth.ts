@@ -15,21 +15,12 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Restore guest session from sessionStorage
-    const guestData = sessionStorage.getItem('sheddit_guest');
-    if (guestData) {
-      try {
-        setUser(JSON.parse(guestData));
-        setLoading(false);
-      } catch {
-        sessionStorage.removeItem('sheddit_guest');
-      }
-    }
+    // Ensure we start with loading true
+    setLoading(true);
 
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       setFirebaseUser(fbUser);
       if (fbUser) {
-        sessionStorage.removeItem('sheddit_guest');
         const userRef = ref(db, `users/${fbUser.uid}`);
         const snap = await get(userRef);
         if (snap.exists()) {
@@ -41,7 +32,7 @@ export function useAuth() {
             bio: data.bio || '',
             avatar: data.avatar || '🦁',
             photoURL: fbUser.photoURL || undefined,
-            isGuest: false,
+            // isGuest removed
             followersCount: data.followersCount || 0,
             followingCount: data.followingCount || 0,
             postsCount: data.postsCount || 0,
@@ -56,7 +47,7 @@ export function useAuth() {
             bio: '',
             avatar: GUEST_AVATARS[Math.floor(Math.random() * GUEST_AVATARS.length)],
             photoURL: fbUser.photoURL || undefined,
-            isGuest: false,
+            // isGuest removed
             followersCount: 0,
             followingCount: 0,
             postsCount: 0,
@@ -65,7 +56,7 @@ export function useAuth() {
           await set(userRef, { ...newUser, createdAt: serverTimestamp() });
           setUser(newUser);
         }
-      } else if (!sessionStorage.getItem('sheddit_guest')) {
+      } else {
         setUser(null);
       }
       setLoading(false);
@@ -74,28 +65,9 @@ export function useAuth() {
     return () => unsub();
   }, []);
 
-  const createGuestUser = (): ShedditUser => {
-    const guestId = 'guest_' + Date.now();
-    const guestUser: ShedditUser = {
-      uid: guestId,
-      displayName: 'Invitado',
-      username: 'invitado_' + Math.floor(Math.random() * 9999),
-      bio: '',
-      avatar: GUEST_AVATARS[Math.floor(Math.random() * GUEST_AVATARS.length)],
-      isGuest: true,
-      followersCount: 0,
-      followingCount: 0,
-      postsCount: 0,
-      createdAt: Date.now(),
-    };
-    sessionStorage.setItem('sheddit_guest', JSON.stringify(guestUser));
-    sessionStorage.setItem('sheddit_role', 'user');
-    setUser(guestUser);
-    return guestUser;
-  };
+  // Guest logic removed
 
   const logout = async () => {
-    sessionStorage.removeItem('sheddit_guest');
     sessionStorage.removeItem('sheddit_role');
     if (firebaseUser) await auth.signOut();
     setUser(null);
@@ -107,11 +79,7 @@ export function useAuth() {
   ) => {
     if (!user) return;
     const updated = { ...user, ...updates };
-    if (user.isGuest) {
-      sessionStorage.setItem('sheddit_guest', JSON.stringify(updated));
-    } else {
-      await set(ref(db, `users/${user.uid}`), updated);
-    }
+    await set(ref(db, `users/${user.uid}`), updated);
     setUser(updated);
   };
 
@@ -132,7 +100,7 @@ export function useAuth() {
       bio: '',
       avatar: GUEST_AVATARS[Math.floor(Math.random() * GUEST_AVATARS.length)],
       photoURL: fbUser.photoURL || undefined,
-      isGuest: false,
+      // isGuest removed
       followersCount: 0,
       followingCount: 0,
       postsCount: 0,
@@ -140,7 +108,6 @@ export function useAuth() {
     };
 
     await set(ref(db, `users/${fbUser.uid}`), { ...newUser, createdAt: serverTimestamp() });
-    sessionStorage.removeItem('sheddit_guest');
     setUser(newUser);
 
     return newUser;
@@ -152,5 +119,5 @@ export function useAuth() {
     return userCredential.user;
   };
 
-  return { user, firebaseUser, loading, createGuestUser, logout, updateProfile, registerWithEmailPassword, loginWithEmailPassword };
+  return { user, firebaseUser, loading, logout, updateProfile, registerWithEmailPassword, loginWithEmailPassword };
 }

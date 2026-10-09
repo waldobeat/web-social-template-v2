@@ -110,7 +110,7 @@ function ReplySection({ postId, replyCount }: { postId: string; replyCount: numb
               </div>
             </div>
           ))}
-          {!user?.isGuest ? (
+          {user ? (
             <div className="flex gap-2 pt-1">
               <input
                 value={text}
@@ -262,7 +262,7 @@ export default function Foro() {
         </div>
 
         {/* New Post */}
-        {user && !user.isGuest && (
+        {user && (
           <div className="mb-6 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
             <p className="mb-3 text-sm font-bold text-white">¿Qué quieres compartir?</p>
 
