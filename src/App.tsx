@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './lib/AuthContext';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Feed from './pages/Feed';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/perfil/:userId" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />

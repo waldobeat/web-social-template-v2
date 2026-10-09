@@ -7,7 +7,9 @@ interface AuthContextType {
   loading: boolean;
   createGuestUser: () => ShedditUser;
   logout: () => Promise<void>;
-  updateProfile: (updates: Partial<Pick<ShedditUser, 'displayName' | 'bio' | 'avatar' | 'username' | 'firstName' | 'lastName' | 'phone' | 'email' | 'birthDate'>>) => Promise<void>;
+  updateProfile: (updates: Partial<Pick<ShedditUser, 'displayName' | 'bio' | 'avatar' | 'username'>>) => Promise<void>;
+  registerWithEmailPassword: (email: string, password: string, displayName: string, recaptchaToken: string) => Promise<ShedditUser>;
+  loginWithEmailPassword: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
