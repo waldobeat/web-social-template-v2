@@ -142,7 +142,24 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
           e.target.style.height = `${e.target.scrollHeight}px`;
         }}
         onKeyDown={(e) => { if (e.key === 'Enter' && e.ctrlKey) handleSubmit(); }}
-        placeholder="¿Qué quieres compartir sobre préstamos o finanzas?"
+        onPaste={(e) => {
+          const items = e.clipboardData.items;
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+              const file = items[i].getAsFile();
+              if (file) {
+                if (file.size > 10 * 1024 * 1024) {
+                  alert('La imagen no puede superar 10 MB.');
+                  return;
+                }
+                setImageFile(file);
+                setImagePreview(URL.createObjectURL(file));
+                // Do not prevent default so text can still be pasted if it's mixed
+              }
+            }
+          }
+        }}
+        placeholder="¿Qué quieres compartir sobre préstamos o finanzas? (También puedes pegar una imagen aquí)"
         rows={3}
         maxLength={2000}
         className="w-full resize-none rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-neon-pink/40 focus:bg-white/6 transition-colors overflow-hidden"
