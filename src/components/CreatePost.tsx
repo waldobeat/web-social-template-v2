@@ -1,13 +1,32 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ref, push, set, serverTimestamp, increment } from 'firebase/database';
 import { db } from '../lib/firebase';
 import { useAuthContext } from '../lib/AuthContext';
 import { CATEGORIES } from './PostCard';
-import { Send, Globe, Lock, ChevronDown } from 'lucide-react';
+import { Send, Globe, Lock, ChevronDown, ImagePlus, X, Loader2 } from 'lucide-react';
 
 interface CreatePostProps {
   onCreated?: () => void;
   defaultCategory?: string;
+}
+
+const CATBOX_USERHASH = '15b5a72bb2ef9386d592fa473';
+
+async function uploadToCatbox(file: File): Promise<string> {
+  const form = new FormData();
+  form.append('reqtype', 'fileupload');
+  form.append('userhash', CATBOX_USERHASH);
+  form.append('fileToUpload', file);
+
+  const res = await fetch('https://catbox.moe/user/api.php', {
+    method: 'POST',
+    body: form,
+  });
+
+  if (!res.ok) throw new Error('Error al subir la imagen');
+  const url = await res.text();
+  if (!url.startsWith('https://')) throw new Error('Respuesta inválida de Catbox');
+  return url.trim();
 }
 
 export default function CreatePost({ onCreated, defaultCategory = 'general' }: CreatePostProps) {
@@ -17,17 +36,48 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
   const [visibility, setVisibility] = useState<'public' | 'followers'>('public');
   const [submitting, setSubmitting] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!user) return null;
 
   const selectedCat = CATEGORIES.find((c) => c.id === category) || CATEGORIES[0];
 
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 25 * 1024 * 1024) {
+      alert('La imagen no puede superar 25 MB.');
+      return;
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
   const handleSubmit = async () => {
-    if (!content.trim() || submitting) return;
+    if (!content.trim() && !imageFile) return;
+    if (submitting) return;
     setSubmitting(true);
+
     try {
+      let imageUrl: string | undefined;
+
+      if (imageFile) {
+        setUploadingImage(true);
+        imageUrl = await uploadToCatbox(imageFile);
+        setUploadingImage(false);
+      }
+
       const postsRef = ref(db, 'posts');
-      const newPost = {
+      const newPost: Record<string, any> = {
         authorId: user.uid,
         authorName: user.displayName,
         authorAvatar: user.avatar,
@@ -39,15 +89,15 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
         likesCount: 0,
         commentsCount: 0,
       };
+      if (imageUrl) newPost.image = imageUrl;
+
       const postRef = await push(postsRef, newPost);
 
-      // Also index under user's posts
       await set(ref(db, `userPosts/${user.uid}/${postRef.key}`), {
         timestamp: serverTimestamp(),
         visibility,
       });
 
-      // Increment user post count
       if (user) {
         await set(ref(db, `users/${user.uid}/postsCount`), increment(1));
       }
@@ -55,9 +105,13 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
       setContent('');
       setCategory('general');
       setVisibility('public');
+      removeImage();
       onCreated?.();
+    } catch (err: any) {
+      alert(err.message || 'Error al publicar');
     } finally {
       setSubmitting(false);
+      setUploadingImage(false);
     }
   };
 
@@ -82,6 +136,23 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
         maxLength={2000}
         className="w-full resize-none rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-neon-pink/40 focus:bg-white/6 transition-all"
       />
+
+      {/* Image preview */}
+      {imagePreview && (
+        <div className="relative mt-3 rounded-xl overflow-hidden border border-white/10">
+          <img
+            src={imagePreview}
+            alt="Preview"
+            className="max-h-72 w-full object-cover"
+          />
+          <button
+            onClick={removeImage}
+            className="absolute top-2 right-2 rounded-full bg-black/60 p-1.5 text-white hover:bg-black/80 transition-all"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
 
       {/* Options row */}
       <div className="mt-3 flex items-center gap-2 flex-wrap">
@@ -128,6 +199,23 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
           }
         </button>
 
+        {/* Image upload button */}
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={submitting}
+          className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-gray-300 hover:border-neon-pink/30 hover:text-neon-pink transition-all disabled:opacity-40"
+        >
+          <ImagePlus className="h-3.5 w-3.5" />
+          Imagen
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleImageSelect}
+        />
+
         {/* Character count + submit */}
         <div className="ml-auto flex items-center gap-3">
           <span className={`text-[11px] ${content.length > 1800 ? 'text-amber-400' : 'text-gray-600'}`}>
@@ -135,11 +223,20 @@ export default function CreatePost({ onCreated, defaultCategory = 'general' }: C
           </span>
           <button
             onClick={handleSubmit}
-            disabled={!content.trim() || submitting}
+            disabled={(!content.trim() && !imageFile) || submitting}
             className="flex items-center gap-2 rounded-xl bg-neon-pink px-4 py-2 text-xs font-bold text-white shadow-lg shadow-neon-pink/20 transition-all hover:shadow-neon-pink/40 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <Send className="h-3.5 w-3.5" />
-            {submitting ? 'Publicando...' : 'Publicar'}
+            {submitting ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                {uploadingImage ? 'Subiendo imagen...' : 'Publicando...'}
+              </>
+            ) : (
+              <>
+                <Send className="h-3.5 w-3.5" />
+                Publicar
+              </>
+            )}
           </button>
         </div>
       </div>

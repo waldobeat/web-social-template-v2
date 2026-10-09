@@ -216,7 +216,19 @@ export default function PostCard({ post, onDelete, showDeleteOption = false }: P
       </div>
 
       {/* Content */}
-      <p className="mb-4 text-sm text-gray-200 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+      <p className="mb-3 text-sm text-gray-200 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+
+      {/* Image */}
+      {post.image && (
+        <div className="mb-4 rounded-xl overflow-hidden border border-white/8">
+          <img
+            src={post.image}
+            alt="Imagen del post"
+            className="w-full max-h-96 object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
 
       <div className="mb-3 border-t border-white/5" />
 
